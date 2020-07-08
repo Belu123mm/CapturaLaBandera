@@ -35,6 +35,14 @@ MonoBehaviour:
   RpcList:
   - ClickRpc
   - DestroyRpc
+  - SetMyNickName
+  - AddPlayer
+  - MeleeDamage
+  - Move
+  - SecondS
+  - SetList
+  - SetServer
+  - Special
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0
