@@ -29,14 +29,27 @@ public class PlayerController : MonoBehaviourPun {
             //Request to move vertical
 
         }
-        if ( Input.GetButton("Fire1") ) {
-            //Request to move vertical
+        if ( Input.GetButton("Attack") ) {
+            //Request to move Attack
 
         }
-        if ( Input.GetButton("Vertical") ) {
-            //Request to move vertical
+        if ( Input.GetButton("Dash") ) {
+            //Request to move Dash
 
         }
+        if ( Input.GetButton("Ability") ) {
+            //Request to move Ability
+
+        }
+        if ( Input.GetButton("Jump") ) {
+            //Request to move Jump
+
+        }
+        if ( Input.GetButton("Grab") ) {
+            //Request to move Grab
+
+        }
+
 
 
 
