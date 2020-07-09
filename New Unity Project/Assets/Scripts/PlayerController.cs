@@ -21,14 +21,11 @@ public class PlayerController : MonoBehaviourPun {
         if ( photonView.IsMine == false )
             return;
 
-        if ( Input.GetButton("Horizontal") ) 
-        {
-            float X = Input.GetAxis("Horizontal");
-            Server.Instance.RequestMoveX(photonView.Owner, X);
+        if ( Input.GetButton("Horizontal") ) {
+            Server.Instance.RequestMoveX(photonView.Owner, Input.GetAxis("Horizontal"));
         }
         if ( Input.GetButton("Vertical") ) {
-            float Y = Input.GetAxis("Vertical");
-            Server.Instance.RequestMoveY(photonView.Owner, Y);
+            Server.Instance.RequestMoveY(photonView.Owner, Input.GetAxis("Vertical"));
         }
         if ( Input.GetButton("Attack") ) {
             //Request to move Attack
