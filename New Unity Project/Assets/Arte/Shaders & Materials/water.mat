@@ -10,7 +10,7 @@ Material:
   m_Name: water
   m_Shader: {fileID: 4800000, guid: bc706de2a47d8e34e9bc5a2c93bc79fb, type: 3}
   m_ShaderKeywords: 
-  m_LightmapFlags: 4
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -83,6 +83,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _TextureSample1:
+        m_Texture: {fileID: 2800000, guid: cac16ed83a36f514181496af8f007085, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Water:
         m_Texture: {fileID: 2800000, guid: d262e24598512aa4aaffdcc76989a4a2, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -102,26 +106,31 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DepthDistance: 1.52
+    - _DepthDistance: 1.11
     - _DepthDistance1: 1.52
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EdgeLength: 15
-    - _Float0: 1.83
-    - _Float1: 1.95
+    - _Float0: 2.35
+    - _Float1: 1.76
     - _Float2: 0.17
-    - _Float4: 2.51
-    - _Float5: 1.14
+    - _Float3: 0.24
+    - _Float4: 0.5762394
+    - _Float5: 0.105882354
+    - _Float6: 1.53
+    - _Float7: 23.93
+    - _Float8: 0.49475262
+    - _Float9: 2.06
     - _FlowmapIntensity: 0.5
     - _FlowmapIntensity1: 0.05
-    - _FoamFallOff: 1.19
+    - _FoamFallOff: 0.95
     - _FoamFallOff1: 0.69
     - _FoamTiling: 0
     - _FoamTiling1: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Int0: 10
+    - _Int0: 5
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -143,9 +152,11 @@ Material:
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color0: {r: 0, g: 0.75479174, b: 0.90199995, a: 1}
-    - _Color1: {r: 0, g: 0.56248564, b: 0.6784314, a: 1}
-    - _Color2: {r: 0.028027987, g: 0.21399349, b: 0.308, a: 1}
+    - _Color0: {r: 0, g: 0.7547917, b: 0.902, a: 1}
+    - _Color1: {r: 0, g: 0.5624856, b: 0.6784314, a: 1}
+    - _Color2: {r: 0.02802799, g: 0.2139935, b: 0.308, a: 1}
+    - _Color3: {r: 1, g: 1, b: 1, a: 0}
+    - _Color4: {r: 0.13952829, g: 0.32805017, b: 0.58, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 0.5754667, g: 0.8666667, b: 0.8666667, a: 1}
     - _VTInfoBlock: {r: 0, g: 0, b: 0, a: 0}
