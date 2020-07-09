@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Flowmap:
-        m_Texture: {fileID: 2800000, guid: 8cbc53266523cfc4bad03c33395b305b, type: 3}
+        m_Texture: {fileID: 2800000, guid: be114cc752a6153449cf1b4b002b490d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Flowmap1:
@@ -99,6 +99,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _owo1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -106,24 +110,27 @@ Material:
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
-    - _DepthDistance: 1.11
+    - _DepthDistance: 0.3
     - _DepthDistance1: 1.52
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EdgeLength: 15
-    - _Float0: 2.35
+    - _Float0: 1.92
     - _Float1: 1.76
-    - _Float2: 0.17
-    - _Float3: 0.24
-    - _Float4: 0.5762394
-    - _Float5: 0.105882354
-    - _Float6: 1.53
-    - _Float7: 23.93
-    - _Float8: 0.49475262
-    - _Float9: 2.06
-    - _FlowmapIntensity: 0.5
+    - _Float10: 5
+    - _Float11: 2.24
+    - _Float2: 0.3
+    - _Float3: 1
+    - _Float4: 0.48212177
+    - _Float5: 0.5411765
+    - _Float6: 0.27
+    - _Float7: 5
+    - _Float8: 1
+    - _Float9: 1.18
+    - _FlowmapIntensity: 0
     - _FlowmapIntensity1: 0.05
-    - _FoamFallOff: 0.95
+    - _FlowmapTiling: 5
+    - _FoamFallOff: 2.14
     - _FoamFallOff1: 0.69
     - _FoamTiling: 0
     - _FoamTiling1: 0
@@ -131,18 +138,23 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Int0: 5
+    - _Int1: 5
     - _Metallic: 0
     - _Mode: 0
+    - _NormalIntensity: 0.42
+    - _NormalspeedX: 2
+    - _NormalspeedY: 2
     - _OcclusionStrength: 1
     - _Opacity: 1
     - _Opacity1: 0.71
     - _Parallax: 0.02
+    - _RefraccionIndex: 0.5411765
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpeedX: 2
-    - _SpeedX1: 0.1
+    - _SpeedX1: 1
     - _SpeedY: 2
-    - _SpeedY1: 0.1
+    - _SpeedY1: 1
     - _SrcBlend: 1
     - _Tiling: 6
     - _Tiling1: 5
@@ -150,6 +162,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0
+    - _asdfasdf: 28
+    - _normalScale: 0.42
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 0, g: 0.7547917, b: 0.902, a: 1}

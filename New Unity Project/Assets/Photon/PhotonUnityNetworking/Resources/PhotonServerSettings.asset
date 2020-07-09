@@ -43,6 +43,12 @@ MonoBehaviour:
   - SetList
   - SetServer
   - Special
+  - Attack
+  - Damage
+  - Dash
+  - Grab
+  - MoveX
+  - MoveY
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0
