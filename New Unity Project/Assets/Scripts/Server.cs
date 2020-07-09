@@ -7,6 +7,7 @@ using TMPro;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Net.Configuration;
 
 public class Server : MonoBehaviourPun
 {
@@ -65,69 +66,92 @@ public class Server : MonoBehaviourPun
         _dic.Add(player, character);
         //  maxLife = character.life;        
     }
-    [PunRPC]
-    private void SetList(Player player)
+
+    public void RequestAttack(Player player)
     {
-        if (!playerList.Contains(player))
-            playerList.Add(player);
+        photonView.RPC("Attack", _server, player);
     }
 
-    public void RequestMove(Player player, int dir)
+    public void RequestMoveX(Player player, float dir)
+    {
+        photonView.RPC("Move", _server, player, dir);
+    }
+    public void RequestMoveY(Player player, float dir)
     {
         photonView.RPC("Move", _server, player, dir);
     }
     [PunRPC]
-    void Move(Player player, int dir)
+    void MoveX(Player player, float dir)
     {
         if (!_dic.ContainsKey(player)) return;
-    //    _dic[player].Move(dir);
-    }
-    public void RequestSpecial(Player player)
-    {
-        Debug.Log("request special");
-       // photonView.RPC("Special", _server, player);
-    }
-    public void RequestSecondS(Player player)
-    {
-     //  photonView.RPC("SecondS", _server, player);
+        _dic[player].MoveHorizontal(dir);
     }
     [PunRPC]
-    void SecondS(Player player)
+    void MoveY(Player player, float dir)
     {
         if (!_dic.ContainsKey(player)) return;
-      //  _dic[player].SecondS();
+        _dic[player].MoveVertical(dir);
+    }
+    [PunRPC]
+    void Attack(Player player)
+    {
+        if (!_dic.ContainsKey(player)) return;
+        _dic[player].Attack();
     }
 
-    [PunRPC]
-    void Special(Player player)
-    {
-        if (!_dic.ContainsKey(player)) return;
-     //   _dic[player].Special(player);
-    }
-   
-    public void RequestMeleeDamage(PlayerModel character,int damage)//pasa un model y su daño ,convierte el moden a int para despues obtener su view
+
+
+    public void RequestDamage(PlayerModel character, float damage)//pasa un model y su daño ,convierte el moden a int para despues obtener su view
     {
         if (!PhotonNetwork.IsMasterClient) return;
         int charId = character.gameObject.GetPhotonView().ViewID;
-        photonView.RPC("MeleeDamage", _server,charId, damage, charId);
-    }  
-    
+        photonView.RPC("Damage", _server, charId, damage);
+    }
+
     [PunRPC]
-    void MeleeDamage( int damage, int ID)
+    void Damage(int ID, int damage)
     {
-       PlayerModel model = PhotonNetwork.GetPhotonView(ID).GetComponent<PlayerModel>();
-      //  model.Life -= damage;   
-      //  PlayerModel.view.SetDamaged(model.Life);
-    } 
- 
+        PlayerModel model = PhotonNetwork.GetPhotonView(ID).GetComponent<PlayerModel>();
+        //  model.Life -= damage;   
+        //  PlayerModel.view.SetDamaged(model.Life);
+    }
+    public void RequestDash(Player player)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        photonView.RPC("Dash", _server);
+    }
+    [PunRPC]
+    void Dash(Player player)
+    {
+        if (!_dic.ContainsKey(player)) return;
+        _dic[player].Dash();
+    }
+
+    public void RequesGrab(Grabeable obj, PlayerModel model)
+    {
+        int objID = obj.gameObject.GetPhotonView().ViewID;
+        int modelID = model.gameObject.GetPhotonView().ViewID;
+        photonView.RPC("Grab", _server,objID, modelID);     
+    }
+
+    [PunRPC]
+    void Grab(int objID, int modelID)
+    {
+        Grabeable obj = PhotonNetwork.GetPhotonView(objID).GetComponent<Grabeable>();
+        obj.grabed = true;
+        PlayerModel model= PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
+        obj.transform.parent = model.transform;
+        obj.transform.position = model.grabPoint.position;
+    }
+
 
     IEnumerator WaitForPlayers()
     {
         while (_dic.Count < 4)
         {
             yield return null;
-        }      
-    }     
-  
-   
+        }
+    }
+
+
 }
