@@ -713,7 +713,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabPoint: {fileID: 6057165675946734733}
-  speed: 20
+  movementSpeed: 3
+  rotateSpeed: 5
 --- !u!95 &4039469234697293793
 Animator:
   serializedVersion: 3
