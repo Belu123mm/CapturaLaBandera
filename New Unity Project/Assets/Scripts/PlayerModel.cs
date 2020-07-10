@@ -13,8 +13,8 @@ public class PlayerModel : MonoBehaviour
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     PlayerView view;
 
-    bool _isMovingHor;
-    bool _isMovingVer;
+    private bool _isMovingHor;
+    private bool _isMovingVer;
 
     // Start is called before the first frame update
     void Start()

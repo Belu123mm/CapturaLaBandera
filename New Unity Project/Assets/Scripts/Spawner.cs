@@ -18,7 +18,7 @@ public class Spawner : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             _myserver = PhotonNetwork.Instantiate("MyServer", transform.position, transform.rotation).GetComponent<Server>();          
-            _myserver.winScreen = winScreen;
+          //  _myserver.winScreen = winScreen;
   
         }
 

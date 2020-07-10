@@ -4,7 +4,8 @@ using UnityEngine;
 using Photon.Pun;
 
 [RequireComponent(typeof(PlayerView))]
-public class PlayerController : MonoBehaviourPun {
+public class PlayerController : MonoBehaviour
+{
     //Controller -> Server -> Server ->Model
     //Variables
 
@@ -18,25 +19,24 @@ public class PlayerController : MonoBehaviourPun {
     // Update is called once per frame
     void Update() {
         //Checkeo si es mi view
-        if ( photonView.IsMine == false )
-            return;
+        
 
         if ( Input.GetButton("Horizontal") ) 
         {
             float X = Input.GetAxis("Horizontal");
-            Server.Instance.RequestMoveX(photonView.Owner, X);
+            Server.Instance.RequestMoveX(PhotonNetwork.LocalPlayer, X);
         }
         if ( Input.GetButton("Vertical") ) {
             float Y = Input.GetAxis("Vertical");
-            Server.Instance.RequestMoveY(photonView.Owner, Y);
+            Server.Instance.RequestMoveY(PhotonNetwork.LocalPlayer, Y);
         }
         if ( Input.GetButton("Attack") ) {
             //Request to move Attack
-            Server.Instance.RequestAttack(photonView.Owner);
+            Server.Instance.RequestAttack(PhotonNetwork.LocalPlayer);
         }
         if ( Input.GetButton("Dash") ) {
 
-            Server.Instance.RequestDash(photonView.Owner);
+            Server.Instance.RequestDash(PhotonNetwork.LocalPlayer);
 
         }
         if ( Input.GetButton("Ability") ) {

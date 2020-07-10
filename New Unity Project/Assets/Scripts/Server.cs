@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using TMPro;
-using System;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using System.Net.Configuration;
+
 
 public class Server : MonoBehaviourPun
 {
@@ -16,7 +12,7 @@ public class Server : MonoBehaviourPun
     public static Server Instance;
     Player _server;
     public PlayerController controllerPrefab;
-    public Animator winScreen;
+   // public Animator winScreen;
     Dictionary<Player, PlayerModel> _dic = new Dictionary<Player, PlayerModel>();
     List<Player> playerList = new List<Player>();
     public GameObject prefab;
