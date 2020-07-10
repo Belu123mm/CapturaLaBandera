@@ -8,7 +8,7 @@ public class PlayerModel : MonoBehaviour
     
     //Variables
     public Transform grabPoint;//usted sabe,ahi va la posicion del objeto agarrado
-
+    public float speed;
 
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     PlayerView view;
@@ -30,11 +30,26 @@ public class PlayerModel : MonoBehaviour
     }
     public void MoveHorizontal(float dir)
     {
-        //lo llama MoveX
+        if ( !_isMovingHor ) {
+            _isMovingHor = true;
+
+            //lo llama MoveX
+            transform.position += transform.forward * dir * speed * Time.deltaTime;
+
+            StartCoroutine(WaitToMoveHor());
+        }
     }
     public void MoveVertical(float dir)
     {
-        //lo llama MoveY
+        if ( !_isMovingVer ) {
+            _isMovingVer = true;
+            //Tendrias que rotar
+
+
+            //lo llama MoveY
+            StartCoroutine(WaitToMoveVer());
+
+        }
     }
     public void Attack()
     {
