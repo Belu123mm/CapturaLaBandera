@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
         if ( Input.GetButton("Horizontal") ) 
         {
             float X = Input.GetAxis("Horizontal");
+       
             Server.Instance.RequestMoveX(PhotonNetwork.LocalPlayer, X);
         }
         if ( Input.GetButton("Vertical") ) {

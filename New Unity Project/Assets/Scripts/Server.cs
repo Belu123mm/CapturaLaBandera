@@ -11,10 +11,8 @@ public class Server : MonoBehaviourPun
     public Transform[] spawns;
     public static Server Instance;
     Player _server;
-    public PlayerController controllerPrefab;
    // public Animator winScreen;
     Dictionary<Player, PlayerModel> _dic = new Dictionary<Player, PlayerModel>();
-    List<Player> playerList = new List<Player>();
     public GameObject prefab;
     private void Awake()
     {
@@ -56,8 +54,6 @@ public class Server : MonoBehaviourPun
     [PunRPC]
     public void AddPlayer(Player player)
     {
-        photonView.RPC("SetList", RpcTarget.AllBuffered, player);
-
         PlayerModel character = PhotonNetwork.Instantiate(prefab.name, spawns[_dic.Count].position, Quaternion.identity).GetComponent<PlayerModel>();
         _dic.Add(player, character);
         //  maxLife = character.life;        
@@ -70,15 +66,16 @@ public class Server : MonoBehaviourPun
 
     public void RequestMoveX(Player player, float dir)
     {
-        photonView.RPC("Move", _server, player, dir);
+        photonView.RPC("MoveX", _server, player, dir);
     }
     public void RequestMoveY(Player player, float dir)
     {
-        photonView.RPC("Move", _server, player, dir);
+        photonView.RPC("MoveY", _server, player, dir);
     }
     [PunRPC]
     void MoveX(Player player, float dir)
     {
+        Debug.Log("se movio " + player);
         if (!_dic.ContainsKey(player)) return;
         _dic[player].MoveHorizontal(dir);
     }

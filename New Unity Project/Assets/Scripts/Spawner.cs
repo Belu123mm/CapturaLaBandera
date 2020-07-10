@@ -10,7 +10,7 @@ using System;
 public class Spawner : MonoBehaviourPunCallbacks
 {
     private Server _myserver;
-    public Animator winScreen;
+   // public Animator winScreen;
 
 
     void Start()

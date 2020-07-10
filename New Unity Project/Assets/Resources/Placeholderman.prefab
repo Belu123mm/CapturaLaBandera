@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 6620730120043307398}
   - component: {fileID: 1024642023688911644}
   - component: {fileID: 3759247438251648434}
-  - component: {fileID: -5086123650015795130}
+  - component: {fileID: -1791669585087071770}
   m_Layer: 0
   m_Name: Placeholderman
   m_TagString: Untagged
@@ -713,6 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabPoint: {fileID: 6057165675946734733}
+  speed: 20
 --- !u!95 &4039469234697293793
 Animator:
   serializedVersion: 3
@@ -788,7 +789,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
---- !u!114 &-5086123650015795130
+--- !u!114 &-1791669585087071770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

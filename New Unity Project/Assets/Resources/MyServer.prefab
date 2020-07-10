@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 996749994845390371}
   - component: {fileID: 7491640136402008385}
+  - component: {fileID: -7676091466928473319}
+  - component: {fileID: 6342897229274272818}
   m_Layer: 0
   m_Name: MyServer
   m_TagString: Untagged
@@ -47,9 +49,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLife: 0
-  spawns: []
-  controllerPrefab: {fileID: 0}
-  prefab: {fileID: 0}
+  spawns:
+  - {fileID: 2714152586653526112}
+  - {fileID: 1119491277445148955}
+  - {fileID: 239660751689566135}
+  prefab: {fileID: 8238921333441893627, guid: 3757705e2faef354aabcd01636136c57, type: 3}
+--- !u!114 &-7676091466928473319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6203760688526015102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 6342897229274272818}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &6342897229274272818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6203760688526015102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!1 &8017828691717389351
 GameObject:
   m_ObjectHideFlags: 0
