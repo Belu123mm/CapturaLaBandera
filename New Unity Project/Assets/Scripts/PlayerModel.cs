@@ -8,7 +8,9 @@ public class PlayerModel : MonoBehaviour
     
     //Variables
     public Transform grabPoint;//usted sabe,ahi va la posicion del objeto agarrado
-    public float speed;
+    public float movementSpeed;
+    public float rotateSpeed;
+
 
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     PlayerView view;
@@ -33,8 +35,20 @@ public class PlayerModel : MonoBehaviour
         if ( !_isMovingHor ) {
             _isMovingHor = true;
 
+            Vector3 targetDir = (transform.position + dir * Vector3.right) - transform.position;
+
+            float step = rotateSpeed * Time.deltaTime;
+
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+
+
+
+            transform.rotation = Quaternion.LookRotation(newDir);
+
+            transform.position += dir * Vector3.right * movementSpeed * Time.deltaTime;
+
             //lo llama MoveX
-            transform.position += transform.forward * dir * speed * Time.deltaTime;
+            //transform.position += transform.forward * dir * speed * Time.deltaTime;
 
             StartCoroutine(WaitToMoveHor());
         }
@@ -44,7 +58,16 @@ public class PlayerModel : MonoBehaviour
         if ( !_isMovingVer ) {
             _isMovingVer = true;
             //Tendrias que rotar
+            Vector3 targetDir = (transform.position + dir * Vector3.forward) - transform.position;
 
+            float step = rotateSpeed * Time.deltaTime;
+
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+
+            transform.rotation = Quaternion.LookRotation(newDir);
+
+            transform.position += dir * Vector3.forward* movementSpeed * Time.deltaTime;
+            Debug.DrawRay(transform.position, newDir, Color.red);
 
             //lo llama MoveY
             StartCoroutine(WaitToMoveVer());
