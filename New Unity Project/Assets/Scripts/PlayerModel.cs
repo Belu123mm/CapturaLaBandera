@@ -28,15 +28,14 @@ public class PlayerModel : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-
     }
 
     public void StartPlayer() {
         camHandler = gameObject.GetComponent<CameraHandler>();
+        Debug.Log("playeriniciado");
 
         if ( camHandler != null ) {
             camHandler.OnStartFollowing();
-
         }
     }
         public void MoveHorizontal(float dir )

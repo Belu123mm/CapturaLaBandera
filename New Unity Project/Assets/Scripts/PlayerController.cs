@@ -9,17 +9,20 @@ public class PlayerController : MonoBehaviour
     //Controller -> Server -> Server ->Model
     //Variables
 
-
+    private bool _isStarted;
 
     // Start is called before the first frame update
     void Start() {
-
-    }
-
-    // Update is called once per frame
+    }    // Update is called once per frame
     void Update() {
         //Checkeo si es mi view
-        
+
+
+        if ( !_isStarted ) {
+            Server.Instance.RequestStartCamHandler(PhotonNetwork.LocalPlayer);
+            _isStarted = true;
+            return;
+        }
 
         if ( Input.GetButton("Horizontal") ) 
         {

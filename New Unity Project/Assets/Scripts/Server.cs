@@ -55,7 +55,6 @@ public class Server : MonoBehaviourPun
     public void AddPlayer(Player player)
     {
         PlayerModel character = PhotonNetwork.Instantiate(prefab.name, spawns[_dic.Count].position, Quaternion.identity).GetComponent<PlayerModel>();
-        character.StartPlayer();
         _dic.Add(player, character);
         //  maxLife = character.life;        
     }
@@ -69,10 +68,12 @@ public class Server : MonoBehaviourPun
     {
         photonView.RPC("MoveX", _server, player, dir);
     }
+    
     public void RequestMoveY(Player player, float dir)
     {
         photonView.RPC("MoveY", _server, player, dir);
     }
+     
     /*
     public void RequestMoveX( Player player, Vector3 newDir ) {
         photonView.RPC("MoveX", _server, player, newDir);
@@ -81,9 +82,26 @@ public class Server : MonoBehaviourPun
         photonView.RPC("MoveY", _server, player, camForward);
     }
     */
+    public void RequestStartCamHandler( Player player) {
+        photonView.RPC("StartCamHandler", player, player);
+        Debug.Log("hago llamada a " + player);
+
+    }
+
     //RPC
     //Y esto igual uwu
+    
     [PunRPC]
+    void StartCamHandler(Player player ) {
+        Debug.Log("recibo llamada a " + player);
+        if ( !PhotonNetwork.IsMasterClient ) {
+
+        if ( !_dic.ContainsKey(player) ) return;
+        _dic [ player ].StartPlayer();
+        }
+
+    }
+
     void MoveX(Player player, float dir)
     {
         Debug.Log("se movio " + player);
