@@ -55,6 +55,7 @@ public class Server : MonoBehaviourPun
     public void AddPlayer(Player player)
     {
         PlayerModel character = PhotonNetwork.Instantiate(prefab.name, spawns[_dic.Count].position, Quaternion.identity).GetComponent<PlayerModel>();
+        character.StartPlayer();
         _dic.Add(player, character);
         //  maxLife = character.life;        
     }
@@ -63,7 +64,7 @@ public class Server : MonoBehaviourPun
     {
         photonView.RPC("Attack", _server, player);
     }
-
+    //Ps por si acaso comento esto para que despues no me reten
     public void RequestMoveX(Player player, float dir)
     {
         photonView.RPC("MoveX", _server, player, dir);
@@ -72,6 +73,16 @@ public class Server : MonoBehaviourPun
     {
         photonView.RPC("MoveY", _server, player, dir);
     }
+    /*
+    public void RequestMoveX( Player player, Vector3 newDir ) {
+        photonView.RPC("MoveX", _server, player, newDir);
+    }
+    public void RequestMoveY( Player player, Vector3 camForward ) {
+        photonView.RPC("MoveY", _server, player, camForward);
+    }
+    */
+    //RPC
+    //Y esto igual uwu
     [PunRPC]
     void MoveX(Player player, float dir)
     {
@@ -85,6 +96,18 @@ public class Server : MonoBehaviourPun
         if (!_dic.ContainsKey(player)) return;
         _dic[player].MoveVertical(dir);
     }
+    /*
+    void MoveX( Player player, Vector3 newDir ) {
+        Debug.Log("se movio " + player);
+        if ( !_dic.ContainsKey(player) ) return;
+        _dic [ player ].MoveHorizontal(newDir);
+    }
+    [PunRPC]
+    void MoveY( Player player, Vector3 camForward ) {
+        if ( !_dic.ContainsKey(player) ) return;
+        _dic [ player ].MoveVertical(camForward);
+    }
+    */
     [PunRPC]
     void Attack(Player player)
     {
