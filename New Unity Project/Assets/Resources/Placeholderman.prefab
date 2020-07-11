@@ -601,6 +601,7 @@ GameObject:
   - component: {fileID: 1024642023688911644}
   - component: {fileID: 3759247438251648434}
   - component: {fileID: -1791669585087071770}
+  - component: {fileID: -7798287872127426655}
   m_Layer: 0
   m_Name: Placeholderman
   m_TagString: Untagged
@@ -714,7 +715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grabPoint: {fileID: 6057165675946734733}
   movementSpeed: 3
-  rotateSpeed: 5
+  rotateSpeed: 20
 --- !u!95 &4039469234697293793
 Animator:
   serializedVersion: 3
@@ -802,3 +803,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18e4d217a895c94bb459c9149bbf4a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-7798287872127426655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8238921333441893627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c0b9ab9df5f7ba48adb1baa5b3cfb98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 0}
+  distance: 7
+  height: 3
+  centerOffset: {x: 0, y: 0, z: 0}
+  followOnStart: 0
+  smoothSpeed: 5

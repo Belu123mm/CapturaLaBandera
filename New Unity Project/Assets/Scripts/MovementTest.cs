@@ -9,52 +9,53 @@ public class MovementTest : MonoBehaviour {
     bool _isMovingHor;
     bool _isMovingVer;
 
+    CameraHandler camHandler;
+
+
     // Start is called before the first frame update
     void Start() {
+        camHandler = gameObject.GetComponent<CameraHandler>();
 
     }
 
     // Update is called once per frame
     void Update() {
         if ( Input.GetButton("Horizontal") )
-            MoveHorizontal(Input.GetAxis("Horizontal") * Vector3.right);
+            MoveHorizontal(Input.GetAxis("Horizontal"));
 
 
         if ( Input.GetButton("Vertical") )
-            MoveVertical(Input.GetAxis("Vertical") * Vector3.forward);
+            MoveVertical(Input.GetAxis("Vertical"));
 
     }
 
-    void MoveHorizontal( Vector3 dir ) {
+    void MoveHorizontal( float dir ) {
 
-        Vector3 targetDir = (transform.position + dir) - transform.position;
+        Vector3 camRight = new Vector3(camHandler.cameraTransform.right.x, 0, camHandler.cameraTransform.right.z);
+        Debug.Log(camRight);
 
-        float step = rotateSpeed * Time.deltaTime;
+        Vector3 currentDir = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
+        Vector3 targetDir = (transform.position + camRight);
 
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+        Debug.DrawLine(currentDir, (targetDir), Color.red);
 
+        float step = rotateSpeed * dir * Time.deltaTime;
 
+        Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
 
         transform.rotation = Quaternion.LookRotation(newDir);
-
-        transform.position += dir * movementSpeed * Time.deltaTime;
-        Debug.DrawRay(transform.position, newDir, Color.red);
 
     }
-    public void MoveVertical( Vector3 dir ) {
+    public void MoveVertical( float dir ) {
 
-        Vector3 targetDir = (transform.position + dir) - transform.position;
+        Vector3 camForward = new Vector3(camHandler.cameraTransform.forward.x , 0 , camHandler.cameraTransform.forward.z );
+        Debug.Log(camForward);
 
-        float step = rotateSpeed * Time.deltaTime;
+        Vector3 targetDir = (transform.position + camForward);
 
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+        transform.position += Time.deltaTime * camForward * dir * movementSpeed ;
 
-        transform.rotation = Quaternion.LookRotation(newDir);
-
-        transform.position += dir * movementSpeed * Time.deltaTime;
-        Debug.DrawRay(transform.position, newDir, Color.red);
-
-
+        Debug.DrawLine(transform.position, (targetDir) , Color.green);
     }
     IEnumerator WaitToMoveHor() {
         yield return new WaitForFixedUpdate();

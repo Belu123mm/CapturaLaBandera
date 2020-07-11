@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 [RequireComponent(typeof(PlayerView))]
-public class PlayerModel : MonoBehaviour
+[RequireComponent(typeof(CameraHandler))]
+public class PlayerModel : MonoBehaviourPun
 {
     
     //Variables
@@ -15,6 +16,8 @@ public class PlayerModel : MonoBehaviour
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     PlayerView view;
 
+    CameraHandler camHandler;
+
     private bool _isMovingHor;
     private bool _isMovingVer;
 
@@ -22,6 +25,16 @@ public class PlayerModel : MonoBehaviour
     void Start()
     {
         view = GetComponent<PlayerView>();
+
+        camHandler = gameObject.GetComponent<CameraHandler>();
+
+        if ( camHandler != null ) {
+            if (photonView.IsMine ) {
+                camHandler.OnStartFollowing();
+                Debug.Log("STArtedD");
+            }
+        }
+
     }
 
 
@@ -35,20 +48,19 @@ public class PlayerModel : MonoBehaviour
         if ( !_isMovingHor ) {
             _isMovingHor = true;
 
-            Vector3 targetDir = (transform.position + dir * Vector3.right) - transform.position;
+            Vector3 camRight = new Vector3(camHandler.cameraTransform.right.x, 0, camHandler.cameraTransform.right.z);
+            Debug.Log(camRight);
 
-            float step = rotateSpeed * Time.deltaTime;
+            Vector3 currentDir = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
+            Vector3 targetDir = (transform.position + camRight);
 
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+            Debug.DrawLine(currentDir, (targetDir), Color.red);
 
+            float step = rotateSpeed * dir * Time.deltaTime;
 
+            Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
 
             transform.rotation = Quaternion.LookRotation(newDir);
-
-            transform.position += dir * Vector3.right * movementSpeed * Time.deltaTime;
-
-            //lo llama MoveX
-            //transform.position += transform.forward * dir * speed * Time.deltaTime;
 
             StartCoroutine(WaitToMoveHor());
         }
@@ -58,16 +70,15 @@ public class PlayerModel : MonoBehaviour
         if ( !_isMovingVer ) {
             _isMovingVer = true;
             //Tendrias que rotar
-            Vector3 targetDir = (transform.position + dir * Vector3.forward) - transform.position;
+            Vector3 camForward = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
+            Debug.Log(camForward);
 
-            float step = rotateSpeed * Time.deltaTime;
+            Vector3 targetDir = (transform.position + camForward);
+            Debug.Log(targetDir);
 
-            Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+            transform.position += Time.deltaTime * camForward * dir * movementSpeed;
 
-            transform.rotation = Quaternion.LookRotation(newDir);
-
-            transform.position += dir * Vector3.forward* movementSpeed * Time.deltaTime;
-            Debug.DrawRay(transform.position, newDir, Color.red);
+            Debug.DrawLine(transform.position, (targetDir), Color.green);
 
             //lo llama MoveY
             StartCoroutine(WaitToMoveVer());
