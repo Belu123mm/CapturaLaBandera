@@ -8,31 +8,27 @@ public class PlayerController : MonoBehaviour
 {
     //Controller -> Server -> Server ->Model
     //Variables
-
+    public CameraHandler camHandler;
     private bool _isStarted;
 
     // Start is called before the first frame update
     void Start() {
+       
     }    // Update is called once per frame
     void Update() {
         //Checkeo si es mi view
 
-
-        if ( !_isStarted ) {
-            Server.Instance.RequestStartCamHandler(PhotonNetwork.LocalPlayer);
-            _isStarted = true;
-            return;
-        }
-
         if ( Input.GetButton("Horizontal") ) 
         {
             float X = Input.GetAxis("Horizontal");
-       
-            Server.Instance.RequestMoveX(PhotonNetwork.LocalPlayer, X);
+            Vector3 camRight = new Vector3(camHandler.cameraTransform.right.x, 0, camHandler.cameraTransform.right.z);
+            Vector3 currentDir = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
+            Server.Instance.RequestMoveX(PhotonNetwork.LocalPlayer, X,camRight,currentDir);
         }
         if ( Input.GetButton("Vertical") ) {
             float Y = Input.GetAxis("Vertical");
-            Server.Instance.RequestMoveY(PhotonNetwork.LocalPlayer, Y);
+            Vector3 camForward = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
+            Server.Instance.RequestMoveY(PhotonNetwork.LocalPlayer, Y,camForward);
         }
         if ( Input.GetButton("Attack") ) {
             //Request to move Attack
@@ -59,5 +55,15 @@ public class PlayerController : MonoBehaviour
 
 
 
+    }
+    public void StartPlayer()
+    {
+        camHandler = gameObject.GetComponent<CameraHandler>();
+        Debug.Log("playeriniciado");
+
+        if (camHandler != null)
+        {
+            camHandler.OnStartFollowing();
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-
+using UnityEngine.Tilemaps;
 
 public class Server : MonoBehaviourPun
 {
@@ -11,7 +11,7 @@ public class Server : MonoBehaviourPun
     public Transform[] spawns;
     public static Server Instance;
     Player _server;
-   // public Animator winScreen;
+    // public Animator winScreen;
     Dictionary<Player, PlayerModel> _dic = new Dictionary<Player, PlayerModel>();
     public GameObject prefab;
     private void Awake()
@@ -32,6 +32,8 @@ public class Server : MonoBehaviourPun
             Camera.main.backgroundColor = Color.red;
             StartCoroutine(WaitForPlayers());
         }
+
+
     }
 
     [PunRPC]
@@ -64,16 +66,16 @@ public class Server : MonoBehaviourPun
         photonView.RPC("Attack", _server, player);
     }
     //Ps por si acaso comento esto para que despues no me reten
-    public void RequestMoveX(Player player, float dir)
+    public void RequestMoveX(Player player, float dir, Vector3 camRight, Vector3 currentDir)
     {
-        photonView.RPC("MoveX", _server, player, dir);
+        photonView.RPC("MoveX", _server, player, dir, camRight, currentDir);
     }
-    
-    public void RequestMoveY(Player player, float dir)
+
+    public void RequestMoveY(Player player, float dir, Vector3 camForward)
     {
-        photonView.RPC("MoveY", _server, player, dir);
+        photonView.RPC("MoveY", _server, player, dir, camForward);
     }
-     
+
     /*
     public void RequestMoveX( Player player, Vector3 newDir ) {
         photonView.RPC("MoveX", _server, player, newDir);
@@ -82,37 +84,37 @@ public class Server : MonoBehaviourPun
         photonView.RPC("MoveY", _server, player, camForward);
     }
     */
-    public void RequestStartCamHandler( Player player) {
-        photonView.RPC("StartCamHandler", player, player);
-        Debug.Log("hago llamada a " + player);
-
-    }
 
     //RPC
     //Y esto igual uwu
-    
-    [PunRPC]
-    void StartCamHandler(Player player ) {
-        Debug.Log("recibo llamada a " + player);
-        if ( !PhotonNetwork.IsMasterClient ) {
-
-        if ( !_dic.ContainsKey(player) ) return;
-        _dic [ player ].StartPlayer();
+    void setCamHandler() //hago un rpc por cada jugador en el diccionario y les paso el ID de su model para que cada uno de forma separada active la camara
+    {
+        foreach (var Player in _dic)
+        {
+            photonView.RPC("StartCamHandler", Player.Key, Player.Value.gameObject.GetPhotonView().ViewID);
+            Debug.Log("recibo llamada a " + Player.Key.NickName);
         }
+    }
+    [PunRPC]
+    void StartCamHandler(int modelID)
+    {
+
+        PlayerController controller = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerController>();
+        controller.StartPlayer();
 
     }
-
-    void MoveX(Player player, float dir)
+    [PunRPC]
+    void MoveX(Player player, float dir, Vector3 camRight, Vector3 currentDir)
     {
         Debug.Log("se movio " + player);
         if (!_dic.ContainsKey(player)) return;
-        _dic[player].MoveHorizontal(dir);
+        _dic[player].MoveHorizontal(dir, camRight, currentDir);
     }
     [PunRPC]
-    void MoveY(Player player, float dir)
+    void MoveY(Player player, float dir, Vector3 camForward)
     {
         if (!_dic.ContainsKey(player)) return;
-        _dic[player].MoveVertical(dir);
+        _dic[player].MoveVertical(dir, camForward);
     }
     /*
     void MoveX( Player player, Vector3 newDir ) {
@@ -165,7 +167,7 @@ public class Server : MonoBehaviourPun
     {
         int objID = obj.gameObject.GetPhotonView().ViewID;
         int modelID = model.gameObject.GetPhotonView().ViewID;
-        photonView.RPC("Grab", _server,objID, modelID);     
+        photonView.RPC("Grab", _server, objID, modelID);
     }
 
     [PunRPC]
@@ -173,7 +175,7 @@ public class Server : MonoBehaviourPun
     {
         Grabeable obj = PhotonNetwork.GetPhotonView(objID).GetComponent<Grabeable>();
         obj.grabed = true;
-        PlayerModel model= PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
+        PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
         obj.transform.parent = model.transform;
         obj.transform.position = model.grabPoint.position;
     }
@@ -181,10 +183,11 @@ public class Server : MonoBehaviourPun
 
     IEnumerator WaitForPlayers()
     {
-        while (_dic.Count < 4)
+        while (_dic.Count < 2)
         {
             yield return null;
         }
+        setCamHandler();
     }
 
 

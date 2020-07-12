@@ -6,7 +6,7 @@ using Photon.Pun;
 [RequireComponent(typeof(CameraHandler))]
 public class PlayerModel : MonoBehaviourPun
 {
-    
+
     //Variables
     public Transform grabPoint;//usted sabe,ahi va la posicion del objeto agarrado
 
@@ -15,42 +15,32 @@ public class PlayerModel : MonoBehaviourPun
 
 
     //Esto seria de manera local nada mas, cada player sincroniza esto?
-    PlayerView view;
-    CameraHandler camHandler;
+    PlayerView view;   
 
     private bool _isMovingHor;
     private bool _isMovingVer;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
     }
-    
+
     // Update is called once per frame
     void Update()
     {
     }
-
-    public void StartPlayer() {
-        camHandler = gameObject.GetComponent<CameraHandler>();
-        Debug.Log("playeriniciado");
-
-        if ( camHandler != null ) {
-            camHandler.OnStartFollowing();
-        }
-    }
-        public void MoveHorizontal(float dir )
+    
+    public void MoveHorizontal(float dir,Vector3 camRight,Vector3 currentDir)
     {
-        if ( !_isMovingHor ) {
+        if (!_isMovingHor)
+        {
             _isMovingHor = true;
             /*
              * Ahora todo esto estaria en el controller, solo le pasaria la nueva direccion a la que mirar
              * 
              */
 
-            Vector3 camRight = new Vector3(camHandler.cameraTransform.right.x, 0, camHandler.cameraTransform.right.z);
-            Debug.Log(camRight);
-
-            Vector3 currentDir = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
+           
 
             Debug.DrawLine(currentDir, (transform.position + camRight), Color.red);
 
@@ -63,12 +53,11 @@ public class PlayerModel : MonoBehaviourPun
             StartCoroutine(WaitToMoveHor());
         }
     }
-    public void MoveVertical(float dir )
+    public void MoveVertical(float dir, Vector3 camForward)
     {
-        if ( !_isMovingVer ) {
-            _isMovingVer = true;
-
-            Vector3 camForward = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
+        if (!_isMovingVer)
+        {
+            _isMovingVer = true;           
 
             Debug.Log(camForward);
 

@@ -724,7 +724,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8238921333441893627}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 50c7bf12b33d6cd4fa0e15499a04cc7e, type: 2}
   m_CullingMode: 0
@@ -754,7 +754,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 3759247438251648434}
-  - {fileID: 1024642023688911644}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -803,6 +802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18e4d217a895c94bb459c9149bbf4a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camHandler: {fileID: 0}
 --- !u!114 &-7798287872127426655
 MonoBehaviour:
   m_ObjectHideFlags: 0
