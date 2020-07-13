@@ -92,7 +92,6 @@ public class Server : MonoBehaviourPun
         foreach (var Player in _dic)
         {
             photonView.RPC("StartCamHandler", Player.Key, Player.Value.gameObject.GetPhotonView().ViewID);
-            Debug.Log("recibo llamada a " + Player.Key.NickName);
         }
     }
     [PunRPC]
@@ -106,7 +105,6 @@ public class Server : MonoBehaviourPun
     [PunRPC]
     void MoveX(Player player, float dir, Vector3 camRight, Vector3 currentDir)
     {
-        Debug.Log("se movio " + player);
         if (!_dic.ContainsKey(player)) return;
         _dic[player].MoveHorizontal(dir, camRight, currentDir);
     }
@@ -163,15 +161,27 @@ public class Server : MonoBehaviourPun
         _dic[player].Dash();
     }
 
-    public void RequesGrab(Grabeable obj, PlayerModel model)
+    public void RequestGrab(Player player)
+    {      
+        photonView.RPC("Grab", _server,player);
+        
+    }
+    public void CheckedGrab(Grabeable obj, PlayerModel model)
     {
         int objID = obj.gameObject.GetPhotonView().ViewID;
         int modelID = model.gameObject.GetPhotonView().ViewID;
-        photonView.RPC("Grab", _server, objID, modelID);
+        photonView.RPC("GrabObject", _server, objID, modelID);
     }
 
     [PunRPC]
-    void Grab(int objID, int modelID)
+    void Grab(Player player)
+    {
+        Debug.Log("grabeo " + player);
+        if (!_dic.ContainsKey(player)) return;
+        _dic[player].Grab();
+    }
+    [PunRPC]
+    void GrabObject(int objID, int modelID)
     {
         Grabeable obj = PhotonNetwork.GetPhotonView(objID).GetComponent<Grabeable>();
         obj.grabed = true;

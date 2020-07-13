@@ -47,7 +47,6 @@ public class MyNetManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("conecte con el master");
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 5;
         PhotonNetwork.JoinOrCreateRoom("MainSala", options, typedLobby: default);

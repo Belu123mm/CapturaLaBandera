@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         }
         if ( Input.GetButton("Grab") ) {
             //Request to move Grab
-
+            Server.Instance.RequestGrab(PhotonNetwork.LocalPlayer);
         }
 
 

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.Linq;
+
 [RequireComponent(typeof(PlayerView))]
 [RequireComponent(typeof(CameraHandler))]
 public class PlayerModel : MonoBehaviourPun
@@ -12,10 +14,10 @@ public class PlayerModel : MonoBehaviourPun
 
     public float rotateSpeed;
     public float movementSpeed;
-
+    public float radiusRange;
 
     //Esto seria de manera local nada mas, cada player sincroniza esto?
-    PlayerView view;   
+    PlayerView view;
 
     private bool _isMovingHor;
     private bool _isMovingVer;
@@ -29,8 +31,8 @@ public class PlayerModel : MonoBehaviourPun
     void Update()
     {
     }
-    
-    public void MoveHorizontal(float dir,Vector3 camRight,Vector3 currentDir)
+
+    public void MoveHorizontal(float dir, Vector3 camRight, Vector3 currentDir)
     {
         if (!_isMovingHor)
         {
@@ -40,7 +42,7 @@ public class PlayerModel : MonoBehaviourPun
              * 
              */
 
-           
+
 
             Debug.DrawLine(currentDir, (transform.position + camRight), Color.red);
 
@@ -57,13 +59,11 @@ public class PlayerModel : MonoBehaviourPun
     {
         if (!_isMovingVer)
         {
-            _isMovingVer = true;           
-
-            Debug.Log(camForward);
+            _isMovingVer = true;
 
             transform.position += Time.deltaTime * camForward * dir * movementSpeed;
 
-            Debug.Log(transform.position + camForward);
+
 
             Debug.DrawLine(transform.position, (transform.position + camForward), Color.green);
 
@@ -82,6 +82,20 @@ public class PlayerModel : MonoBehaviourPun
     }
     public void Grab()
     {
+        Debug.Log("Grabie");
+        Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
+        for (int i = 0; i < collisions.Length; i++)
+        {
+            if (collisions[i].GetComponent<Grabeable>() != null)
+            {
+
+                Grabeable g = collisions[i].GetComponent<Grabeable>();
+                if (!g.grabed)
+                {
+                    Server.Instance.CheckedGrab(g, this);
+                }
+            }
+        }
         //envia el componente Grabeable y este model a RequestGrab
     }
     public void Jum()
