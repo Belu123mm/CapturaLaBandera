@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.Tilemaps;
-
+using System.Linq;
 public class Server : MonoBehaviourPun
 {
     public int maxLife;
@@ -162,9 +162,9 @@ public class Server : MonoBehaviourPun
     }
 
     public void RequestGrab(Player player)
-    {      
-        photonView.RPC("Grab", _server,player);
-        
+    {
+        photonView.RPC("Grab", _server, player);
+
     }
     public void CheckedGrab(Grabeable obj, PlayerModel model)
     {
@@ -190,6 +190,18 @@ public class Server : MonoBehaviourPun
         obj.transform.position = model.grabPoint.position;
     }
 
+    public void GetWinner(PlayerModel model)
+    {
+        int modelID = model.photonView.ViewID;
+        photonView.RPC("SetWinner", _server, modelID);
+    }
+    [PunRPC]
+    private void SetWinner(int modelID)
+    {
+        PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();      
+        Player ppp = _dic.Select(x => x.Key).Where(x => _dic[x] == model).First();
+        //proximamente mostrarle al ganador un winscreen y a los perdedores decirles que el gano
+    }
 
     IEnumerator WaitForPlayers()
     {

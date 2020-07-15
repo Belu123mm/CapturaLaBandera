@@ -15,10 +15,13 @@ public class PlayerModel : MonoBehaviourPun
     public float rotateSpeed;
     public float movementSpeed;
     public float radiusRange;
-
     //Esto seria de manera local nada mas, cada player sincroniza esto?
+    // sipi pero algunas cosas del view hay que mostrarlas a todos
     PlayerView view;
 
+    private float timeWithFlag;
+    private float totalTime=60;
+    private bool HasTheFlag;
     private bool _isMovingHor;
     private bool _isMovingVer;
 
@@ -30,6 +33,14 @@ public class PlayerModel : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
+        if (HasTheFlag)
+        {
+            timeWithFlag += Time.deltaTime;
+        }
+        if (timeWithFlag >= totalTime)
+        {
+            Server.Instance.GetWinner(this);
+        }
     }
 
     public void MoveHorizontal(float dir, Vector3 camRight, Vector3 currentDir)
