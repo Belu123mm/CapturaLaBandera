@@ -26,8 +26,13 @@ public class Server : MonoBehaviourPun
             {
                 photonView.RPC("SetServer", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer);
             }
+        } else {
+            if ( photonView.IsMine ) {
+
+                PhotonNetwork.Destroy(gameObject);  //Me destrushe
+            }
         }
-        if (PhotonNetwork.IsMasterClient)
+        if ( PhotonNetwork.IsMasterClient)
         {
             Camera.main.backgroundColor = Color.red;
             StartCoroutine(WaitForPlayers());
@@ -36,23 +41,19 @@ public class Server : MonoBehaviourPun
 
     }
 
+
+
     [PunRPC]
     public void SetServer(Player serverPlayer)
     {
-        if (Instance)
-        {
-            Destroy(gameObject);
-            return;
-        }
         Instance = this;
         _server = serverPlayer;
+            DontDestroyOnLoad(this);
         if (serverPlayer != PhotonNetwork.LocalPlayer)
         {
             photonView.RPC("AddPlayer", _server, PhotonNetwork.LocalPlayer);
         }
     }
-
-
     [PunRPC]
     public void AddPlayer(Player player)
     {
