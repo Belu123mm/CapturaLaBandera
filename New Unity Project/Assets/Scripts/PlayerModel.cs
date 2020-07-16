@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.Linq;
-
-[RequireComponent(typeof(PlayerView))]
-[RequireComponent(typeof(CameraHandler))]
+using Photon.Realtime;
 public class PlayerModel : MonoBehaviourPun
 {
-
     //Variables
     public Transform grabPoint;//usted sabe,ahi va la posicion del objeto agarrado
 
@@ -17,7 +14,7 @@ public class PlayerModel : MonoBehaviourPun
     public float radiusRange;
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     // sipi pero algunas cosas del view hay que mostrarlas a todos
-    PlayerView view;
+    public PlayerView view;
 
     private float timeWithFlag;
     private float totalTime=60;
@@ -26,8 +23,14 @@ public class PlayerModel : MonoBehaviourPun
     private bool _isMovingVer;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
+        view = GetComponentInChildren<PlayerView>();
+    }
+    public void StartModel(Player p) {
+        view.SetPlayerName(p);
+    }
+    public void UpdateView(float t) {
+        view.SetTimerValue(t);
     }
 
     // Update is called once per frame
@@ -36,6 +39,7 @@ public class PlayerModel : MonoBehaviourPun
         if (HasTheFlag)
         {
             timeWithFlag += Time.deltaTime;
+            //llamar al server a sincronizar
         }
         if (timeWithFlag >= totalTime)
         {
@@ -52,9 +56,6 @@ public class PlayerModel : MonoBehaviourPun
              * Ahora todo esto estaria en el controller, solo le pasaria la nueva direccion a la que mirar
              * 
              */
-
-
-
             Debug.DrawLine(currentDir, (transform.position + camRight), Color.red);
 
             float step = rotateSpeed * dir * Time.deltaTime;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+[RequireComponent(typeof(CameraHandler))]
 public class PlayerController : MonoBehaviour
 {
     //Controller -> Server -> Server ->Model
@@ -60,6 +61,7 @@ public class PlayerController : MonoBehaviour
         if (camHandler != null)
         {
             camHandler.OnStartFollowing();
+            Server.Instance.RequestStartModel(PhotonNetwork.LocalPlayer);
         }
     }
 }
