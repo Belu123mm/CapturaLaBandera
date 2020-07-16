@@ -13,6 +13,7 @@ public class Server : MonoBehaviourPun {
     // public Animator winScreen;
     Dictionary<Player, PlayerModel> _dic = new Dictionary<Player, PlayerModel>();
     public GameObject prefab;
+    public Animator endAnim;
     private void Awake() {
         PhotonNetwork.AutomaticallySyncScene = true;
     }
@@ -167,6 +168,13 @@ public class Server : MonoBehaviourPun {
     private void SetWinner( int modelID ) {
         PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
         Player ppp = _dic.Select(x => x.Key).Where(x => _dic [ x ] == model).First();
+        foreach (var item in _dic)
+        {
+            if (item.Key != ppp)
+            {
+                item.Value.view.endText.text = "You Lose";
+            }
+        }
         //proximamente mostrarle al ganador un winscreen y a los perdedores decirles que el gano
     }
 
