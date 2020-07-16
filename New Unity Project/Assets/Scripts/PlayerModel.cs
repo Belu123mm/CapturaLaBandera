@@ -21,7 +21,7 @@ public class PlayerModel : MonoBehaviourPun
 
     private float timeWithFlag;
     private float totalTime=60;
-    private bool HasTheFlag;
+    private bool hasTheFlag;
     private bool _isMovingHor;
     private bool _isMovingVer;
 
@@ -33,7 +33,7 @@ public class PlayerModel : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (HasTheFlag)
+        if (hasTheFlag)
         {
             timeWithFlag += Time.deltaTime;
         }
@@ -104,6 +104,7 @@ public class PlayerModel : MonoBehaviourPun
                 if (!g.grabed)
                 {
                     Server.Instance.CheckedGrab(g, this);
+                    hasTheFlag = true;
                 }
             }
         }
