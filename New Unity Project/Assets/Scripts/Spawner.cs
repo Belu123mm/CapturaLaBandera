@@ -15,13 +15,14 @@ public class Spawner : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        /*
         if (PhotonNetwork.IsMasterClient)
         {
             _myserver = PhotonNetwork.Instantiate("MyServer", transform.position, transform.rotation).GetComponent<Server>();          
           //  _myserver.winScreen = winScreen;
   
         }
-
+        */
     }
 
 

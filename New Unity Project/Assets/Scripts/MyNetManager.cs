@@ -4,64 +4,111 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class MyNetManager : MonoBehaviourPunCallbacks
-{
+public class MyNetManager : MonoBehaviourPunCallbacks {
     public InputField txt;
-    public Button connectButton;
+    public Button serverButton;
+    public Button clientButton;
+    public bool isServerOn;
+    public bool isPlayerOn;
+    public bool isHost;
+    public bool inGame;
 
-    private void Awake()
-    {
+    private void Awake() {
+        DontDestroyOnLoad(this);
+    }
+
+    private void Start() {
+
         txt.text = PlayerPrefs.GetString("name");
-        if (txt.text == "")
-        {
-            connectButton.interactable = false;
+        if ( txt.text == "" ) {
+            clientButton.interactable = false;
 
-        }
-        else { connectButton.interactable = true; }
+        } else { clientButton.interactable = true; }
         PhotonNetwork.AutomaticallySyncScene = true;
 
     }
 
+    public void Update() {
+        if ( SceneManager.GetActiveScene().name != "Lobby" ) {
+            inGame = true;
+        }
+        if ( inGame == false ) {
+            if ( isHost ) {
+                if ( PhotonNetwork.InRoom ) {//Y se cumple esta cosa cambias de escena
+                    byte playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
+                    if ( playerCount == PhotonNetwork.CurrentRoom.MaxPlayers ) {
+                        //PhotonNetwork.LoadLevel(playerCount - 2);
 
-    public void MyConnect()
-    {
-        connectButton.interactable = false;
-        PhotonNetwork.ConnectUsingSettings();
+                        PhotonNetwork.LoadLevel(1);
+                        Debug.Log("CAMBIO");
+                        inGame = true;
+                        return;
+                    }
+                }
+            }//si no sos el host, no haces nada
+        } else {//ahora, si hay juego, pues creas el server o el pj
+            if ( isHost == true ) {
+                Debug.Log("RECAMBIO");
+
+                if ( !isServerOn ) {
+                    isServerOn = true;
+                    PhotonNetwork.Instantiate("Server", Vector3.zero, Quaternion.identity);
+                    return;
+                }
+            }
+        }
     }
-    public void RegisterName(string name)
-    {
+    //Functions
+    public void ImServer() {
+        isHost = true;
+        serverButton.interactable = false;
+        PhotonNetwork.ConnectUsingSettings();
+
+    }
+
+    public void ImClient() {
+        clientButton.interactable = false;
+        PhotonNetwork.ConnectUsingSettings();
+
+    }
+
+    public void RegisterName( string name ) {
 
         PlayerPrefs.SetString("name", name);
-        if (name == "")
-        {
-            connectButton.interactable = false;
-        }
-        else
-        {
-            connectButton.interactable = true;
+        if ( name == "" ) {
+            clientButton.interactable = false;
+        } else {
+            clientButton.interactable = true;
             PhotonNetwork.NickName = name;
         }
     }
 
-    public override void OnConnectedToMaster()
-    {
-        RoomOptions options = new RoomOptions();
-        options.MaxPlayers = 5;
-        PhotonNetwork.JoinOrCreateRoom("MainSala", options, typedLobby: default);
+    //Callbacks
+
+    public override void OnConnectedToMaster() {
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    public override void OnJoinedLobby() {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        string namedes = PhotonNetwork.NickName;
+        Hashtable hash = new Hashtable();
+        hash.Add("Name", namedes);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        if ( isHost ) {
+            //Esta es la instancia del juego, en terminos de network no de escenas 
+            PhotonNetwork.CreateRoom("MainRoom", new RoomOptions() { MaxPlayers = 3 });     //NUMERO DE PLAYERS
+            return;
+        } else {
+            PhotonNetwork.JoinRandomRoom();
 
-    {
-        if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == 3)
-        {
-            PhotonNetwork.LoadLevel(1);
         }
+
     }
-
-
 
 }
 

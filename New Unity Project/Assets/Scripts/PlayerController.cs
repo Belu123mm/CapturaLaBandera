@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-[RequireComponent(typeof(PlayerView))]
+[RequireComponent(typeof(CameraHandler))]
 public class PlayerController : MonoBehaviour
 {
     //Controller -> Server -> Server ->Model
@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     }    // Update is called once per frame
     void Update() {
         //Checkeo si es mi view
+        if ( !camHandler) return;
 
         if ( Input.GetButton("Horizontal") ) 
         {
@@ -51,10 +52,6 @@ public class PlayerController : MonoBehaviour
             //Request to move Grab
             Server.Instance.RequestGrab(PhotonNetwork.LocalPlayer);
         }
-
-
-
-
     }
     public void StartPlayer()
     {
@@ -64,6 +61,7 @@ public class PlayerController : MonoBehaviour
         if (camHandler != null)
         {
             camHandler.OnStartFollowing();
+            Server.Instance.RequestStartModel(PhotonNetwork.LocalPlayer);
         }
     }
 }
