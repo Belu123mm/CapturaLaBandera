@@ -16,6 +16,7 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
     public bool isHost;
     public bool inGame;
 
+
     private void Awake() {
         DontDestroyOnLoad(this);
     }
@@ -57,6 +58,7 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
                 if ( !isServerOn ) {
                     isServerOn = true;
                     PhotonNetwork.Instantiate("Server", Vector3.zero, Quaternion.identity);
+                   
                     return;
                 }
             }

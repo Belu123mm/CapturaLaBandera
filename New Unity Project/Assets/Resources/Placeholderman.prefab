@@ -477,6 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 3465643131218738309}
   timeText: {fileID: 920965421315291327}
+  endText: {fileID: 0}
   penguinMesh: {fileID: 6028563132021457695}
 --- !u!114 &9181759912438123853
 MonoBehaviour:

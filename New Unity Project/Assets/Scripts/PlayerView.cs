@@ -5,10 +5,12 @@ using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.UI;
 
 public class PlayerView : MonoBehaviourPun, IPunObservable {
     public TMP_Text nameText;
     public TMP_Text timeText;
+    public TextMeshProUGUI endText;
     public SkinnedMeshRenderer penguinMesh;
     //Skinvalues
     bool isSkinReady;   //Este se sincroniza, el otro no
@@ -31,6 +33,7 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     // Start is called before the first frame update
     void Start()
     {
+        endText = GameObject.Find("EndText").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -51,7 +54,7 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     public void SetSkinValues (Player p ) {
 
     }
-
+  
     public void OnPhotonSerializeView( PhotonStream stream, PhotonMessageInfo info ) {  //Esto se llama cuando cambia en el server
         if ( stream.IsWriting ) {
             stream.SendNext(nameText.text);

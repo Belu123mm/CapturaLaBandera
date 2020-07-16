@@ -56,6 +56,7 @@ MonoBehaviour:
   - {fileID: 1119491277445148955}
   - {fileID: 239660751689566135}
   prefab: {fileID: 8238921333441893627, guid: 3757705e2faef354aabcd01636136c57, type: 3}
+  endAnim: {fileID: 0}
 --- !u!114 &-7676091466928473319
 MonoBehaviour:
   m_ObjectHideFlags: 0

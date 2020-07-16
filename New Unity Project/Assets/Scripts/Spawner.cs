@@ -10,19 +10,19 @@ using System;
 public class Spawner : MonoBehaviourPunCallbacks
 {
     private Server _myserver;
-    public Animator winScreen;
+   // public Animator winScreen;
 
 
     void Start()
     {
-
+        /*
         if (PhotonNetwork.IsMasterClient)
         {
-            _myserver = PhotonNetwork.Instantiate("MyServer", transform.position, transform.rotation).GetComponent<Server>();
-            _myserver.endAnim = winScreen;
-
+            _myserver = PhotonNetwork.Instantiate("MyServer", transform.position, transform.rotation).GetComponent<Server>();          
+          //  _myserver.winScreen = winScreen;
+  
         }
-
+        */
     }
 
 
