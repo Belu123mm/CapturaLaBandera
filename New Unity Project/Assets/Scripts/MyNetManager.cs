@@ -95,10 +95,12 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
 
     public override void OnJoinedLobby() {
         PhotonNetwork.AutomaticallySyncScene = true;
+        //Custom Properties
         string namedes = PhotonNetwork.NickName;
         Hashtable hash = new Hashtable();
         hash.Add("Name", namedes);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+
         if ( isHost ) {
             //Esta es la instancia del juego, en terminos de network no de escenas 
             PhotonNetwork.CreateRoom("MainRoom", new RoomOptions() { MaxPlayers = 3 });     //NUMERO DE PLAYERS
