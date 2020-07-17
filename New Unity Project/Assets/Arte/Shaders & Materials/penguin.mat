@@ -24,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Clothes:
-        m_Texture: {fileID: 2800000, guid: 0ca7d0958a329d14cb0b14d01686c6d6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3ddba65b861cdf24bad7f8176c660c69, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -60,7 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SKin:
-        m_Texture: {fileID: 2800000, guid: 4039aca0e0f1b1e44844e73ec10de1e0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3ddba65b861cdf24bad7f8176c660c69, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample0:
@@ -87,7 +87,7 @@ Material:
     - _Parallax: 0.02
     - _PenguinMetallic: 0
     - _PenguinSmoothness: 0
-    - _SkinIntensity: 0.8598385
+    - _SkinIntensity: 0.801
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -101,5 +101,5 @@ Material:
     - _Color2: {r: 0.734, g: 0.025690021, b: 0.025690021, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _baseColor: {r: 0, g: 0, b: 0, a: 0}
-    - _clothesColor: {r: 0, g: 0.74530673, b: 1, a: 0}
-    - _skinColor: {r: 1, g: 1, b: 1, a: 0}
+    - _clothesColor: {r: 1, g: 0.55265117, b: 0.08399999, a: 1}
+    - _skinColor: {r: 0.705384, g: 0.90900004, b: 0.90900004, a: 0}
