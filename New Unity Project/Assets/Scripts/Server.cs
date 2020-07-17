@@ -21,7 +21,7 @@ public class Server : MonoBehaviourPun
     }
     void Start()
     {
-        endAnim = GameObject.Find("EndImage").GetComponent<Animator>();
+        //endAnim = GameObject.Find("EndImage").GetComponent<Animator>();
         if (Instance == null)
         {
             if (photonView.IsMine)

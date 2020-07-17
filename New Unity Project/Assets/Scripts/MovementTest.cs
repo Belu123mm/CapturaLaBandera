@@ -6,8 +6,6 @@ public class MovementTest : MonoBehaviour {
 
     public float movementSpeed;
     public float rotateSpeed;
-    bool _isMovingHor;
-    bool _isMovingVer;
 
     CameraHandler camHandler;
 
@@ -56,14 +54,6 @@ public class MovementTest : MonoBehaviour {
         transform.position += Time.deltaTime * camForward * dir * movementSpeed ;
 
         Debug.DrawLine(transform.position, (targetDir) , Color.green);
-    }
-    IEnumerator WaitToMoveHor() {
-        yield return new WaitForFixedUpdate();
-        _isMovingHor = false;
-    }
-    IEnumerator WaitToMoveVer() {
-        yield return new WaitForFixedUpdate();
-        _isMovingVer = false;
     }
 
 

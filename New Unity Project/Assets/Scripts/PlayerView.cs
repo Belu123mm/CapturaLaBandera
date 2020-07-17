@@ -12,6 +12,9 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     public TMP_Text timeText;
     public TextMeshProUGUI endText;
     public SkinnedMeshRenderer penguinMesh;
+
+    Animator anim;
+
     //Skinvalues
     bool isSkinReady;   //Este se sincroniza, el otro no
     bool isSkinChanged;
@@ -34,6 +37,7 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     void Start()
     {
         endText = GameObject.Find("EndText").GetComponent<TextMeshProUGUI>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -54,7 +58,14 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     public void SetSkinValues (Player p ) {
 
     }
-  
+    public void SetWalkAnimX(float x) {
+        anim.SetFloat("xVelocity",x);
+    }
+    public void SetWalkAnimY(float y) {
+        anim.SetFloat("yVelocity",y);
+    }
+
+
     public void OnPhotonSerializeView( PhotonStream stream, PhotonMessageInfo info ) {  //Esto se llama cuando cambia en el server
         if ( stream.IsWriting ) {
             stream.SendNext(nameText.text);

@@ -64,6 +64,7 @@ public class PlayerModel : MonoBehaviourPun
 
             transform.rotation = Quaternion.LookRotation(newDir);
 
+            view.SetWalkAnimX(dir);
             StartCoroutine(WaitToMoveHor());
         }
     }
@@ -75,9 +76,9 @@ public class PlayerModel : MonoBehaviourPun
 
             transform.position += Time.deltaTime * camForward * dir * movementSpeed;
 
-
-
             Debug.DrawLine(transform.position, (transform.position + camForward), Color.green);
+
+            view.SetWalkAnimY(dir);
 
             //lo llama MoveY
             StartCoroutine(WaitToMoveVer());
