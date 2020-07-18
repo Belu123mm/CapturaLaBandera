@@ -65,7 +65,7 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         anim.SetFloat("yVelocity",y);
     }
 
-
+   
     public void OnPhotonSerializeView( PhotonStream stream, PhotonMessageInfo info ) {  //Esto se llama cuando cambia en el server
         if ( stream.IsWriting ) {
             stream.SendNext(nameText.text);

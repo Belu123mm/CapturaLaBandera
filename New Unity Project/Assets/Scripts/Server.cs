@@ -190,29 +190,36 @@ public class Server : MonoBehaviourPun
     public void GetWinner(PlayerModel model)
     {
         int modelID = model.photonView.ViewID;
+
         foreach (var item in _dic)
         {
-            photonView.RPC("SetWinner", item.Key, modelID);
+            if (item.Value == model)
+            {
+                photonView.RPC("SetWinner", item.Key, item.Value.photonView.ViewID, true);
+
+            }
+            else
+            {
+                photonView.RPC("SetWinner", item.Key, item.Value.photonView.ViewID, false);
+
+            }
 
         }
         endAnim.SetBool("End", true);
     }
     [PunRPC]
-    private void SetWinner(int modelID)//en teoria, este rpc es individual para cada player en el diccionario,entonces cada uno checkea esto
+    private void SetWinner(int modelID, bool isWinner)//en teoria, este rpc es individual para cada player en el diccionario,entonces cada uno checkea esto
     {
         PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
-        Player ppp = _dic.Select(x => x.Key).Where(x => _dic[x] == model).First();
-        foreach (var item in _dic)
+        if (!isWinner)
         {
-            if (item.Key != ppp)
-            {
-                item.Value.view.endText.text = "You Lose :c";
-            }
-            else
-            {
-                item.Value.view.endText.text = "You Win :D";
-            }
+            model.view.endText.text = "You Lose :c";
         }
+        else
+        {
+            model.view.endText.text = "You Win :D";
+        }
+
     }
 
     public void RequestStartModel(Player p)
