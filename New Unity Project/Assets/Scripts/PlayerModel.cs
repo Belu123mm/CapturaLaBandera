@@ -125,11 +125,13 @@ public class PlayerModel : MonoBehaviourPun
     IEnumerator WaitToMoveHor()
     {
         yield return new WaitForFixedUpdate();
+        view.IsNotMoving();
         _isMovingHor = false;
     }
     IEnumerator WaitToMoveVer()
     {
         yield return new WaitForFixedUpdate();
+        view.IsNotMoving();
         _isMovingVer = false;
     }
 

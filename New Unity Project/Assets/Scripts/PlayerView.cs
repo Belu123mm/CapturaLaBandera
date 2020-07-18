@@ -59,10 +59,15 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
 
     }
     public void SetWalkAnimX(float x) {
+        anim.SetBool("isMoving", true);
         anim.SetFloat("xVelocity",x);
     }
     public void SetWalkAnimY(float y) {
+        anim.SetBool("isMoving", true);
         anim.SetFloat("yVelocity",y);
+    }
+    public void IsNotMoving() {
+
     }
 
    
