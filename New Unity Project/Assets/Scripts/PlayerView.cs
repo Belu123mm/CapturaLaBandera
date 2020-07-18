@@ -13,6 +13,7 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     public TextMeshProUGUI endText;
     public SkinnedMeshRenderer penguinMesh;
 
+    [SerializeField]
     Animator anim;
 
     //Skinvalues
@@ -67,10 +68,12 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         anim.SetFloat("yVelocity",y);
     }
     public void IsNotMoving() {
-
+        anim.SetBool("isMoving", false);
     }
-
-   
+    public void IsAttacking() {
+        anim.SetTrigger("isAttacking");
+    }
+    
     public void OnPhotonSerializeView( PhotonStream stream, PhotonMessageInfo info ) {  //Esto se llama cuando cambia en el server
         if ( stream.IsWriting ) {
             stream.SendNext(nameText.text);
