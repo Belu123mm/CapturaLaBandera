@@ -88,6 +88,14 @@ public class PlayerModel : MonoBehaviourPun
 
         }
     }
+    public void StopWalkingX() {
+        view.IsNotMovingX();
+
+    }
+    public void StopWalkingY() {
+        view.IsNotMovingY();
+
+    }
     public void Attack()
     {
         //enviar el playerModel dañado y el daño realizado a RequestDamage(PlayerModel ,float damage)
@@ -146,13 +154,11 @@ public class PlayerModel : MonoBehaviourPun
     IEnumerator WaitToMoveHor()
     {
         yield return new WaitForFixedUpdate();
-        view.IsNotMoving();
         _isMovingHor = false;
     }
     IEnumerator WaitToMoveVer()
     {
         yield return new WaitForFixedUpdate();
-        view.IsNotMoving();
         _isMovingVer = false;
     }
 

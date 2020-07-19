@@ -34,6 +34,9 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     float penSm;
     float pengMet;
 
+    bool isWalkingx;
+    bool isWalkingy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,8 +47,12 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     // Update is called once per frame
     void Update()
     {
-        
-        
+        if ( !photonView.IsMine ) {
+            return;
+        }
+        if(!isWalkingx && !isWalkingy ) {
+            anim.SetBool("isMoving", false);
+        }
     }
     public void SetPlayerName (Player p ) {
 
@@ -60,16 +67,28 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
 
     }
     public void SetWalkAnimX(float x) {
+        isWalkingx = true;
+        anim.SetFloat("xVelocity", x);
         anim.SetBool("isMoving", true);
-        anim.SetFloat("xVelocity",x);
+        Debug.Log("aaaaaaaaaaanimationx" + anim.GetBool("isMoving"));
     }
     public void SetWalkAnimY(float y) {
+        isWalkingy = true;
+        anim.SetFloat("yVelocity", y);
         anim.SetBool("isMoving", true);
-        anim.SetFloat("yVelocity",y);
+        Debug.Log("aaaaaaaaaaanimationy" + anim.GetBool("isMoving"));
     }
-    public void IsNotMoving() {
-        anim.SetBool("isMoving", false);
+    public void IsNotMovingX() {
+        isWalkingx = false;
+        anim.SetFloat("xVelocity", 0);
+
     }
+    public void IsNotMovingY() {
+        isWalkingy = false;
+        anim.SetFloat("yVelocity", 0);
+
+    }
+
     public void IsAttacking() {
         anim.SetTrigger("isAttacking");
     }

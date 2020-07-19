@@ -260,6 +260,26 @@ public class Server : MonoBehaviourPun
 
     }
 
+    public void PlayerRequestToStopX( Player p ) {
+        photonView.RPC("AskToStopWalkingX", _server, p);
+    }
+    public void PlayerRequestToStopY( Player p ) {
+        photonView.RPC("AskToStopWalkingY", _server, p);
+    }
+
+    [PunRPC]
+    void AskToStopWalkingX( Player p ) {
+        if ( !_dic.ContainsKey(p) ) return;
+        _dic [ p ].StopWalkingX();
+    }
+    [PunRPC]
+    void AskToStopWalkingY( Player p ) {
+        if ( !_dic.ContainsKey(p) ) return;
+        _dic [ p ].StopWalkingY();
+    }
+
+
+
     IEnumerator WaitForPlayers()
     {
         while (_dic.Count < 2)
