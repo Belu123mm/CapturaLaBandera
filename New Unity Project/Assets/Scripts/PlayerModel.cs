@@ -13,6 +13,7 @@ public class PlayerModel : MonoBehaviourPun
     public float movementSpeed;
     public float radiusRange;
     public bool hasTheFlag;
+    public GameObject hammer;
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     // sipi pero algunas cosas del view hay que mostrarlas a todos
     public PlayerView view;
@@ -98,6 +99,7 @@ public class PlayerModel : MonoBehaviourPun
     }
     public void Attack()
     {
+        StartCoroutine(WaitToAttack());
         //enviar el playerModel dañado y el daño realizado a RequestDamage(PlayerModel ,float damage)
     }
     public void Dash()
@@ -149,7 +151,12 @@ public class PlayerModel : MonoBehaviourPun
             Server.Instance.RequestRemove(pM, flag);
         }
     }
-
+    IEnumerator WaitToAttack() {
+        hammer.SetActive(true);
+        view.SetAttack();
+        yield return new WaitForSeconds(2);
+        hammer.SetActive(false);
+    }
     //Para no llenar la red con paquetes
     IEnumerator WaitToMoveHor()
     {

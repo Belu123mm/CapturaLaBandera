@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         } else {
             _verHasStopped = true;
         }
-        if ( Input.GetButton("Attack") ) {
+        if ( Input.GetButtonDown("Attack") ) {
             //Request to move Attack
             Server.Instance.RequestAttack(PhotonNetwork.LocalPlayer);
         }

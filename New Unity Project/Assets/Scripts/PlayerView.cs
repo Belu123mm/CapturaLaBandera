@@ -78,6 +78,9 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         anim.SetBool("isMoving", true);
         Debug.Log("aaaaaaaaaaanimationy" + anim.GetBool("isMoving"));
     }
+    public void SetAttack() {
+        anim.SetTrigger("attack");
+    }
     public void IsNotMovingX() {
         isWalkingx = false;
         anim.SetFloat("xVelocity", 0);
@@ -88,11 +91,6 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         anim.SetFloat("yVelocity", 0);
 
     }
-
-    public void IsAttacking() {
-        anim.SetTrigger("isAttacking");
-    }
-    
     public void OnPhotonSerializeView( PhotonStream stream, PhotonMessageInfo info ) {  //Esto se llama cuando cambia en el server
         if ( stream.IsWriting ) {
             stream.SendNext(nameText.text);
