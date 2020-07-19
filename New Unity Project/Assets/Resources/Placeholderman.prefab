@@ -482,6 +482,7 @@ MonoBehaviour:
   timeText: {fileID: 920965421315291327}
   endText: {fileID: 0}
   penguinMesh: {fileID: 6028563132021457695}
+  anim: {fileID: 0}
 --- !u!114 &9181759912438123853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -607,6 +608,7 @@ MonoBehaviour:
   rotateSpeed: 40
   movementSpeed: 20
   radiusRange: 8
+  hasTheFlag: 0
   view: {fileID: 0}
 --- !u!114 &3759247438251648434
 MonoBehaviour:

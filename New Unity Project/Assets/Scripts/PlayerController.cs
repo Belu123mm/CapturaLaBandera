@@ -41,8 +41,7 @@ public class PlayerController : MonoBehaviour
 
         }
         if ( Input.GetButton("Ability") ) {
-            //Request to move Ability
-
+            Server.Instance.RequestAbility(PhotonNetwork.LocalPlayer);         
         }
         if ( Input.GetButton("Jump") ) {
             //Request to move Jump

@@ -12,24 +12,27 @@ public class PlayerModel : MonoBehaviourPun
     public float rotateSpeed;
     public float movementSpeed;
     public float radiusRange;
+    public bool hasTheFlag;
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     // sipi pero algunas cosas del view hay que mostrarlas a todos
     public PlayerView view;
 
     private float timeWithFlag;
-    private float totalTime=60;
-    private bool hasTheFlag;
+    private float totalTime = 60;
     private bool _isMovingHor;
     private bool _isMovingVer;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         view = GetComponentInChildren<PlayerView>();
     }
-    public void StartModel(Player p) {
+    public void StartModel(Player p)
+    {
         view.SetPlayerName(p);
     }
-    public void UpdateView(float t) {
+    public void UpdateView(float t)
+    {
         view.SetTimerValue(t);
     }
 
@@ -95,7 +98,6 @@ public class PlayerModel : MonoBehaviourPun
     }
     public void Grab()
     {
-        Debug.Log("Grabie");
         Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
         for (int i = 0; i < collisions.Length; i++)
         {
@@ -118,7 +120,26 @@ public class PlayerModel : MonoBehaviourPun
     }
     public void Ability()
     {
-
+        Debug.Log("lanze habiliad");
+        PlayerModel pM=null;
+        Grabeable flag=null;
+        Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
+        for (int i = 0; i < collisions.Length; i++)
+        {
+            if (collisions[i].GetComponent<PlayerModel>() != null && collisions[i].gameObject != this)
+            {
+                pM = collisions[i].GetComponent<PlayerModel>();
+            }
+            if (collisions[i].GetComponent<Grabeable>() != null)
+            {
+                flag = collisions[i].GetComponent<Grabeable>();
+            }
+        }
+        if (pM != null && flag != null)
+        {
+            Debug.Log("request de sacar bandera");
+            Server.Instance.RequestRemove(pM, flag);
+        }
     }
 
     //Para no llenar la red con paquetes

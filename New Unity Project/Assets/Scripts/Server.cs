@@ -146,6 +146,32 @@ public class Server : MonoBehaviourPun
         //  model.Life -= damage;   
         //  PlayerModel.view.SetDamaged(model.Life);
     }
+    public void RequestRemove(PlayerModel pM, Grabeable flag)//pido sacarle la bandera a este model
+    {
+        int modelID = pM.photonView.ViewID;
+        int flagID = flag.photonView.ViewID;
+        photonView.RPC("RemoveFlag", RpcTarget.AllBuffered, modelID, flagID);
+    }
+    [PunRPC]
+    void RemoveFlag(int modelID, int flatID)
+    {
+       PlayerModel model= PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
+        Grabeable flag = PhotonNetwork.GetPhotonView(flatID).GetComponent<Grabeable>();
+        model.hasTheFlag = false;
+        flag.transform.SetParent(null);
+    }
+    public void RequestAbility(Player player)
+    {
+        Debug.Log("pedi Abilidad");
+       
+        photonView.RPC("Ability", _server,player);
+    }
+    [PunRPC]
+    void Ability(Player player)
+    {
+        if (!_dic.ContainsKey(player)) return;
+        _dic[player].Ability();
+    }
     public void RequestDash(Player player)
     {
         if (!PhotonNetwork.IsMasterClient) return;
@@ -173,7 +199,6 @@ public class Server : MonoBehaviourPun
     [PunRPC]
     void Grab(Player player)
     {
-        Debug.Log("grabeo " + player);
         if (!_dic.ContainsKey(player)) return;
         _dic[player].Grab();
     }
