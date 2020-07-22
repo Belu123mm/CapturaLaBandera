@@ -72,13 +72,13 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         isWalkingx = true;
         anim.SetFloat("xVelocity", x);
         anim.SetBool("isMoving", true);
-        Debug.Log("aaaaaaaaaaanimationx" + anim.GetBool("isMoving"));
+      //  Debug.Log("aaaaaaaaaaanimationx" + anim.GetBool("isMoving"));
     }
     public void SetWalkAnimY( float y ) {
         isWalkingy = true;
         anim.SetFloat("yVelocity", y);
         anim.SetBool("isMoving", true);
-        Debug.Log("aaaaaaaaaaanimationy" + anim.GetBool("isMoving"));
+       // Debug.Log("aaaaaaaaaaanimationy" + anim.GetBool("isMoving"));
     }
     public void SetAttack() {
         anim.SetTrigger("attack");

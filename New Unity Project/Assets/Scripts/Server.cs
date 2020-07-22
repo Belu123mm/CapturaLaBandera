@@ -156,12 +156,11 @@ public class Server : MonoBehaviourPun
        PlayerModel model= PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
         Grabeable flag = PhotonNetwork.GetPhotonView(flatID).GetComponent<Grabeable>();
         model.hasTheFlag = false;
+        flag.grabed=false;
         flag.transform.SetParent(null);
     }
     public void RequestAbility(Player player)
-    {
-        Debug.Log("pedi Abilidad");
-       
+    {     
         photonView.RPC("Ability", _server,player);
     }
     [PunRPC]

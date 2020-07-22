@@ -53,7 +53,6 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
             }//si no sos el host, no haces nada
         } else {//ahora, si hay juego, pues creas el server o el pj
             if ( isHost == true ) {
-                Debug.Log("RECAMBIO");
 
                 if ( !isServerOn ) {
                     isServerOn = true;

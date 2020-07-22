@@ -131,8 +131,7 @@ public class PlayerModel : MonoBehaviourPun
 
     }
     public void Ability()
-    {
-        Debug.Log("lanze habiliad");
+    {        
         PlayerModel pM=null;
         Grabeable flag=null;
         Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
@@ -144,12 +143,11 @@ public class PlayerModel : MonoBehaviourPun
             }
             if (collisions[i].GetComponent<Grabeable>() != null)
             {
-                flag = collisions[i].GetComponent<Grabeable>();
+                flag = collisions[i].GetComponent<Grabeable>();           
             }
         }
         if (pM != null && flag != null)
-        {
-            Debug.Log("request de sacar bandera");
+        {          
             Server.Instance.RequestRemove(pM, flag);
         }
     }
