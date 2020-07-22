@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class PlayerView : MonoBehaviourPun, IPunObservable {
     public TMP_Text nameText;
     public TMP_Text timeText;
+    public TMP_Text lifeText;
     public TextMeshProUGUI endText;
     public SkinnedMeshRenderer penguinMesh;
 
@@ -41,6 +42,7 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     void Start() {
         endText = GameObject.Find("EndText").GetComponent<TextMeshProUGUI>();
         anim = GetComponent<Animator>();
+        lifeText.text = "3";
     }
 
     // Update is called once per frame
@@ -95,6 +97,11 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     }
     public void SetDamage( int newLife ) {
         //feedback y lo de la vida 
+        photonView.RPC("ReceiveDamage", RpcTarget.All, newLife.ToString());
+    }
+    [PunRPC]
+    void ReceiveDamage(string text ) {
+        lifeText.text = text;
     }
     //Solo llamar para variables que se actualizen todo el rato, para lo demas existe RPC
     public void OnPhotonSerializeView( PhotonStream stream, PhotonMessageInfo info ) {  //Esto se llama cuando cambia en el server

@@ -156,7 +156,7 @@ public class PlayerModel : MonoBehaviourPun
         }
     }
 
-    internal void GetDamage( int damage ) {
+    public void GetDamage( int damage ) {
         life -= damage;
         view.SetDamage(life);
     }
