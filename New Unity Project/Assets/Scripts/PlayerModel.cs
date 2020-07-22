@@ -98,7 +98,11 @@ public class PlayerModel : MonoBehaviourPun
         view.IsNotMovingY();
 
     }
-    public void Attack()
+    public void PrepAttack() {
+        photonView.RPC("Attack", RpcTarget.All);
+    }
+    [PunRPC]
+    void Attack()
     {
         StartCoroutine(WaitToAttack());
         //La idea es que si activaste el collidrer, este detecte ls colision y le avise al server

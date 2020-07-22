@@ -68,7 +68,7 @@ public class Server : MonoBehaviourPun
 
     public void RequestAttack(Player player)
     {
-        photonView.RPC("Attack", _server, player);
+        photonView.RPC("Attack", RpcTarget.All, player);
     }
     //Ps por si acaso comento esto para que despues no me reten
     public void RequestMoveX(Player player, float dir, Vector3 camRight, Vector3 currentDir)
@@ -127,7 +127,7 @@ public class Server : MonoBehaviourPun
     void Attack(Player player)
     {
         if (!_dic.ContainsKey(player)) return;
-        _dic[player].Attack();
+        _dic[player].PrepAttack();
     }
 
 
