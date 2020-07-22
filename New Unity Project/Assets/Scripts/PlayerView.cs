@@ -38,41 +38,43 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     bool isWalkingy;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         endText = GameObject.Find("EndText").GetComponent<TextMeshProUGUI>();
         anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if ( !photonView.IsMine ) {
             return;
         }
-        if(!isWalkingx && !isWalkingy ) {
+        if ( !isWalkingx && !isWalkingy ) {
             anim.SetBool("isMoving", false);
         }
     }
-    public void SetPlayerName (Player p ) {
+    public void SetPlayerName( Player p ) {
 
-        string misticText = (string) p.CustomProperties [ "Name" ];
-        nameText.text = misticText;
+        string misticText = p.NickName;
+        photonView.RPC("ReceivePlayerName", RpcTarget.All, misticText);
+    }
+    [PunRPC]
+    void ReceivePlayerName(string text) {
+        nameText.text = text;
 
     }
-    public void SetTimerValue(float time ) {
+    public void SetTimerValue( float time ) {
         timeText.text = time.ToString();
     }
-    public void SetSkinValues (Player p ) {
+    public void SetSkinValues( Player p ) {
 
     }
-    public void SetWalkAnimX(float x) {
+    public void SetWalkAnimX( float x ) {
         isWalkingx = true;
         anim.SetFloat("xVelocity", x);
         anim.SetBool("isMoving", true);
         Debug.Log("aaaaaaaaaaanimationx" + anim.GetBool("isMoving"));
     }
-    public void SetWalkAnimY(float y) {
+    public void SetWalkAnimY( float y ) {
         isWalkingy = true;
         anim.SetFloat("yVelocity", y);
         anim.SetBool("isMoving", true);
@@ -91,11 +93,17 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         anim.SetFloat("yVelocity", 0);
 
     }
+    public void SetDamage( int newLife ) {
+        //feedback y lo de la vida 
+    }
+    //Solo llamar para variables que se actualizen todo el rato, para lo demas existe RPC
     public void OnPhotonSerializeView( PhotonStream stream, PhotonMessageInfo info ) {  //Esto se llama cuando cambia en el server
+        
         if ( stream.IsWriting ) {
-            stream.SendNext(nameText.text);
+            stream.SendNext(timeText.text);
         } else {
-            nameText.text = (string) stream.ReceiveNext();
+            timeText.text = (string) stream.ReceiveNext();
         }
+        
     }
 }

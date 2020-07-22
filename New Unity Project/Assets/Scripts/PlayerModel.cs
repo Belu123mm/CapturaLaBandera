@@ -4,11 +4,13 @@ using UnityEngine;
 using Photon.Pun;
 using System.Linq;
 using Photon.Realtime;
+using System;
+
 public class PlayerModel : MonoBehaviourPun
 {
     //Variables
     public Transform grabPoint;//usted sabe,ahi va la posicion del objeto agarrado
-
+    public int life = 3;    //Cada hit es de 1, asi que ps 3 hits de base pero vemos, you know
     public float rotateSpeed;
     public float movementSpeed;
     public float radiusRange;
@@ -17,7 +19,6 @@ public class PlayerModel : MonoBehaviourPun
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     // sipi pero algunas cosas del view hay que mostrarlas a todos
     public PlayerView view;
-
     private float timeWithFlag;
     private float totalTime = 60;
     private bool _isMovingHor;
@@ -100,6 +101,7 @@ public class PlayerModel : MonoBehaviourPun
     public void Attack()
     {
         StartCoroutine(WaitToAttack());
+        //La idea es que si activaste el collidrer, este detecte ls colision y le avise al server
         //enviar el playerModel dañado y el daño realizado a RequestDamage(PlayerModel ,float damage)
     }
     public void Dash()
@@ -151,6 +153,12 @@ public class PlayerModel : MonoBehaviourPun
             Server.Instance.RequestRemove(pM, flag);
         }
     }
+
+    internal void GetDamage( int damage ) {
+        life -= damage;
+        view.SetDamage(life);
+    }
+
     IEnumerator WaitToAttack() {
         hammer.SetActive(true);
         view.SetAttack();

@@ -58,6 +58,7 @@ MonoBehaviour:
   - RemoveFlag
   - AskToStopWalkingX
   - AskToStopWalkingY
+  - ReceivePlayerName
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

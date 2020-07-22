@@ -143,9 +143,7 @@ public class Server : MonoBehaviourPun
     void Damage(int ID, int damage)
     {
         PlayerModel model = PhotonNetwork.GetPhotonView(ID).GetComponent<PlayerModel>();
-        //  model.Life -= damage;   
-        //  PlayerModel.view.SetDamaged(model.Life);
-    }
+        model.GetDamage(damage);    }
     public void RequestRemove(PlayerModel pM, Grabeable flag)//pido sacarle la bandera a este model
     {
         int modelID = pM.photonView.ViewID;
