@@ -63,15 +63,18 @@ public class PlayerModel : MonoBehaviourPun
              * Ahora todo esto estaria en el controller, solo le pasaria la nueva direccion a la que mirar
              * 
              */
+             /*
             Debug.DrawLine(currentDir, (transform.position + camRight), Color.red);
 
             float step = rotateSpeed * dir * Time.deltaTime;
 
             Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
 
-            transform.rotation = Quaternion.LookRotation(newDir);
+            //transform.rotation = Quaternion.LookRotation(newDir);
+            */
             //RIGIDBODYMOVEMENT
             //rb.MoveRotation(Quaternion.LookRotation(newDir));
+            rb.AddTorque(Vector3.up * dir * rotateSpeed);
             view.SetWalkAnimX(dir);
             StartCoroutine(WaitToMoveHor());
         }
