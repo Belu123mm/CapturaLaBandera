@@ -61,7 +61,7 @@ public class Server : MonoBehaviourPun
     [PunRPC]
     public void AddPlayer(Player player)
     {
-        PlayerModel character = PhotonNetwork.Instantiate(prefab.name, spawns[_dic.Count].position, Quaternion.identity).GetComponent<PlayerModel>();
+        PlayerModel character = PhotonNetwork.Instantiate(prefab.name, spawns[_dic.Count].position, spawns[_dic.Count].rotation).GetComponent<PlayerModel>();
         _dic.Add(player, character);
         //  maxLife = character.life;        
     }
@@ -132,9 +132,8 @@ public class Server : MonoBehaviourPun
 
 
 
-    public void RequestDamage(PlayerModel character, float damage)//pasa un model y su daño ,convierte el moden a int para despues obtener su view
-    {
-        if (!PhotonNetwork.IsMasterClient) return;
+    public void RequestDamage(PlayerModel character,int damage)//pasa un model y su daño ,convierte el moden a int para despues obtener su view
+    {     
         int charId = character.gameObject.GetPhotonView().ViewID;
         photonView.RPC("Damage", _server, charId, damage);
     }

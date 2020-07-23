@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class DamageDealer : MonoBehaviour
 {
-    public LayerMask penguinMask;
-    public void OnCollisionEnter( Collision collision ) {
-        if (collision.gameObject.layer == penguinMask ) {
-            PlayerModel m = collision.gameObject.GetComponent<PlayerModel>();
+    public GameObject dad;    
+  
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 9 &&other.gameObject!=dad) {
+            PlayerModel m = other.gameObject.GetComponent<PlayerModel>();
             Server.Instance.RequestDamage(m, 1);
         }
     }
+  
+   
 }

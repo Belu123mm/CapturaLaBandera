@@ -74,7 +74,7 @@ public class PlayerModel : MonoBehaviourPun
             */
             //RIGIDBODYMOVEMENT
             //rb.MoveRotation(Quaternion.LookRotation(newDir));
-            rb.AddTorque(Vector3.up * dir * rotateSpeed);
+            rb.AddTorque(Vector3.up * dir * rotateSpeed*Time.deltaTime);
             view.SetWalkAnimX(dir);
             StartCoroutine(WaitToMoveHor());
         }
