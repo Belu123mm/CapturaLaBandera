@@ -23,11 +23,13 @@ public class PlayerModel : MonoBehaviourPun
     private float totalTime = 60;
     private bool _isMovingHor;
     private bool _isMovingVer;
+    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponentInChildren<PlayerView>();
+        rb = GetComponent<Rigidbody>();
     }
     public void StartModel(Player p)
     {
@@ -68,7 +70,8 @@ public class PlayerModel : MonoBehaviourPun
             Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
 
             transform.rotation = Quaternion.LookRotation(newDir);
-
+            //RIGIDBODYMOVEMENT
+            //rb.MoveRotation(Quaternion.LookRotation(newDir));
             view.SetWalkAnimX(dir);
             StartCoroutine(WaitToMoveHor());
         }
@@ -79,7 +82,9 @@ public class PlayerModel : MonoBehaviourPun
         {
             _isMovingVer = true;
 
-            transform.position += Time.deltaTime * camForward * dir * movementSpeed;
+            //transform.position += Time.deltaTime * camForward * dir * movementSpeed;
+            //RIGIDBODYMOVEMENT
+            rb.position += Time.deltaTime * camForward * dir * movementSpeed;
 
             Debug.DrawLine(transform.position, (transform.position + camForward), Color.green);
 
@@ -164,7 +169,7 @@ public class PlayerModel : MonoBehaviourPun
     IEnumerator WaitToAttack() {
         hammer.SetActive(true);
         view.SetAttack();
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         hammer.SetActive(false);
     }
     //Para no llenar la red con paquetes
