@@ -88,6 +88,10 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
         }
     }
 
+    public void Disconnect() {
+        PhotonNetwork.Disconnect();
+    }
+
     //Callbacks
 
     public override void OnConnectedToMaster() {
