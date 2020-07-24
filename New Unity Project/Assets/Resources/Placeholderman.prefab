@@ -918,9 +918,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dad: {fileID: 8238921333441893627}
-  penguinMask:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!114 &3094782778557159155
 MonoBehaviour:
   m_ObjectHideFlags: 0
