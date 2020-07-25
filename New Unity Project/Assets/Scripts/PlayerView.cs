@@ -43,6 +43,16 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         endText = GameObject.Find("EndText").GetComponent<TextMeshProUGUI>();
         anim = GetComponent<Animator>();
         lifeText.text = "3";
+
+        //Skinn
+        //De ahi sigo esto, lo comento para no arruinar el color bonito que tiene ahora jsfjsdf
+        /*
+        Material aaaa = Resources.Load<Material>("penguinMaterial");
+        Material aaaaaaa = new Material(aaaa);
+        var materials = penguinMesh.materials;
+        materials [ 0 ] = aaaaaaa;
+        penguinMesh.materials = materials;
+        */
     }
 
     // Update is called once per frame

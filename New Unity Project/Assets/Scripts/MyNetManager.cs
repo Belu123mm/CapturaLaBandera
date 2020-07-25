@@ -9,6 +9,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class MyNetManager : MonoBehaviourPunCallbacks {
     public InputField txt;
+    public SkinHandler handler;
     public Button serverButton;
     public Button clientButton;
     public bool isServerOn;
@@ -87,6 +88,13 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
             PhotonNetwork.NickName = name;
         }
     }
+    public void SetSkinValues() {
+        //Custom Properties
+        Hashtable hash = new Hashtable();
+        //hash.Add("BaseColor", handler.baseColor);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+
+    }
 
     public void Disconnect() {
         PhotonNetwork.Disconnect();
@@ -100,11 +108,6 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
 
     public override void OnJoinedLobby() {
         PhotonNetwork.AutomaticallySyncScene = true;
-        //Custom Properties
-        string namedes = PhotonNetwork.NickName;
-        Hashtable hash = new Hashtable();
-        hash.Add("Name", namedes);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
         if ( isHost ) {
             //Esta es la instancia del juego, en terminos de network no de escenas 
