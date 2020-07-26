@@ -1412,9 +1412,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2235245789278775237, guid: 62fc67e9003cc2447be42a24ab802a85,
         type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2235245789278775237, guid: 62fc67e9003cc2447be42a24ab802a85,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 03227249cfd1c334d88734acc31d69c3, type: 2}
+    - target: {fileID: -2235245789278775237, guid: 62fc67e9003cc2447be42a24ab802a85,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 60fef0b5fed068b40ac52369f3040fc4, type: 2}
     - target: {fileID: -1950698483442028583, guid: 62fc67e9003cc2447be42a24ab802a85,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

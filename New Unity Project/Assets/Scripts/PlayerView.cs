@@ -44,15 +44,6 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         anim = GetComponent<Animator>();
         lifeText.text = "3";
 
-        //Skinn
-        //De ahi sigo esto, lo comento para no arruinar el color bonito que tiene ahora jsfjsdf
-        /*
-        Material aaaa = Resources.Load<Material>("penguinMaterial");
-        Material aaaaaaa = new Material(aaaa);
-        var materials = penguinMesh.materials;
-        materials [ 0 ] = aaaaaaa;
-        penguinMesh.materials = materials;
-        */
     }
 
     // Update is called once per frame
@@ -64,6 +55,8 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
             anim.SetBool("isMoving", false);
         }
     }
+    //Start
+        //Name
     public void SetPlayerName( Player p ) {
 
         string misticText = p.NickName;
@@ -74,6 +67,30 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         nameText.text = text;
 
     }
+        //Material
+    public void SetMaterialNya(Player p ) {
+        photonView.RPC("ReceiveMaterialNya", RpcTarget.All, p);
+    }
+    [PunRPC]
+    void ReceiveMaterialNya(Player p) {
+        Vector3 baseColorVector = (Vector3) p.CustomProperties [ "BaseColor" ];
+        Color baseColor = new Color(baseColorVector.x, baseColorVector.y, baseColorVector.z);
+        penguinMesh.material.SetColor("_baseColor", baseColor);
+        /*
+        p.CustomProperties [ "BaseMetallic" ];
+|       p.CustomProperties [ "BaseSmoothness" ];
+        p.CustomProperties [ "PatternColor" ];
+        p.CustomProperties [ "PatternIntensity" ];
+        p.CustomProperties [ "PatternType" ];
+        p.CustomProperties [ "ClothesColor" ];
+        p.CustomProperties [ "ClothesMetallic" ];
+        p.CustomProperties [ "ClothesSmoothness" ];
+        p.CustomProperties [ "ClothesType" ];
+        */
+
+    }
+
+    //Update
     public void SetTimerValue( float time ) {
         timeText.text = time.ToString();
     }

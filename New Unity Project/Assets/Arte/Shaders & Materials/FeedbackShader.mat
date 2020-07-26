@@ -31,8 +31,8 @@ Material:
     - _Float0: 1
     - _Float1: 1
     - __dirty: 0
-    - _colorValue: 0.422
-    - _value: 0.628
+    - _colorValue: 0.4102353
+    - _value: 0.14786738
     m_Colors:
     - _Color0: {r: 1, g: 0, b: 0, a: 0}
     - _checkerColor: {r: 1, g: 0, b: 0, a: 0}

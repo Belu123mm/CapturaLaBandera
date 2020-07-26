@@ -34,6 +34,7 @@ public class PlayerModel : MonoBehaviourPun
     public void StartModel(Player p)
     {
         view.SetPlayerName(p);
+        view.SetMaterialNya(p);
     }
     public void UpdateView(float t)
     {
