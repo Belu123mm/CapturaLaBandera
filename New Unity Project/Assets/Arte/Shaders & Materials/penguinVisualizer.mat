@@ -24,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Clothes:
-        m_Texture: {fileID: 2800000, guid: 4039aca0e0f1b1e44844e73ec10de1e0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0ca7d0958a329d14cb0b14d01686c6d6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -77,8 +77,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
-    - _ClothesMetallic: 0.40619922
-    - _ClothesSmootness: 0.20622422
+    - _ClothesMetallic: 1
+    - _ClothesSmootness: 0.18947631
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -105,13 +105,13 @@ Material:
     - _OcclusionStrength: 1
     - _Opacity: 0
     - _Parallax: 0.02
-    - _PenguinMetallic: 0.14373203
-    - _PenguinSmoothness: 0.35620546
+    - _PenguinMetallic: 0.8768904
+    - _PenguinSmoothness: 0.10623672
     - _ReflexionTiling: 0
     - _RefraccionIndex: 0.1
     - _ShadowDepthDistance: 0
     - _ShadowfallOff: 0
-    - _SkinIntensity: 0.26246718
+    - _SkinIntensity: 0.18947631
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -127,7 +127,7 @@ Material:
     - _Shadowcolor: {r: 0, g: 1, b: 0.03440881, a: 0}
     - _Watercolor: {r: 1, g: 0, b: 0.009047508, a: 0}
     - _WaterreflexionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _baseColor: {r: 0, g: 0.21297336, b: 1, a: 1}
-    - _clothesColor: {r: 0.23625048, g: 0.39592952, b: 0.7456568, a: 1}
-    - _patternColor: {r: 0.47494063, g: 0.47494063, b: 0.47494063, a: 1}
+    - _baseColor: {r: 0.6761681, g: 0.83314586, b: 0.09215521, a: 1}
+    - _clothesColor: {r: 0.51051855, g: 0.63317084, b: 0.054208457, a: 1}
+    - _patternColor: {r: 0.77690285, g: 0.7456132, b: 0.15875968, a: 1}
     - _skinColor: {r: 0.6320754, g: 0.24746348, b: 0.43976945, a: 1}

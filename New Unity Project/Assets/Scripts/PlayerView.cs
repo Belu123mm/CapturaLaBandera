@@ -76,17 +76,40 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         Vector3 baseColorVector = (Vector3) p.CustomProperties [ "BaseColor" ];
         Color baseColor = new Color(baseColorVector.x, baseColorVector.y, baseColorVector.z);
         penguinMesh.material.SetColor("_baseColor", baseColor);
-        /*
-        p.CustomProperties [ "BaseMetallic" ];
-|       p.CustomProperties [ "BaseSmoothness" ];
-        p.CustomProperties [ "PatternColor" ];
-        p.CustomProperties [ "PatternIntensity" ];
-        p.CustomProperties [ "PatternType" ];
-        p.CustomProperties [ "ClothesColor" ];
-        p.CustomProperties [ "ClothesMetallic" ];
-        p.CustomProperties [ "ClothesSmoothness" ];
-        p.CustomProperties [ "ClothesType" ];
-        */
+        penguinMesh.material.SetFloat("_PenguinMetallic", (float)p.CustomProperties [ "BaseMetallic" ]);
+        penguinMesh.material.SetFloat("_PeguinSmoothness",(float)p.CustomProperties [ "BaseSmoothness" ]);
+        Vector3 patternColorVector = (Vector3)p.CustomProperties [ "PatternColor" ];
+        Color patternColor = new Color(patternColorVector.x, patternColorVector.y, patternColorVector.z);
+        penguinMesh.material.SetColor("_patternColor", patternColor);
+        penguinMesh.material.SetFloat("_SkinIntensity",(float)p.CustomProperties [ "PatternIntensity" ]);
+        switch ( (int ) p.CustomProperties [ "PatternType" ] ) {
+            case 0:
+            penguinMesh.material.SetTexture("_SKin",Resources.Load<Texture>("penguin v1"));
+            break;
+            case 1:
+            penguinMesh.material.SetTexture("_SKin",Resources.Load<Texture>("penguin v2"));
+            break;
+            case 2:
+            penguinMesh.material.SetTexture("_SKin",Resources.Load<Texture>("penguin v3"));
+            break;
+        }
+        Vector3 clothesColorVector = (Vector3)p.CustomProperties [ "ClothesColor" ];
+        Color clothesColor = new Color(clothesColorVector.x, clothesColorVector.y, clothesColorVector.z);
+        penguinMesh.material.SetColor("_clothesColor", clothesColor);
+        penguinMesh.material.SetFloat("_ClothesMetallic", (float) p.CustomProperties [ "ClothesMetallic" ]);
+        penguinMesh.material.SetFloat("_ClothesSmootness", (float) p.CustomProperties [ "ClothesSmoothness" ]);
+        switch ( (int) p.CustomProperties [ "ClothesType" ] ) {
+            case 0:
+            penguinMesh.material.SetTexture("_Clothes", Resources.Load<Texture>("penguin v1"));
+            break;
+            case 1:
+            penguinMesh.material.SetTexture("_Clothes", Resources.Load<Texture>("penguin v2"));
+            break;
+            case 2:
+            penguinMesh.material.SetTexture("_Clothes", Resources.Load<Texture>("penguin v3"));
+            break;
+        }
+
 
     }
 
