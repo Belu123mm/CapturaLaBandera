@@ -44,15 +44,6 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         anim = GetComponent<Animator>();
         lifeText.text = "3";
 
-        //Skinn
-        //De ahi sigo esto, lo comento para no arruinar el color bonito que tiene ahora jsfjsdf
-        /*
-        Material aaaa = Resources.Load<Material>("penguinMaterial");
-        Material aaaaaaa = new Material(aaaa);
-        var materials = penguinMesh.materials;
-        materials [ 0 ] = aaaaaaa;
-        penguinMesh.materials = materials;
-        */
     }
 
     // Update is called once per frame
@@ -64,6 +55,8 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
             anim.SetBool("isMoving", false);
         }
     }
+    //Start
+        //Name
     public void SetPlayerName( Player p ) {
 
         string misticText = p.NickName;
@@ -74,6 +67,53 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
         nameText.text = text;
 
     }
+        //Material
+    public void SetMaterialNya(Player p ) {
+        photonView.RPC("ReceiveMaterialNya", RpcTarget.All, p);
+    }
+    [PunRPC]
+    void ReceiveMaterialNya(Player p) {
+        Vector3 baseColorVector = (Vector3) p.CustomProperties [ "BaseColor" ];
+        Color baseColor = new Color(baseColorVector.x, baseColorVector.y, baseColorVector.z);
+        penguinMesh.material.SetColor("_baseColor", baseColor);
+        penguinMesh.material.SetFloat("_PenguinMetallic", (float)p.CustomProperties [ "BaseMetallic" ]);
+        penguinMesh.material.SetFloat("_PeguinSmoothness",(float)p.CustomProperties [ "BaseSmoothness" ]);
+        Vector3 patternColorVector = (Vector3)p.CustomProperties [ "PatternColor" ];
+        Color patternColor = new Color(patternColorVector.x, patternColorVector.y, patternColorVector.z);
+        penguinMesh.material.SetColor("_patternColor", patternColor);
+        penguinMesh.material.SetFloat("_SkinIntensity",(float)p.CustomProperties [ "PatternIntensity" ]);
+        switch ( (int ) p.CustomProperties [ "PatternType" ] ) {
+            case 0:
+            penguinMesh.material.SetTexture("_SKin",Resources.Load<Texture>("penguin v1"));
+            break;
+            case 1:
+            penguinMesh.material.SetTexture("_SKin",Resources.Load<Texture>("penguin v2"));
+            break;
+            case 2:
+            penguinMesh.material.SetTexture("_SKin",Resources.Load<Texture>("penguin v3"));
+            break;
+        }
+        Vector3 clothesColorVector = (Vector3)p.CustomProperties [ "ClothesColor" ];
+        Color clothesColor = new Color(clothesColorVector.x, clothesColorVector.y, clothesColorVector.z);
+        penguinMesh.material.SetColor("_clothesColor", clothesColor);
+        penguinMesh.material.SetFloat("_ClothesMetallic", (float) p.CustomProperties [ "ClothesMetallic" ]);
+        penguinMesh.material.SetFloat("_ClothesSmootness", (float) p.CustomProperties [ "ClothesSmoothness" ]);
+        switch ( (int) p.CustomProperties [ "ClothesType" ] ) {
+            case 0:
+            penguinMesh.material.SetTexture("_Clothes", Resources.Load<Texture>("penguin v1"));
+            break;
+            case 1:
+            penguinMesh.material.SetTexture("_Clothes", Resources.Load<Texture>("penguin v2"));
+            break;
+            case 2:
+            penguinMesh.material.SetTexture("_Clothes", Resources.Load<Texture>("penguin v3"));
+            break;
+        }
+
+
+    }
+
+    //Update
     public void SetTimerValue( float time ) {
         timeText.text = time.ToString();
     }

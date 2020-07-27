@@ -90,8 +90,21 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
     }
     public void SetSkinValues() {
         //Custom Properties
+            //Color thingz. 10 variables
         Hashtable hash = new Hashtable();
-        //hash.Add("BaseColor", handler.baseColor);
+        Vector3 baseColor = new Vector3(handler.baseColor.r, handler.baseColor.g, handler.baseColor.b);
+        hash.Add("BaseColor", baseColor);
+        hash.Add("BaseMetallic", handler.baseMetallic.value);
+        hash.Add("BaseSmoothness", handler.baseSmoothness.value);
+        Vector3 patternColor = new Vector3(handler.patternColor.r, handler.patternColor.g, handler.patternColor.b);
+        hash.Add("PatternColor", patternColor);
+        hash.Add("PatternIntensity", handler.patternIntensity.value);
+        hash.Add("PatternType", handler.patternType.value);
+        Vector3 clothesColor = new Vector3(handler.clothesColor.r, handler.clothesColor.g, handler.clothesColor.b);
+        hash.Add("ClothesColor", clothesColor);
+        hash.Add("ClothesMetallic", handler.clothesMetallic.value);
+        hash.Add("ClothesSmoothness", handler.clothesSmoothness.value);
+        hash.Add("ClothesType", handler.clothesType.value);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
     }
