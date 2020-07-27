@@ -11,9 +11,9 @@ public class DamageDealer : MonoBehaviour
         if (!hit)
         {
 
-            StartCoroutine(HitCD());
             if (other.gameObject.layer == 9 && other.gameObject != dad)
             {
+                StartCoroutine(HitCD());
                 PlayerModel m = other.gameObject.GetComponent<PlayerModel>();
                 Server.Instance.RequestDamage(m, 1);
             }

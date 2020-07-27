@@ -1091,6 +1091,7 @@ MonoBehaviour:
   rotateSpeed: 20.99
   movementSpeed: 20
   radiusRange: 8
+  dashCD: 1
   hasTheFlag: 0
   hammer: {fileID: 4682152275939032579}
   view: {fileID: 0}

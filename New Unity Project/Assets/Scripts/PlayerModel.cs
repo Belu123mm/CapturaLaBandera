@@ -127,6 +127,7 @@ public class PlayerModel : MonoBehaviourPun
     {
         if (!_isDashing)
         {
+            Debug.Log("dashie");
             StartCoroutine(DashTime(dir));
         }
     }
@@ -202,7 +203,7 @@ public class PlayerModel : MonoBehaviourPun
     {
         _isDashing = true;
         rb.velocity = Vector3.zero;
-        rb.AddForce(transform.forward*dir * movementSpeed * 2, ForceMode.Impulse);
+        rb.AddForce(transform.forward*dir * movementSpeed * 5, ForceMode.Impulse);
         yield return new WaitForSeconds(0.7f);
         rb.velocity = new Vector3(0, rb.velocity.y, 0);
         yield return new WaitForSeconds(dashCD);

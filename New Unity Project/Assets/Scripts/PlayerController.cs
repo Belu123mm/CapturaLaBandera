@@ -16,62 +16,88 @@ public class PlayerController : MonoBehaviour
     private bool _isStarted;
 
     // Start is called before the first frame update
-    void Start() {
-       
+    void Start()
+    {
+
     }    // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         //Checkeo si es mi view
-        if ( !camHandler) return;
+        if (!camHandler) return;
 
 
-        if ( Input.GetButton("Horizontal") ) {
+        if (Input.GetButton("Horizontal"))
+        {
             _horHasStopped = false;
             _animxHastStopped = false;
             float X = Input.GetAxis("Horizontal");
             Vector3 camRight = new Vector3(camHandler.cameraTransform.right.x, 0, camHandler.cameraTransform.right.z);
             Vector3 currentDir = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
             Server.Instance.RequestMoveX(PhotonNetwork.LocalPlayer, X, camRight, currentDir);
-        } else {
+        }
+        else
+        {
             _horHasStopped = true;
         }
-        if ( Input.GetButton("Vertical") ) {
+        if (Input.GetButton("Vertical"))
+        {
             _verHasStopped = false;
             _animyHastStopped = false;
             float Y = Input.GetAxis("Vertical");
             Vector3 camForward = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
             Server.Instance.RequestMoveY(PhotonNetwork.LocalPlayer, Y, camForward);
             Server.Instance.RequestMoveY(PhotonNetwork.LocalPlayer, Y, camForward);
-        } else {
+        }
+        else
+        {
             _verHasStopped = true;
         }
-        if ( Input.GetButtonDown("Attack") ) {
+        if (Input.GetButtonDown("Attack"))
+        {
             //Request to move Attack
             Server.Instance.RequestAttack(PhotonNetwork.LocalPlayer);
         }
-        if ( Input.GetButton("Dash") ) {
+        if (Input.GetButton("Dash"))
+        {
             float X = Input.GetAxis("Horizontal");
-            Server.Instance.RequestDash(PhotonNetwork.LocalPlayer,X);
+            if (X == 0)
+            {
+                Server.Instance.RequestDash(PhotonNetwork.LocalPlayer, 1);
+
+            }
+            else
+            {
+                Server.Instance.RequestDash(PhotonNetwork.LocalPlayer, X);
+
+            }
 
         }
-        if ( Input.GetButton("Ability") ) {
-            Server.Instance.RequestAbility(PhotonNetwork.LocalPlayer);         
+        if (Input.GetButton("Ability"))
+        {
+            Server.Instance.RequestAbility(PhotonNetwork.LocalPlayer);
         }
-        if ( Input.GetButton("Jump") ) {
+        if (Input.GetButton("Jump"))
+        {
             //Request to move Jump
 
         }
-        if ( Input.GetButton("Grab") ) {
+        if (Input.GetButton("Grab"))
+        {
             //Request to move Grab
             Server.Instance.RequestGrab(PhotonNetwork.LocalPlayer);
         }
-        if ( _verHasStopped ) {
-            if ( _animyHastStopped == false ) {
+        if (_verHasStopped)
+        {
+            if (_animyHastStopped == false)
+            {
                 Server.Instance.PlayerRequestToStopY(PhotonNetwork.LocalPlayer);
                 _animyHastStopped = true;
             }
         }
-        if ( _horHasStopped ) {
-            if ( _animxHastStopped == false ) {
+        if (_horHasStopped)
+        {
+            if (_animxHastStopped == false)
+            {
                 Server.Instance.PlayerRequestToStopX(PhotonNetwork.LocalPlayer);
                 _animxHastStopped = true;
             }
