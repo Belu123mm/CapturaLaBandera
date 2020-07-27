@@ -14,6 +14,7 @@ public class PlayerModel : MonoBehaviourPun
     public float rotateSpeed;
     public float movementSpeed;
     public float radiusRange;
+    public float dashCD;
     public bool hasTheFlag;
     public GameObject hammer;
     //Esto seria de manera local nada mas, cada player sincroniza esto?
@@ -23,6 +24,8 @@ public class PlayerModel : MonoBehaviourPun
     private float totalTime = 60;
     private bool _isMovingHor;
     private bool _isMovingVer;
+    private bool _isDashing;
+    private bool _grounded;
     private Rigidbody rb;
 
     // Start is called before the first frame update
@@ -63,19 +66,19 @@ public class PlayerModel : MonoBehaviourPun
              * Ahora todo esto estaria en el controller, solo le pasaria la nueva direccion a la que mirar
              * 
              */
-             /*
-            Debug.DrawLine(currentDir, (transform.position + camRight), Color.red);
+            /*
+           Debug.DrawLine(currentDir, (transform.position + camRight), Color.red);
 
+
+           //transform.rotation = Quaternion.LookRotation(newDir);
+           */
+            //RIGIDBODYMOVEMENT
+            //rb.MoveRotation(Quaternion.LookRotation(newDir));
             float step = rotateSpeed * dir * Time.deltaTime;
 
             Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
-
-            //transform.rotation = Quaternion.LookRotation(newDir);
-            */
-            //RIGIDBODYMOVEMENT
-            //rb.MoveRotation(Quaternion.LookRotation(newDir));
-            rb.AddTorque(Vector3.up * dir * rotateSpeed*Time.deltaTime);
-            view.SetWalkAnimX(dir);
+            // rb.AddTorque(Vector3.up * dir * rotateSpeed * Time.deltaTime);
+            rb.rotation = Quaternion.LookRotation(newDir);
             StartCoroutine(WaitToMoveHor());
         }
     }
@@ -98,15 +101,18 @@ public class PlayerModel : MonoBehaviourPun
 
         }
     }
-    public void StopWalkingX() {
+    public void StopWalkingX()
+    {
         view.IsNotMovingX();
 
     }
-    public void StopWalkingY() {
+    public void StopWalkingY()
+    {
         view.IsNotMovingY();
 
     }
-    public void PrepAttack() {
+    public void PrepAttack()
+    {
         photonView.RPC("Attack", RpcTarget.All);
     }
     [PunRPC]
@@ -116,9 +122,12 @@ public class PlayerModel : MonoBehaviourPun
         //La idea es que si activaste el collidrer, este detecte ls colision y le avise al server
         //enviar el playerModel dañado y el daño realizado a RequestDamage(PlayerModel ,float damage)
     }
-    public void Dash()
+    public void Dash(float dir)
     {
-
+        if (!_isDashing)
+        {
+            StartCoroutine(DashTime(dir));
+        }
     }
     public void Grab()
     {
@@ -143,9 +152,9 @@ public class PlayerModel : MonoBehaviourPun
 
     }
     public void Ability()
-    {        
-        PlayerModel pM=null;
-        Grabeable flag=null;
+    {
+        PlayerModel pM = null;
+        Grabeable flag = null;
         Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
         for (int i = 0; i < collisions.Length; i++)
         {
@@ -155,21 +164,23 @@ public class PlayerModel : MonoBehaviourPun
             }
             if (collisions[i].GetComponent<Grabeable>() != null)
             {
-                flag = collisions[i].GetComponent<Grabeable>();           
+                flag = collisions[i].GetComponent<Grabeable>();
             }
         }
         if (pM != null && flag != null)
-        {          
+        {
             Server.Instance.RequestRemove(pM, flag);
         }
     }
 
-    public void GetDamage( int damage ) {
+    public void GetDamage(int damage)
+    {
         life -= damage;
         view.SetDamage(life);
     }
 
-    IEnumerator WaitToAttack() {
+    IEnumerator WaitToAttack()
+    {
         hammer.SetActive(true);
         view.SetAttack();
         yield return new WaitForSeconds(1);
@@ -186,5 +197,14 @@ public class PlayerModel : MonoBehaviourPun
         yield return new WaitForFixedUpdate();
         _isMovingVer = false;
     }
-
+    IEnumerator DashTime(float dir)
+    {
+        _isDashing = true;
+        rb.velocity = Vector3.zero;
+        rb.AddForce(transform.forward*dir * movementSpeed * 2, ForceMode.Impulse);
+        yield return new WaitForSeconds(0.7f);
+        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        yield return new WaitForSeconds(dashCD);
+        _isDashing = false;
+    }
 }

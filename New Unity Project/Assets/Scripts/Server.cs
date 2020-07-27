@@ -169,16 +169,16 @@ public class Server : MonoBehaviourPun
         if (!_dic.ContainsKey(player)) return;
         _dic[player].Ability();
     }
-    public void RequestDash(Player player)
+    public void RequestDash(Player player,float x)
     {
         if (!PhotonNetwork.IsMasterClient) return;
-        photonView.RPC("Dash", _server);
+        photonView.RPC("Dash", _server,x);
     }
     [PunRPC]
-    void Dash(Player player)
+    void Dash(Player player,float x)
     {
         if (!_dic.ContainsKey(player)) return;
-        _dic[player].Dash();
+        _dic[player].Dash(x);
     }
 
     public void RequestGrab(Player player)

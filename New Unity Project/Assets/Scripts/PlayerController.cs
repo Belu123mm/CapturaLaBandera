@@ -49,8 +49,8 @@ public class PlayerController : MonoBehaviour
             Server.Instance.RequestAttack(PhotonNetwork.LocalPlayer);
         }
         if ( Input.GetButton("Dash") ) {
-
-            Server.Instance.RequestDash(PhotonNetwork.LocalPlayer);
+            float X = Input.GetAxis("Horizontal");
+            Server.Instance.RequestDash(PhotonNetwork.LocalPlayer,X);
 
         }
         if ( Input.GetButton("Ability") ) {
