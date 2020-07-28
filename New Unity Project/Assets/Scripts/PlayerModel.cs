@@ -76,10 +76,13 @@ public class PlayerModel : MonoBehaviourPun
             //RIGIDBODYMOVEMENT
             //rb.MoveRotation(Quaternion.LookRotation(newDir));
             float step = rotateSpeed * dir * Time.deltaTime;
-
             Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
+            if (rb.angularVelocity.y *dir<0)//si esta sensilla cuenta matematica da un numero negativo quiere decir que esta girando en direccion contraria a la del input recibido
+            {
+                rb.angularVelocity = Vector3.zero;
+            }
+                rb.rotation = Quaternion.LookRotation(newDir);
             // rb.AddTorque(Vector3.up * dir * rotateSpeed * Time.deltaTime);
-            rb.rotation = Quaternion.LookRotation(newDir);
             StartCoroutine(WaitToMoveHor());
         }
     }
@@ -183,6 +186,7 @@ public class PlayerModel : MonoBehaviourPun
 
     IEnumerator WaitToAttack()
     {
+
         hammer.SetActive(true);
         view.SetAttack();
         yield return new WaitForSeconds(1);
@@ -202,9 +206,10 @@ public class PlayerModel : MonoBehaviourPun
     IEnumerator DashTime(float dir)
     {
         _isDashing = true;
+        rb.angularVelocity = Vector3.zero;
         rb.velocity = Vector3.zero;
-        rb.AddForce(transform.forward*dir * movementSpeed * 5, ForceMode.Impulse);
-        yield return new WaitForSeconds(0.7f);
+        rb.AddForce(transform.forward * dir * movementSpeed * 2, ForceMode.Impulse);
+        yield return new WaitForSeconds(0.5f);
         rb.velocity = new Vector3(0, rb.velocity.y, 0);
         yield return new WaitForSeconds(dashCD);
         _isDashing = false;

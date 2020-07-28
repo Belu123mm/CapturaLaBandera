@@ -171,8 +171,7 @@ public class Server : MonoBehaviourPun
     }
     public void RequestDash(Player player,float x)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        photonView.RPC("Dash", _server,x);
+        photonView.RPC("Dash", _server,player,x);
     }
     [PunRPC]
     void Dash(Player player,float x)
