@@ -1089,6 +1089,8 @@ MonoBehaviour:
   grabPoint: {fileID: 6057165675946734733}
   life: 3
   rotateSpeed: 20.99
+  jumpForce: 81.8
+  DashForce: 458.7
   movementSpeed: 20
   radiusRange: 8
   dashCD: 1

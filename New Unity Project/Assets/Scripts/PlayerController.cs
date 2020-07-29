@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButton("Dash"))
         {
-            float X = Input.GetAxis("Horizontal");
+            float X = Input.GetAxis("Vertical");
             if (X == 0)
             {
                 Server.Instance.RequestDash(PhotonNetwork.LocalPlayer, 1);
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButton("Jump"))
         {
-            //Request to move Jump
+            Server.Instance.RequestJump(PhotonNetwork.LocalPlayer);
 
         }
         if (Input.GetButton("Grab"))

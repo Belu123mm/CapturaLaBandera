@@ -12,6 +12,8 @@ public class PlayerModel : MonoBehaviourPun
     public Transform grabPoint;//usted sabe,ahi va la posicion del objeto agarrado
     public int life = 3;    //Cada hit es de 1, asi que ps 3 hits de base pero vemos, you know
     public float rotateSpeed;
+    public float jumpForce;
+    public float DashForce;
     public float movementSpeed;
     public float radiusRange;
     public float dashCD;
@@ -77,11 +79,11 @@ public class PlayerModel : MonoBehaviourPun
             //rb.MoveRotation(Quaternion.LookRotation(newDir));
             float step = rotateSpeed * dir * Time.deltaTime;
             Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
-            if (rb.angularVelocity.y *dir<0)//si esta sensilla cuenta matematica da un numero negativo quiere decir que esta girando en direccion contraria a la del input recibido
+            if (rb.angularVelocity.y * dir < 0)//si esta sensilla cuenta matematica da un numero negativo quiere decir que esta girando en direccion contraria a la del input recibido
             {
                 rb.angularVelocity = Vector3.zero;
             }
-                rb.rotation = Quaternion.LookRotation(newDir);
+            rb.rotation = Quaternion.LookRotation(newDir);
             // rb.AddTorque(Vector3.up * dir * rotateSpeed * Time.deltaTime);
             StartCoroutine(WaitToMoveHor());
         }
@@ -130,7 +132,6 @@ public class PlayerModel : MonoBehaviourPun
     {
         if (!_isDashing)
         {
-            Debug.Log("dashie");
             StartCoroutine(DashTime(dir));
         }
     }
@@ -152,9 +153,12 @@ public class PlayerModel : MonoBehaviourPun
         }
         //envia el componente Grabeable y este model a RequestGrab
     }
-    public void Jum()
+    public void Jump()
     {
-
+        if (_grounded)
+        {
+            rb.AddForce(Vector3.up * jumpForce);
+        }
     }
     public void Ability()
     {
@@ -208,10 +212,24 @@ public class PlayerModel : MonoBehaviourPun
         _isDashing = true;
         rb.angularVelocity = Vector3.zero;
         rb.velocity = Vector3.zero;
-        rb.AddForce(transform.forward * dir * movementSpeed * 2, ForceMode.Impulse);
-        yield return new WaitForSeconds(0.5f);
-        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        rb.AddForce(transform.forward * dir * DashForce);
+        yield return new WaitForSeconds(0.3f);
+        rb.AddForce(transform.forward * -dir * (DashForce/2));
         yield return new WaitForSeconds(dashCD);
         _isDashing = false;
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.layer == 10)
+        {
+            _grounded = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == 10)
+        {
+            _grounded = false;
+        }
     }
 }

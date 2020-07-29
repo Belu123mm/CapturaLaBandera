@@ -130,8 +130,16 @@ public class Server : MonoBehaviourPun
         _dic[player].PrepAttack();
     }
 
-
-
+    public void RequestJump(Player player)
+    {
+        photonView.RPC("Jump", _server, player);
+    }
+    [PunRPC]
+    void Jump(Player player)
+    {
+        if (!_dic.ContainsKey(player)) return;
+        _dic[player].Jump();
+    }
     public void RequestDamage(PlayerModel character,int damage)//pasa un model y su daño ,convierte el moden a int para despues obtener su view
     {     
         int charId = character.gameObject.GetPhotonView().ViewID;
