@@ -9,7 +9,7 @@ Shader "FeedbackShader"
 		_value("value", Range( 0 , 1)) = 0
 		_Frequency("Frequency", Float) = 20
 		_ScaleTime("ScaleTime", Float) = 0
-		_Float2("Float 2", Float) = 0
+		_feedbackType("feedbackType", Float) = 0
 		[HideInInspector] __dirty( "", Int ) = 1
 	}
 
@@ -32,7 +32,7 @@ Shader "FeedbackShader"
 
 		uniform float4 _checkerColor;
 		uniform float _colorValue;
-		uniform float _Float2;
+		uniform float _feedbackType;
 		uniform float _ScaleTime;
 		uniform float _Frequency;
 		uniform float _value;
@@ -40,11 +40,11 @@ Shader "FeedbackShader"
 		void surf( Input i , inout SurfaceOutputStandard o )
 		{
 			float4 color24 = IsGammaSpace() ? float4(1,0,0,0) : float4(1,0,0,0);
-			float4 lerpResult27 = lerp( ( _checkerColor * _colorValue ) , ( color24 * _colorValue ) , _Float2);
+			float4 lerpResult27 = lerp( ( _checkerColor * _colorValue ) , ( color24 * _colorValue ) , _feedbackType);
 			o.Emission = lerpResult27.rgb;
 			float3 ase_worldNormal = i.worldNormal;
 			float mulTime11 = _Time.y * _ScaleTime;
-			float lerpResult26 = lerp( sin( ( ( ase_worldNormal.y + mulTime11 ) * _Frequency ) ) , 1.0 , _Float2);
+			float lerpResult26 = lerp( sin( ( ( ase_worldNormal.y + mulTime11 ) * _Frequency ) ) , 1.0 , _feedbackType);
 			o.Alpha = ( lerpResult26 * _value );
 		}
 
@@ -126,18 +126,18 @@ Shader "FeedbackShader"
 }
 /*ASEBEGIN
 Version=18100
-54;456;1402;1071;2611.713;604.0723;2.105488;True;False
+285;215;1402;666;2352.759;445.0975;1.805488;True;False
 Node;AmplifyShaderEditor.RangedFloatNode;17;-1677.11,303.5413;Inherit;False;Property;_ScaleTime;ScaleTime;5;0;Create;True;0;0;False;0;False;0;0.25;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.WorldNormalVector;20;-1519.709,94.84551;Inherit;False;False;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.SimpleTimeNode;11;-1471.894,235.17;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;16;-1305.774,396.7108;Inherit;False;Property;_Frequency;Frequency;4;0;Create;True;0;0;False;0;False;20;30;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;15;-1245.879,192.7108;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;14;-1080.88,236.7108;Inherit;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;24;-1342.943,-152.0471;Inherit;False;Constant;_damageColor;damageColor;6;0;Create;True;0;0;False;0;False;1,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;28;-824.5208,550.2605;Inherit;False;Property;_Float2;Float 2;6;0;Create;True;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SinOpNode;10;-799.5872,149.1257;Inherit;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;3;-1503.065,-362.717;Inherit;False;Property;_colorValue;colorValue;1;0;Create;True;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.ColorNode;5;-1485.065,-627.717;Inherit;False;Property;_checkerColor;checkerColor;2;0;Create;True;0;0;False;0;False;1,0,0,0;1,0.902755,0.4575472,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;3;-1503.065,-362.717;Inherit;False;Property;_colorValue;colorValue;1;0;Create;True;0;0;False;0;False;0;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;24;-1342.943,-152.0471;Inherit;False;Constant;_damageColor;damageColor;6;0;Create;True;0;0;False;0;False;1,0,0,0;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SinOpNode;10;-799.5872,149.1257;Inherit;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;28;-887.7126,488.874;Inherit;False;Property;_feedbackType;feedbackType;6;0;Create;True;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;4;-1251.065,-603.717;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;25;-958.3068,-183.5378;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;6;-522.385,467.3866;Inherit;False;Property;_value;value;3;0;Create;True;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
@@ -165,4 +165,4 @@ WireConnection;29;1;6;0
 WireConnection;2;2;27;0
 WireConnection;2;9;29;0
 ASEEND*/
-//CHKSM=F2C8A280DFA34300E83473261FBC5DF7450BA9EF
+//CHKSM=37AA019DB0539C1FCDC5239A56CA5FA967838E40

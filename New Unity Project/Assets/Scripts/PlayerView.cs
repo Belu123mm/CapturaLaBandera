@@ -109,16 +109,15 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
             penguinMesh.material.SetTexture("_Clothes", Resources.Load<Texture>("penguin v3"));
             break;
         }
-
-
+        
+        var matz = penguinMesh.materials;
+        matz [ 1 ] = Resources.Load<Material>("FeedbackShader");  //no?
+        
     }
 
     //Update
     public void SetTimerValue( float time ) {
         timeText.text = time.ToString();
-    }
-    public void SetSkinValues( Player p ) {
-
     }
     public void SetWalkAnimX( float x ) {
         isWalkingx = true;
@@ -152,7 +151,28 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
     [PunRPC]
     void ReceiveDamage(string text ) {
         lifeText.text = text;
+        StartCoroutine(DamageFeedback());
     }
+    IEnumerator DamageFeedback() {
+        Material [] mats;
+        mats = penguinMesh.materials;
+        mats [ 1 ].SetFloat("FeedbackType", 1);
+        mats [ 1 ].SetFloat("value", 1);
+        penguinMesh.materials = mats;
+        yield return new WaitForSeconds(3);
+        mats = penguinMesh.materials;
+        mats [ 1 ].SetFloat("value", 0);
+        penguinMesh.materials = mats;
+
+    }
+    /*
+    IEnumerator ReviveFeedback() {
+        feedbackMat.SetFloat("FeedbackType", 0);
+        feedbackMat.SetFloat("value", 1);
+        yield return new WaitForSeconds(0.2f);
+        feedbackMat.SetFloat("value", 0);
+
+    }*/
     //Solo llamar para variables que se actualizen todo el rato, para lo demas existe RPC
     public void OnPhotonSerializeView( PhotonStream stream, PhotonMessageInfo info ) {  //Esto se llama cuando cambia en el server
         
