@@ -6,6 +6,8 @@ public class DamageDealer : MonoBehaviour
 {
     public GameObject dad;
     private bool hit;
+
+
     public void OnTriggerEnter(Collider other)
     {
         if (!hit)
@@ -20,6 +22,7 @@ public class DamageDealer : MonoBehaviour
         }
     }
 
+ 
     private IEnumerator HitCD()
     {
         hit = true;

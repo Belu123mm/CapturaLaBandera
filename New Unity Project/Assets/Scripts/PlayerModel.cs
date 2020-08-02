@@ -17,11 +17,13 @@ public class PlayerModel : MonoBehaviourPun
     public float movementSpeed;
     public float radiusRange;
     public float dashCD;
+    public bool hasObject;
     public bool hasTheFlag;
     public GameObject hammer;
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     // sipi pero algunas cosas del view hay que mostrarlas a todos
     public PlayerView view;
+    private Grabeable _currentObject;
     private float timeWithFlag;
     private float totalTime = 60;
     private bool _isMovingHor;
@@ -137,19 +139,35 @@ public class PlayerModel : MonoBehaviourPun
     }
     public void Grab()
     {
-        Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
-        for (int i = 0; i < collisions.Length; i++)
+        if (!hasObject)
         {
-            if (collisions[i].GetComponent<Grabeable>() != null)
-            {
 
-                Grabeable g = collisions[i].GetComponent<Grabeable>();
-                if (!g.grabed)
+            Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
+            for (int i = 0; i < collisions.Length; i++)
+            {
+                if (collisions[i].GetComponent<Grabeable>() != null)
                 {
-                    Server.Instance.CheckedGrab(g, this);
-                    hasTheFlag = true;
+
+                    Grabeable g = collisions[i].GetComponent<Grabeable>();
+                    if (!g.grabed)
+                    {
+                        _currentObject = g;
+                        Server.Instance.CheckedGrab(g, this);
+                        if (g.IsFlag)
+                        {
+                            hasTheFlag = true;
+                        }
+                        hasObject = true;
+                    }
                 }
             }
+        }
+        else
+        {
+            Server.Instance.RequestRemove(this, _currentObject);
+            _currentObject = null;
+            hasObject = false;
+            
         }
         //envia el componente Grabeable y este model a RequestGrab
     }
@@ -214,7 +232,7 @@ public class PlayerModel : MonoBehaviourPun
         rb.velocity = Vector3.zero;
         rb.AddForce(transform.forward * dir * DashForce);
         yield return new WaitForSeconds(0.3f);
-        rb.AddForce(transform.forward * -dir * (DashForce/2));
+        rb.AddForce(transform.forward * -dir * (DashForce / 2));
         yield return new WaitForSeconds(dashCD);
         _isDashing = false;
     }
