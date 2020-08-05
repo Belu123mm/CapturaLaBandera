@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        if (Input.GetButton("Ability"))
+        if (Input.GetButtonDown("Ability"))
         {
             Server.Instance.RequestAbility(PhotonNetwork.LocalPlayer);
         }

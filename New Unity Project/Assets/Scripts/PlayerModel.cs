@@ -181,6 +181,25 @@ public class PlayerModel : MonoBehaviourPun
     }
     public void Ability()
     {
+        //Como es una cosa que hace el server y tiene rigidbody, ps el movimiento se replica cuando pasas el addforce
+        Collider [] penguinz = Physics.OverlapSphere(transform.position, radiusRange);
+        Debug.DrawLine(transform.position, transform.position+ transform.forward * radiusRange);
+        Debug.DrawLine(transform.position, transform.position - transform.forward * radiusRange);
+        Debug.DrawLine(transform.position, transform.position + transform.right * radiusRange);
+        Debug.DrawLine(transform.position, transform.position - transform.right * radiusRange);
+
+        for ( int i = 0; i< penguinz.Length;i++ ) {
+            if(penguinz[i].gameObject != this ) {
+                Vector3 dir = penguinz [ i ].transform.position - transform.position;
+                Debug.Log(penguinz [ i ].name);
+                if(penguinz[i].attachedRigidbody != null ) {
+                    penguinz [ i ].GetComponent<Rigidbody>().AddForce(dir.normalized * 50);
+
+                }
+            }
+        }
+
+
         PlayerModel pM = null;
         Grabeable flag = null;
         Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
