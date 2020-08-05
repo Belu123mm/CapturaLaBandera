@@ -152,12 +152,13 @@ public class PlayerModel : MonoBehaviourPun
                     if (!g.grabed)
                     {
                         _currentObject = g;
-                        Server.Instance.CheckedGrab(g, this);
                         if (g.IsFlag)
                         {
                             hasTheFlag = true;
                         }
                         hasObject = true;
+                        Server.Instance.CheckedGrab(g, this);
+                        break;
                     }
                 }
             }

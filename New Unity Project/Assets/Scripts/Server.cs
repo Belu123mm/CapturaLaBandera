@@ -158,6 +158,17 @@ public class Server : MonoBehaviourPun
         int flagID = flag.photonView.ViewID;
         photonView.RPC("RemoveFlag", RpcTarget.AllBuffered, modelID, flagID);
     }
+    public void RequestTrap(Trap t)
+    {
+        int trapID = t.photonView.ViewID;
+        photonView.RPC("ActiveTrap", RpcTarget.All, trapID);
+    }
+    [PunRPC]
+    void ActiveTrap(int trapID)
+    {
+        Trap t = PhotonNetwork.GetPhotonView(trapID).GetComponent<Trap>();
+        t.StartTrap();
+    }
     [PunRPC]
     void RemoveFlag(int modelID, int flatID)
     {

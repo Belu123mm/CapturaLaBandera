@@ -585,13 +585,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3501971793361686084}
-  m_LocalRotation: {x: -0.1751825, y: -0.7019644, z: 0.16715275, w: 0.6697889}
-  m_LocalPosition: {x: -0.73, y: 1.5, z: 0.39}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.021, y: 0.858, z: 1.2}
   m_LocalScale: {x: 0.17192662, y: 0.17192662, z: 0.40320233}
   m_Children: []
   m_Father: {fileID: 3798279746188279374}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -92.687004, z: 28.025002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4179971852517781061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,7 +1059,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &5752036897845101596
 MonoBehaviour:
@@ -1094,6 +1094,7 @@ MonoBehaviour:
   movementSpeed: 20
   radiusRange: 8
   dashCD: 1
+  hasObject: 0
   hasTheFlag: 0
   hammer: {fileID: 4682152275939032579}
   view: {fileID: 0}
@@ -1151,7 +1152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 1
-  m_TeleportEnabled: 0
+  m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!135 &8839128924796099508
 SphereCollider:
