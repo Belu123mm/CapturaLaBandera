@@ -4,11 +4,13 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class MyNetManager : MonoBehaviourPunCallbacks {
-    public InputField txt;
+    public InputField nameText;
+    public TMP_Text infoText;
     public SkinHandler handler;
     public Button serverButton;
     public Button clientButton;
@@ -23,12 +25,6 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
     }
 
     private void Start() {
-
-        txt.text = PlayerPrefs.GetString("name");
-        if ( txt.text == "" ) {
-            clientButton.interactable = false;
-
-        } else { clientButton.interactable = true; }
         PhotonNetwork.AutomaticallySyncScene = true;
 
     }
@@ -67,15 +63,14 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
     //Functions
     public void ImServer() {
         isHost = true;
-        serverButton.interactable = false;
         PhotonNetwork.ConnectUsingSettings();
+        infoText.text = "Connecting as Server";
 
     }
 
     public void ImClient() {
-        clientButton.interactable = false;
         PhotonNetwork.ConnectUsingSettings();
-
+        infoText.text = "Connecting to Server";
     }
 
     public void RegisterName( string name ) {
@@ -88,6 +83,7 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
             PhotonNetwork.NickName = name;
         }
     }
+
     public void SetSkinValues() {
         //Custom Properties
             //Color thingz. 10 variables
@@ -121,6 +117,7 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
 
     public override void OnJoinedLobby() {
         PhotonNetwork.AutomaticallySyncScene = true;
+        infoText.text = "In Lobby";
 
         if ( isHost ) {
             //Esta es la instancia del juego, en terminos de network no de escenas 
@@ -132,6 +129,24 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
         }
 
     }
+    public override void OnCreatedRoom() {
+        infoText.text = "Room created";
+    }
+
+    public override void OnJoinedRoom() {
+        infoText.text = "In room";
+
+    }
+    public override void OnJoinRandomFailed( short returnCode, string message ) {
+        infoText.text = "Failed. Cause: " + message;
+        PhotonNetwork.Disconnect();
+    }
+
+
+    public override void OnDisconnected( DisconnectCause cause ) {
+        infoText.text = cause.ToString();
+    }
+
 
 }
 

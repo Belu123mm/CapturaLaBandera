@@ -48,11 +48,46 @@ public class SkinHandler : MonoBehaviour
         baseSatBackground = baseSat.GetComponentInChildren<Image>();
         patternSatBackground = patternSat.GetComponentInChildren<Image>();
         clothesSatBackground = clothesSat.GetComponentInChildren<Image>();
-                
+
+        //TODO start values
+
+        //Base
+        Color baseColor = view.GetColor("_baseColor");
+        float baseH, baseS, baseV = 0f;
+            Color.RGBToHSV(baseColor, out baseH, out baseS, out baseV);
+        baseHue.value = baseH;
+        baseSat.value = baseS;
+        baseLum.value = baseV;
+
+        baseMetallic.value = view.GetFloat("_PenguinMetallic");
+        baseSmoothness.value = view.GetFloat("_PenguinSmoothness");
+
+        Color patternColor = view.GetColor("_patternColor");
+        float pattH, pattS, pattV = 0f;
+        Color.RGBToHSV(patternColor, out pattH, out pattS, out pattV);
+        patternHue.value = pattH;
+        patternSat.value = pattS;
+        patternLum.value = pattV;
+
+        patternIntensity.value = view.GetFloat("_SkinIntensity");
+        view.SetTexture("_SKin", version1);
+
+        Color clothesColor = view.GetColor("_clothesColor");
+        float clothH, clothS, clothV = 0f;
+        Color.RGBToHSV(clothesColor, out clothH, out clothS, out clothV);
+        clothesHue.value = clothH;
+        clothesSat.value = clothS;
+        clothesLum.value = clothV;
+
+        clothesMetallic.value = view.GetFloat("_ClothesMetallic");
+        clothesSmoothness.value = view.GetFloat("_ClothesSmootness");
+
+        view.SetTexture("_Clothes", version1);
+
     }
     #region Sliders
     //Public functions
-        //Colors
+    //Colors
     public void UpdateBaseHue() {
         baseSatBackground.color = Color.HSVToRGB(baseHue.value, 1, 1);
         UpdateBase();
