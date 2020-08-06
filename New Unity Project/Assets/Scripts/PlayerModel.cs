@@ -145,6 +145,40 @@ public class PlayerModel : MonoBehaviourPun
     }
     public void Grab()
     {
+        Debug.Log("GRABBIN");
+        //Si tiene un objeto
+        if ( hasObject ) {
+            //Let it go
+            Server.Instance.RequestRemove(this, _currentObject);
+            _currentObject = null;
+            hasObject = false;
+
+        }
+        //Si no tiene un objeto
+        else {
+            //Smash
+            Collider [] collisions = Physics.OverlapSphere(transform.position, radiusRange);
+            //Solo el 1ro
+            Grabeable g = collisions.Where(x => x.GetComponent<Grabeable>() == true).Select(x => x.GetComponent<Grabeable>()).First();
+
+            if ( g != null && !g.grabed ) {
+                hasObject = true;
+                //Server.Instance.CheckedGrab(g, this);
+                g.grabed = true;
+                g.transform.parent = transform;
+                g.transform.position = grabPoint.position;
+
+                _currentObject = g;
+                Debug.Log("PESCAO");
+                if ( g.IsFlag ) {
+                    hasTheFlag = true;
+                }
+            }
+        }
+
+        //envia el componente Grabeable y este model a RequestGrab
+
+        /*
         if (!hasObject)
         {
 
@@ -176,8 +210,11 @@ public class PlayerModel : MonoBehaviourPun
             hasObject = false;
             
         }
-        //envia el componente Grabeable y este model a RequestGrab
+
+    */
     }
+
+    
     public void Jump()
     {
         if (_grounded)

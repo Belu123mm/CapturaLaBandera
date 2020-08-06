@@ -202,6 +202,7 @@ public class Server : MonoBehaviourPun
     public void RequestGrab(Player player)
     {
         photonView.RPC("Grab", _server, player);
+        Debug.Log("grabbbbbbbin");
 
     }
     public void CheckedGrab(Grabeable obj, PlayerModel model)

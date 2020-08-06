@@ -81,9 +81,10 @@ public class PlayerController : MonoBehaviour
             Server.Instance.RequestJump(PhotonNetwork.LocalPlayer);
 
         }
-        if (Input.GetButton("Grab"))
+        if (Input.GetButtonDown("Grab"))
         {
             //Request to move Grab
+            Debug.Log("grabbbbbbbbbbbbbbb");
             Server.Instance.RequestGrab(PhotonNetwork.LocalPlayer);
         }
         if (_verHasStopped)
