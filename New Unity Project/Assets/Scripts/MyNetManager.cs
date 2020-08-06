@@ -11,6 +11,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class MyNetManager : MonoBehaviourPunCallbacks {
     public InputField nameText;
     public TMP_Text infoText;
+    public TMP_InputField serverpeople;
     public SkinHandler handler;
     public Button serverButton;
     public Button clientButton;
@@ -121,7 +122,11 @@ public class MyNetManager : MonoBehaviourPunCallbacks {
 
         if ( isHost ) {
             //Esta es la instancia del juego, en terminos de network no de escenas 
-            PhotonNetwork.CreateRoom("MainRoom", new RoomOptions() { MaxPlayers = 3 });     //NUMERO DE PLAYERS
+            int pp = byte.Parse(serverpeople.text) + 1;
+            string owo = "" + pp;
+            byte players = byte.Parse(owo);
+            Debug.Log(players);
+            PhotonNetwork.CreateRoom("MainRoom", new RoomOptions() { MaxPlayers = players });     //NUMERO DE PLAYERS
             return;
         } else {
             PhotonNetwork.JoinRandomRoom();
