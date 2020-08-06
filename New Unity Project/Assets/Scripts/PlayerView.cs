@@ -132,7 +132,7 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
        // Debug.Log("aaaaaaaaaaanimationy" + anim.GetBool("isMoving"));
     }
     public void SetAttack() {
-        photonView.RPC("TriggetAttack", RpcTarget.All);
+        photonView.RPC("TriggerAttack", RpcTarget.All);
     }
     [PunRPC]
     void TriggerAttack() {

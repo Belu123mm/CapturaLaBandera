@@ -38,6 +38,10 @@ public class PlayerModel : MonoBehaviourPun
     {
         view = GetComponentInChildren<PlayerView>();
         rb = GetComponent<Rigidbody>();
+
+        StartCoroutine(WaitToMoveHor());
+        StartCoroutine(WaitToMoveVer());
+
     }
     public void StartModel(Player p)
     {
@@ -87,8 +91,8 @@ public class PlayerModel : MonoBehaviourPun
                 rb.angularVelocity = Vector3.zero;
             }
             rb.rotation = Quaternion.LookRotation(newDir);
+            view.SetWalkAnimX(dir);
             // rb.AddTorque(Vector3.up * dir * rotateSpeed * Time.deltaTime);
-            StartCoroutine(WaitToMoveHor());
         }
     }
     public void MoveVertical(float dir, Vector3 camForward)
@@ -106,7 +110,6 @@ public class PlayerModel : MonoBehaviourPun
             view.SetWalkAnimY(dir);
 
             //lo llama MoveY
-            StartCoroutine(WaitToMoveVer());
 
         }
     }
@@ -127,6 +130,7 @@ public class PlayerModel : MonoBehaviourPun
     [PunRPC]
     void Attack()
     {
+        StopCoroutine(WaitToAttack());
         StartCoroutine(WaitToAttack());
         //La idea es que si activaste el collidrer, este detecte ls colision y le avise al server
         //enviar el playerModel dañado y el daño realizado a RequestDamage(PlayerModel ,float damage)
@@ -135,6 +139,7 @@ public class PlayerModel : MonoBehaviourPun
     {
         if (!_isDashing)
         {
+            StopCoroutine(DashTime(dir));
             StartCoroutine(DashTime(dir));
         }
     }
@@ -240,13 +245,19 @@ public class PlayerModel : MonoBehaviourPun
     //Para no llenar la red con paquetes
     IEnumerator WaitToMoveHor()
     {
+        if ( _isMovingHor ) {
         yield return new WaitForFixedUpdate();
         _isMovingHor = false;
+
+        }
     }
     IEnumerator WaitToMoveVer()
     {
+        if ( _isMovingVer ) {
         yield return new WaitForFixedUpdate();
         _isMovingVer = false;
+
+        }
     }
     IEnumerator DashTime(float dir)
     {
