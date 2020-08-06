@@ -105,13 +105,13 @@ Material:
     - _OcclusionStrength: 1
     - _Opacity: 0
     - _Parallax: 0.02
-    - _PenguinMetallic: 0.7644044
+    - _PenguinMetallic: 0.13323334
     - _PenguinSmoothness: 0.7269091
     - _ReflexionTiling: 0
     - _RefraccionIndex: 0.1
     - _ShadowDepthDistance: 0
     - _ShadowfallOff: 0
-    - _SkinIntensity: 0.3000875
+    - _SkinIntensity: 0.7894013
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -127,7 +127,7 @@ Material:
     - _Shadowcolor: {r: 0, g: 1, b: 0.03440881, a: 0}
     - _Watercolor: {r: 1, g: 0, b: 0.009047508, a: 0}
     - _WaterreflexionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _baseColor: {r: 0, g: 0.5759282, b: 1, a: 1}
-    - _clothesColor: {r: 1, g: 0.6605424, b: 0.9367415, a: 1}
-    - _patternColor: {r: 0.40496773, g: 0.19225523, b: 0.53318334, a: 1}
+    - _baseColor: {r: 0.11323583, g: 1, b: 0, a: 1}
+    - _clothesColor: {r: 0.4206974, g: 0.28977698, b: 0.08334021, a: 1}
+    - _patternColor: {r: 0.19740613, g: 0.04468039, b: 0.28946382, a: 1}
     - _skinColor: {r: 0.6320754, g: 0.24746348, b: 0.43976945, a: 1}

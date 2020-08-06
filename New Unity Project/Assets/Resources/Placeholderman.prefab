@@ -665,7 +665,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: isMoving
   - Type: 9
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: attack
   - Type: 9
     SynchronizeType: 0
@@ -956,6 +956,7 @@ MonoBehaviour:
   hasObject: 0
   hasTheFlag: 0
   hammer: {fileID: 4682152275939032579}
+  waaaForce: 100
   view: {fileID: 0}
 --- !u!114 &6620730120043307398
 MonoBehaviour:

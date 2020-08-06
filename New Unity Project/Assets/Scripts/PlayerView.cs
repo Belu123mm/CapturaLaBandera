@@ -132,7 +132,20 @@ public class PlayerView : MonoBehaviourPun, IPunObservable {
        // Debug.Log("aaaaaaaaaaanimationy" + anim.GetBool("isMoving"));
     }
     public void SetAttack() {
+        photonView.RPC("TriggetAttack", RpcTarget.All);
+    }
+    [PunRPC]
+    void TriggerAttack() {
         anim.SetTrigger("attack");
+
+    }
+    public void SetAbility() {
+        photonView.RPC("TriggerAbility", RpcTarget.All);
+    }
+    [PunRPC]
+    void TriggerAbility() {
+        anim.SetTrigger("waaa");
+
     }
     public void IsNotMovingX() {
         isWalkingx = false;

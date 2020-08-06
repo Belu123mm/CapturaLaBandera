@@ -20,6 +20,7 @@ public class PlayerModel : MonoBehaviourPun
     public bool hasObject;
     public bool hasTheFlag;
     public GameObject hammer;
+    public float waaaForce;
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     // sipi pero algunas cosas del view hay que mostrarlas a todos
     public PlayerView view;
@@ -193,11 +194,13 @@ public class PlayerModel : MonoBehaviourPun
                 Vector3 dir = penguinz [ i ].transform.position - transform.position;
                 Debug.Log(penguinz [ i ].name);
                 if(penguinz[i].attachedRigidbody != null ) {
-                    penguinz [ i ].GetComponent<Rigidbody>().AddForce(dir.normalized * 50);
+                    penguinz [ i ].GetComponent<Rigidbody>().AddForce(dir.normalized * waaaForce);
 
                 }
             }
         }
+
+        view.SetAbility();
 
 
         PlayerModel pM = null;
