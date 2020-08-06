@@ -134,18 +134,18 @@ Material:
     - _FlowmapIntensity: 0.5
     - _FlowmapIntensity1: 0.05
     - _FlowmapTiling: 10
-    - _FoamDistance: 1.46
+    - _FoamDistance: 1.72
     - _FoamFallOff: 2.14
     - _FoamFallOff1: 0.69
-    - _FoamIntensity: 0.264
+    - _FoamIntensity: 0.348
     - _FoamTiling: 0
     - _FoamTiling1: 0
-    - _FoamfallOf: 0.51
-    - _Foamnoisemultiplier: 1.38
-    - _Foamnoisetiling: 1
-    - _FoamspeedY: 5
-    - _Foamspeedx: 5
-    - _Fresnelpower: 4.06
+    - _FoamfallOf: 0.07
+    - _Foamnoisemultiplier: 1.75
+    - _Foamnoisetiling: 80
+    - _FoamspeedY: 10
+    - _Foamspeedx: 10
+    - _Fresnelpower: 4
     - _Fresnelscale: 1.5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -156,7 +156,7 @@ Material:
     - _Mode: 0
     - _NoiseMultiplier: 0.9
     - _NormalIntensity: 0.11
-    - _NormalTiling: 3.57
+    - _NormalTiling: 3
     - _NormalspeedX: 2
     - _NormalspeedY: 2
     - _OcclusionStrength: 1
@@ -165,8 +165,8 @@ Material:
     - _Parallax: 0.02
     - _ReflexionTiling: 30
     - _RefraccionIndex: 0.082
-    - _ShadowDepthDistance: 0.3
-    - _ShadowfallOff: 2.14
+    - _ShadowDepthDistance: 0.33
+    - _ShadowfallOff: 1.9
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpeedX: 2
@@ -178,7 +178,7 @@ Material:
     - _Tiling1: 5
     - _Tiling2: 3
     - _UVSec: 0
-    - _Waterreflexion: 0.236
+    - _Waterreflexion: 0.358
     - _ZWrite: 1
     - __dirty: 0
     - _asdfasdf: 28

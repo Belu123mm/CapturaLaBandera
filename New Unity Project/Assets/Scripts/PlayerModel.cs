@@ -39,8 +39,6 @@ public class PlayerModel : MonoBehaviourPun
         view = GetComponentInChildren<PlayerView>();
         rb = GetComponent<Rigidbody>();
 
-        StartCoroutine(WaitToMoveHor());
-        StartCoroutine(WaitToMoveVer());
 
     }
     public void StartModel(Player p)
@@ -92,6 +90,7 @@ public class PlayerModel : MonoBehaviourPun
             }
             rb.rotation = Quaternion.LookRotation(newDir);
             view.SetWalkAnimX(dir);
+            StartCoroutine(WaitToMoveHor());
             // rb.AddTorque(Vector3.up * dir * rotateSpeed * Time.deltaTime);
         }
     }
@@ -108,6 +107,7 @@ public class PlayerModel : MonoBehaviourPun
             Debug.DrawLine(transform.position, (transform.position + camForward), Color.green);
 
             view.SetWalkAnimY(dir);
+            StartCoroutine(WaitToMoveVer());
 
             //lo llama MoveY
 
