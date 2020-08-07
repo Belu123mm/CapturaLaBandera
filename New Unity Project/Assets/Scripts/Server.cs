@@ -248,19 +248,20 @@ public class Server : MonoBehaviourPun
         obj.transform.parent = model.transform;       
     }
 
-    public void RequestHeal(PlayerModel model,int heal)
+    public void RequestHeal(PlayerModel model,int heal,Heal coso)
     {
         int modelID = model.photonView.ViewID;
-
-        photonView.RPC("Heal", _server, modelID, heal);
+        int cosoID = coso.photonView.ViewID;
+        photonView.RPC("Heal", _server, modelID, heal,cosoID);
     }
     [PunRPC]
-    void Heal(int modeID,int heal)
+    void Heal(int modeID,int heal,int coso)
     {
+        Heal h = PhotonNetwork.GetPhotonView(coso).GetComponent<Heal>();
         PlayerModel model = PhotonNetwork.GetPhotonView(modeID).GetComponent<PlayerModel>();
         model.addLife(heal);
         PhotonNetwork.Instantiate("Heal", model.transform.position , Quaternion.identity);
-
+        PhotonNetwork.Destroy(h.gameObject);
     }
 
     public void GetWinner(PlayerModel model)

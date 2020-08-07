@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8702047405361673800}
   - component: {fileID: 348342877039823637}
   - component: {fileID: 3400971551342413480}
-  - component: {fileID: 5495349547406144714}
   - component: {fileID: 8189324464690009179}
   m_Layer: 0
   m_Name: Boink
@@ -44,7 +43,7 @@ ParticleSystem:
   serializedVersion: 6
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4813,19 +4812,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &5495349547406144714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4613618557399422128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5189e9876c937db448f4973f487e4d81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  secs: 2
 --- !u!114 &8189324464690009179
 MonoBehaviour:
   m_ObjectHideFlags: 0

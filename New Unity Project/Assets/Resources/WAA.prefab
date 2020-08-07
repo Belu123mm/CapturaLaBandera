@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8415612691690850582}
   - component: {fileID: 638439284399846475}
   - component: {fileID: 2538636827691645430}
-  - component: {fileID: 4632733325156322196}
   - component: {fileID: 9056723543193168645}
   m_Layer: 0
   m_Name: WAA
@@ -44,7 +43,7 @@ ParticleSystem:
   serializedVersion: 6
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4755,19 +4754,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &4632733325156322196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5480736193115122670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5189e9876c937db448f4973f487e4d81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  secs: 2
 --- !u!114 &9056723543193168645
 MonoBehaviour:
   m_ObjectHideFlags: 0

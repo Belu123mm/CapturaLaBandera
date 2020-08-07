@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Heal : MonoBehaviour
+using Photon.Pun;
+public class Heal : MonoBehaviourPun
 {
     public int heal;
     private void OnCollisionEnter(Collision collision)
@@ -10,8 +10,8 @@ public class Heal : MonoBehaviour
         if (collision.gameObject.layer == 9)
         {
             PlayerModel model=collision.gameObject.GetComponent<PlayerModel>();
-            Server.Instance.RequestHeal(model,heal);
-            gameObject.GetComponent<Destroyer>();
+            Server.Instance.RequestHeal(model,heal,this);
+            
         }
     }
 }

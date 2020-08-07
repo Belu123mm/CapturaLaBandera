@@ -5,12 +5,11 @@ using Photon.Pun;
 
 public class Destroyer : MonoBehaviourPun
 {
-    public float secs;
-    // Start is called before the first frame update
+   
     void Start()
     {
-
-        Destroy(this.gameObject, secs);
+        PhotonNetwork.Destroy(gameObject.GetComponent<PhotonView>());
+        
 
     }
 
