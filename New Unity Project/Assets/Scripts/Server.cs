@@ -167,8 +167,7 @@ public class Server : MonoBehaviourPun
         if (flag != null)
         {
             int flagID = flag.photonView.ViewID;
-            photonView.RPC("RemoveFlag", RpcTarget.AllBuffered, modelID, flagID);
-            flag.gameObject.layer = 8;
+            photonView.RPC("RemoveFlag", RpcTarget.AllBuffered, modelID, flagID);           
 
         }
     }
@@ -244,9 +243,7 @@ public class Server : MonoBehaviourPun
         Grabeable obj = PhotonNetwork.GetPhotonView(objID).GetComponent<Grabeable>();
         obj.grabed = true;
         PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
-        obj.transform.parent = model.transform;
-        obj.gameObject.layer = 11;
-       
+        obj.transform.parent = model.transform;       
     }
 
     public void GetWinner(PlayerModel model)
