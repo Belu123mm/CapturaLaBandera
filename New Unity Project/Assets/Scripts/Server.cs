@@ -254,6 +254,7 @@ public class Server : MonoBehaviourPun
 
         photonView.RPC("Heal", _server, modelID, heal);
     }
+    [PunRPC]
     void Heal(int modeID,int heal)
     {
         PlayerModel model = PhotonNetwork.GetPhotonView(modeID).GetComponent<PlayerModel>();

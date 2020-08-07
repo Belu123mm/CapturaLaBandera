@@ -11,6 +11,7 @@ public class Heal : MonoBehaviour
         {
             PlayerModel model=collision.gameObject.GetComponent<PlayerModel>();
             Server.Instance.RequestHeal(model,heal);
+            gameObject.GetComponent<Destroyer>();
         }
     }
 }

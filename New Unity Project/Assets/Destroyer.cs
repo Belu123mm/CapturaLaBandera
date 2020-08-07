@@ -9,14 +9,9 @@ public class Destroyer : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        if ( PhotonNetwork.IsMasterClient ) {
-            Destroy(this.gameObject, secs);
-        }
+
+        Destroy(this.gameObject, secs);
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
