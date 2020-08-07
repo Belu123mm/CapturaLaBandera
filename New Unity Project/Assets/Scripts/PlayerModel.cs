@@ -274,7 +274,11 @@ public class PlayerModel : MonoBehaviourPun
         
         view.SetDamage(life);        
     }
-
+    public void addLife(int heal)
+    {
+        life += heal;
+        view.SetDamage(life);
+    }
     IEnumerator WaitToAttack()
     {
 

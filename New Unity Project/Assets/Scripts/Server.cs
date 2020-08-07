@@ -248,6 +248,18 @@ public class Server : MonoBehaviourPun
         obj.transform.parent = model.transform;       
     }
 
+    public void RequestHeal(PlayerModel model,int heal)
+    {
+        int modelID = model.photonView.ViewID;
+
+        photonView.RPC("Heal", _server, modelID, heal);
+    }
+    void Heal(int modeID,int heal)
+    {
+        PlayerModel model = PhotonNetwork.GetPhotonView(modeID).GetComponent<PlayerModel>();
+        model.addLife(heal);
+    }
+    
     public void GetWinner(PlayerModel model)
     {
         int modelID = model.photonView.ViewID;
