@@ -162,19 +162,22 @@ public class PlayerModel : MonoBehaviourPun
             //Smash
             Collider [] collisions = Physics.OverlapSphere(transform.position, radiusRange);
             //Solo el 1ro
-            Grabeable g = collisions.Where(x => x.GetComponent<Grabeable>() == true).Select(x => x.GetComponent<Grabeable>()).First();
+            if ( collisions.Length < 0 ) {
+                Grabeable g = collisions.Where(x => x.GetComponent<Grabeable>() == true).Select(x => x.GetComponent<Grabeable>()).First();
 
-            if ( g != null && !g.grabed ) {
-                hasObject = true;
-                //Server.Instance.CheckedGrab(g, this);
-                g.grabed = true;
-                g.transform.parent = transform;
-                g.transform.position = grabPoint.position;
 
-                _currentObject = g;
-                Debug.Log("PESCAO");
-                if ( g.IsFlag ) {
-                    hasTheFlag = true;
+                if ( g != null && !g.grabed ) {
+                    hasObject = true;
+                    //Server.Instance.CheckedGrab(g, this);
+                    g.grabed = true;
+                    g.transform.parent = transform;
+                    g.transform.position = grabPoint.position;
+
+                    _currentObject = g;
+                    Debug.Log("PESCAO");
+                    if ( g.IsFlag ) {
+                        hasTheFlag = true;
+                    }
                 }
             }
         }
@@ -233,6 +236,7 @@ public class PlayerModel : MonoBehaviourPun
         Debug.DrawLine(transform.position, transform.position - transform.forward * radiusRange);
         Debug.DrawLine(transform.position, transform.position + transform.right * radiusRange);
         Debug.DrawLine(transform.position, transform.position - transform.right * radiusRange);
+        if (penguinz.Length < 0 ) {
 
         for ( int i = 0; i< penguinz.Length;i++ ) {
             if(penguinz[i].gameObject != this ) {
@@ -244,28 +248,10 @@ public class PlayerModel : MonoBehaviourPun
                 }
             }
         }
+        }
 
         view.SetAbility();
 
-
-        PlayerModel pM = null;
-        Grabeable flag = null;
-        Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
-        for (int i = 0; i < collisions.Length; i++)
-        {
-            if (collisions[i].GetComponent<PlayerModel>() != null && collisions[i].gameObject != this)
-            {
-                pM = collisions[i].GetComponent<PlayerModel>();
-            }
-            if (collisions[i].GetComponent<Grabeable>() != null)
-            {
-                flag = collisions[i].GetComponent<Grabeable>();
-            }
-        }
-        if (pM != null && flag != null)
-        {
-            Server.Instance.RequestRemove(pM, flag);
-        }
     }
 
     public void GetDamage(int damage)
