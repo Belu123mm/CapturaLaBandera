@@ -8,14 +8,14 @@ public class DamageDealer : MonoBehaviour
     private bool hit;
 
 
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerExit(Collider other)
     {
         if (!hit)
         {
 
             if (other.gameObject.layer == 9 && other.gameObject != dad)
             {
-                StartCoroutine(HitCD());
+               // StartCoroutine(HitCD());
                 PlayerModel m = other.gameObject.GetComponent<PlayerModel>();
                 Server.Instance.RequestDamage(m, 1);
             }
@@ -26,7 +26,7 @@ public class DamageDealer : MonoBehaviour
     private IEnumerator HitCD()
     {
         hit = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1);
         hit = false;
     }
 

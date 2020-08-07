@@ -11,6 +11,7 @@ public class PlayerModel : MonoBehaviourPun
     //Variables
     public Transform grabPoint;//usted sabe,ahi va la posicion del objeto agarrado
     public int life = 3;    //Cada hit es de 1, asi que ps 3 hits de base pero vemos, you know
+   
     public float rotateSpeed;
     public float jumpForce;
     public float DashForce;
@@ -21,10 +22,11 @@ public class PlayerModel : MonoBehaviourPun
     public bool hasTheFlag;
     public GameObject hammer;
     public float waaaForce;
+    public Vector3 inicialPos;
     //Esto seria de manera local nada mas, cada player sincroniza esto?
     // sipi pero algunas cosas del view hay que mostrarlas a todos
     public PlayerView view;
-    private Grabeable _currentObject;
+    public Grabeable _currentObject;
     private float timeWithFlag;
     private float totalTime = 60;
     private bool _isMovingHor;
@@ -38,7 +40,7 @@ public class PlayerModel : MonoBehaviourPun
     {
         view = GetComponentInChildren<PlayerView>();
         rb = GetComponent<Rigidbody>();
-
+        inicialPos = transform.position;
 
     }
     public void StartModel(Player p)
@@ -268,7 +270,8 @@ public class PlayerModel : MonoBehaviourPun
     public void GetDamage(int damage)
     {
         life -= damage;
-        view.SetDamage(life);
+        
+        view.SetDamage(life);        
     }
 
     IEnumerator WaitToAttack()

@@ -6,7 +6,7 @@ using Photon.Pun;
 public class Trap : MonoBehaviourPun
 {
     private Animator anim;
-    private Grabeable gb;
+    public Grabeable gb;
 
     private bool grabed;
     private bool actived;
@@ -48,7 +48,7 @@ public class Trap : MonoBehaviourPun
         yield return new WaitForSeconds(3);
         anim.SetBool("IsOn", true);
         yield return new WaitForSeconds(0.6f);
-        DamageDealer dd = gameObject.AddComponent<DamageDealer>();
+        DamageDealer dd = gameObject.AddComponent<DamageDealer>();     
         dd.dad = this.gameObject;
     }
 }

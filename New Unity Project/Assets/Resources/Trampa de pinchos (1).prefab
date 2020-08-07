@@ -952,6 +952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsFlag: 0
   grabed: 0
+  myCol: {fileID: 2639806814269403629}
 --- !u!65 &2639806814269403629
 BoxCollider:
   m_ObjectHideFlags: 0

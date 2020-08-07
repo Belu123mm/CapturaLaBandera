@@ -63,8 +63,9 @@ public class Server : MonoBehaviourPun
     {
         PlayerModel character = PhotonNetwork.Instantiate(prefab.name, spawns[_dic.Count].position, spawns[_dic.Count].rotation).GetComponent<PlayerModel>();
         _dic.Add(player, character);
-        //  maxLife = character.life;        
+        maxLife = character.life;
     }
+
 
     public void RequestAttack(Player player)
     {
@@ -140,8 +141,8 @@ public class Server : MonoBehaviourPun
         if (!_dic.ContainsKey(player)) return;
         _dic[player].Jump();
     }
-    public void RequestDamage(PlayerModel character,int damage)//pasa un model y su daño ,convierte el moden a int para despues obtener su view
-    {     
+    public void RequestDamage(PlayerModel character, int damage)//pasa un model y su daño ,convierte el moden a int para despues obtener su view
+    {
         int charId = character.gameObject.GetPhotonView().ViewID;
         photonView.RPC("Damage", _server, charId, damage);
     }
@@ -151,16 +152,28 @@ public class Server : MonoBehaviourPun
     {
         PlayerModel model = PhotonNetwork.GetPhotonView(ID).GetComponent<PlayerModel>();
         model.GetDamage(damage);
+        if (model.life <= 0 || damage >= 3)
+        {
+            RequestRemove(model, model._currentObject);
+            Debug.Log("se re murio");
+            model.transform.position = model.inicialPos;
+            model.life = 3;
+            model.view.SetDamage(3);
+        }
     }
     public void RequestRemove(PlayerModel pM, Grabeable flag)//pido sacarle la bandera a este model
     {
         int modelID = pM.photonView.ViewID;
-        int flagID = flag.photonView.ViewID;
-        photonView.RPC("RemoveFlag", RpcTarget.AllBuffered, modelID, flagID);
+        if (flag != null)
+        {
+            int flagID = flag.photonView.ViewID;
+            photonView.RPC("RemoveFlag", RpcTarget.AllBuffered, modelID, flagID);
+        }
     }
     public void RequestTrap(Trap t)
     {
         int trapID = t.photonView.ViewID;
+
         photonView.RPC("ActiveTrap", RpcTarget.All, trapID);
     }
     [PunRPC]
@@ -168,19 +181,21 @@ public class Server : MonoBehaviourPun
     {
         Trap t = PhotonNetwork.GetPhotonView(trapID).GetComponent<Trap>();
         t.StartTrap();
+        Destroy(t.GetComponent<Grabeable>());
     }
     [PunRPC]
     void RemoveFlag(int modelID, int flatID)
     {
-       PlayerModel model= PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
+        PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
         Grabeable flag = PhotonNetwork.GetPhotonView(flatID).GetComponent<Grabeable>();
         model.hasTheFlag = false;
-        flag.grabed=false;
+        flag.grabed = false;
+        flag.myCol.enabled = true;
         flag.transform.SetParent(null);
     }
     public void RequestAbility(Player player)
-    {     
-        photonView.RPC("Ability", _server,player);
+    {
+        photonView.RPC("Ability", _server, player);
     }
     [PunRPC]
     void Ability(Player player)
@@ -188,12 +203,12 @@ public class Server : MonoBehaviourPun
         if (!_dic.ContainsKey(player)) return;
         _dic[player].Ability();
     }
-    public void RequestDash(Player player,float x)
+    public void RequestDash(Player player, float x)
     {
-        photonView.RPC("Dash", _server,player,x);
+        photonView.RPC("Dash", _server, player, x);
     }
     [PunRPC]
-    void Dash(Player player,float x)
+    void Dash(Player player, float x)
     {
         if (!_dic.ContainsKey(player)) return;
         _dic[player].Dash(x);
@@ -215,6 +230,7 @@ public class Server : MonoBehaviourPun
     [PunRPC]
     void Grab(Player player)
     {
+
         if (!_dic.ContainsKey(player)) return;
         _dic[player].Grab();
     }
@@ -223,6 +239,7 @@ public class Server : MonoBehaviourPun
     {
         Grabeable obj = PhotonNetwork.GetPhotonView(objID).GetComponent<Grabeable>();
         obj.grabed = true;
+        obj.myCol.enabled = false;
         PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
         obj.transform.parent = model.transform;
         obj.transform.position = model.grabPoint.position;
@@ -276,22 +293,26 @@ public class Server : MonoBehaviourPun
 
     }
 
-    public void PlayerRequestToStopX( Player p ) {
+    public void PlayerRequestToStopX(Player p)
+    {
         photonView.RPC("AskToStopWalkingX", _server, p);
     }
-    public void PlayerRequestToStopY( Player p ) {
+    public void PlayerRequestToStopY(Player p)
+    {
         photonView.RPC("AskToStopWalkingY", _server, p);
     }
 
     [PunRPC]
-    void AskToStopWalkingX( Player p ) {
-        if ( !_dic.ContainsKey(p) ) return;
-        _dic [ p ].StopWalkingX();
+    void AskToStopWalkingX(Player p)
+    {
+        if (!_dic.ContainsKey(p)) return;
+        _dic[p].StopWalkingX();
     }
     [PunRPC]
-    void AskToStopWalkingY( Player p ) {
-        if ( !_dic.ContainsKey(p) ) return;
-        _dic [ p ].StopWalkingY();
+    void AskToStopWalkingY(Player p)
+    {
+        if (!_dic.ContainsKey(p)) return;
+        _dic[p].StopWalkingY();
     }
 
 
