@@ -258,8 +258,10 @@ public class Server : MonoBehaviourPun
     {
         PlayerModel model = PhotonNetwork.GetPhotonView(modeID).GetComponent<PlayerModel>();
         model.addLife(heal);
+        PhotonNetwork.Instantiate("Heal", model.transform.position , Quaternion.identity);
+
     }
-    
+
     public void GetWinner(PlayerModel model)
     {
         int modelID = model.photonView.ViewID;
