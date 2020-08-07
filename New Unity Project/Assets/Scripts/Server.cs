@@ -129,6 +129,8 @@ public class Server : MonoBehaviourPun
     {
         if (!_dic.ContainsKey(player)) return;
         _dic[player].PrepAttack();
+        PhotonNetwork.Instantiate("Boink", _dic [ player ].transform.position + _dic [ player ].transform.forward + _dic [ player ].transform.up * 2, _dic [ player ].transform.rotation);
+
     }
 
     public void RequestJump(Player player)
