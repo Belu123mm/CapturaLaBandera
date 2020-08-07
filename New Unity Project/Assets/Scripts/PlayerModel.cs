@@ -162,8 +162,10 @@ public class PlayerModel : MonoBehaviourPun
             //Smash
             Collider [] collisions = Physics.OverlapSphere(transform.position, radiusRange);
             //Solo el 1ro
-            if ( collisions.Length < 0 ) {
-                Grabeable g = collisions.Where(x => x.GetComponent<Grabeable>() == true).Select(x => x.GetComponent<Grabeable>()).First();
+            var gList = collisions.Where(x => x.GetComponent<Grabeable>() == true).Select(x => x.GetComponent<Grabeable>());
+            if ( gList.Any() ) {
+                Grabeable g = gList.First();
+
 
 
                 if ( g != null && !g.grabed ) {
@@ -180,7 +182,7 @@ public class PlayerModel : MonoBehaviourPun
                     }
                 }
             }
-        }
+            }
 
         //envia el componente Grabeable y este model a RequestGrab
 
@@ -236,14 +238,15 @@ public class PlayerModel : MonoBehaviourPun
         Debug.DrawLine(transform.position, transform.position - transform.forward * radiusRange);
         Debug.DrawLine(transform.position, transform.position + transform.right * radiusRange);
         Debug.DrawLine(transform.position, transform.position - transform.right * radiusRange);
-        if (penguinz.Length < 0 ) {
+        if (penguinz.Length > 0 ) {
 
         for ( int i = 0; i< penguinz.Length;i++ ) {
             if(penguinz[i].gameObject != this ) {
                 Vector3 dir = penguinz [ i ].transform.position - transform.position;
                 Debug.Log(penguinz [ i ].name);
-                if(penguinz[i].attachedRigidbody != null ) {
-                    penguinz [ i ].GetComponent<Rigidbody>().AddForce(dir.normalized * waaaForce);
+                    Rigidbody rb = penguinz [ i ].GetComponent<Rigidbody>();
+                if (rb != null ) {
+                    rb.AddForce(dir.normalized * waaaForce);
 
                 }
             }
