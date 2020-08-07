@@ -59,6 +59,7 @@ public class PlayerModel : MonoBehaviourPun
         if (hasTheFlag)
         {
             timeWithFlag += Time.deltaTime;
+            UpdateView(timeWithFlag);
             //llamar al server a sincronizar
         }
         if (timeWithFlag >= totalTime)

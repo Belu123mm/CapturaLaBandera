@@ -168,6 +168,8 @@ public class Server : MonoBehaviourPun
         {
             int flagID = flag.photonView.ViewID;
             photonView.RPC("RemoveFlag", RpcTarget.AllBuffered, modelID, flagID);
+            flag.gameObject.layer = 8;
+
         }
     }
     public void RequestTrap(Trap t)
@@ -190,7 +192,8 @@ public class Server : MonoBehaviourPun
         Grabeable flag = PhotonNetwork.GetPhotonView(flatID).GetComponent<Grabeable>();
         model.hasTheFlag = false;
         flag.grabed = false;
-        flag.myCol.enabled = true;
+        
+
         flag.transform.SetParent(null);
     }
     public void RequestAbility(Player player)
@@ -224,7 +227,7 @@ public class Server : MonoBehaviourPun
     {
         int objID = obj.gameObject.GetPhotonView().ViewID;
         int modelID = model.gameObject.GetPhotonView().ViewID;
-        photonView.RPC("GrabObject", _server, objID, modelID);
+        photonView.RPC("GrabObject", RpcTarget.AllBuffered, objID, modelID);
     }
 
     [PunRPC]
@@ -239,10 +242,10 @@ public class Server : MonoBehaviourPun
     {
         Grabeable obj = PhotonNetwork.GetPhotonView(objID).GetComponent<Grabeable>();
         obj.grabed = true;
-        obj.myCol.enabled = false;
         PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
         obj.transform.parent = model.transform;
-        obj.transform.position = model.grabPoint.position;
+        obj.gameObject.layer = 11;
+       
     }
 
     public void GetWinner(PlayerModel model)
