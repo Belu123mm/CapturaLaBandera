@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 638439284399846475}
   - component: {fileID: 2538636827691645430}
   - component: {fileID: 4632733325156322196}
+  - component: {fileID: 9056723543193168645}
   m_Layer: 0
   m_Name: WAA
   m_TagString: Untagged
@@ -4766,3 +4767,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5189e9876c937db448f4973f487e4d81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  secs: 0
+--- !u!114 &9056723543193168645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480736193115122670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

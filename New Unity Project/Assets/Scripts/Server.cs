@@ -205,6 +205,7 @@ public class Server : MonoBehaviourPun
     {
         if (!_dic.ContainsKey(player)) return;
         _dic[player].Ability();
+        PhotonNetwork.Instantiate("WAA", _dic [ player ].transform.position + _dic [ player ].transform.forward + _dic [ player ].transform.up * 2, _dic [ player ].transform.rotation);
     }
     public void RequestDash(Player player, float x)
     {
