@@ -261,7 +261,7 @@ public class Server : MonoBehaviourPun
         PlayerModel model = PhotonNetwork.GetPhotonView(modeID).GetComponent<PlayerModel>();
         model.addLife(heal);
         PhotonNetwork.Instantiate("Heal", model.transform.position , Quaternion.identity);
-        PhotonNetwork.Destroy(h.gameObject);
+        h.DestroyTime();
     }
 
     public void GetWinner(PlayerModel model)

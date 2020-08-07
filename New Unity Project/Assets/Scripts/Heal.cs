@@ -11,7 +11,15 @@ public class Heal : MonoBehaviourPun
         {
             PlayerModel model=collision.gameObject.GetComponent<PlayerModel>();
             Server.Instance.RequestHeal(model,heal,this);
-            
+
         }
     }
+    public void DestroyTime() {
+        photonView.RPC("DestroyMe", RpcTarget.All);
+    }
+    [PunRPC]
+    void DestroyMe() {
+        Destroy(this.gameObject);
+    }
+
 }

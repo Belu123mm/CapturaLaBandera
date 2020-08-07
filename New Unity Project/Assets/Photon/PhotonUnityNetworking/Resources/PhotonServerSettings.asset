@@ -66,6 +66,7 @@ MonoBehaviour:
   - TriggerAbility
   - TriggerAttack
   - Heal
+  - DestroyMe
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
