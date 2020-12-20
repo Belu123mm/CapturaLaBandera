@@ -991,6 +991,11 @@ PrefabInstance:
       propertyPath: m_textInfo.wordCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2362565958276845468, guid: 798bcf2cd93b17045aa602db9e06086a,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2362565959175794503, guid: 798bcf2cd93b17045aa602db9e06086a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1100,6 +1105,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2362565959370358193, guid: 798bcf2cd93b17045aa602db9e06086a,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2362565959370358195, guid: 798bcf2cd93b17045aa602db9e06086a,
         type: 3}

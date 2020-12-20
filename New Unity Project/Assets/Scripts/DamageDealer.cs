@@ -12,7 +12,6 @@ public class DamageDealer : MonoBehaviour
     {
         if (!hit)
         {
-
             if (other.gameObject.layer == 9 && other.gameObject != dad)
             {
                // StartCoroutine(HitCD());

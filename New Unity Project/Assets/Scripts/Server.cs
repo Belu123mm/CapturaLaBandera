@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine.Tilemaps;
-using System.Linq;
 public class Server : MonoBehaviourPun
 {
     public int maxLife;
     public Transform[] spawns;
     public static Server Instance;
     Player _server;
-    // public Animator winScreen;
     Dictionary<Player, PlayerModel> _dic = new Dictionary<Player, PlayerModel>();
     public GameObject prefab;
     public Animator endAnim;
@@ -21,21 +18,15 @@ public class Server : MonoBehaviourPun
     }
     void Start()
     {
-        //endAnim = GameObject.Find("EndImage").GetComponent<Animator>();
         if (Instance == null)
         {
             if (photonView.IsMine)
-            {
                 photonView.RPC("SetServer", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer);
-            }
         }
         else
         {
             if (photonView.IsMine)
-            {
-
                 PhotonNetwork.Destroy(gameObject);  //Me destrushe
-            }
         }
         if (PhotonNetwork.IsMasterClient)
         {
@@ -54,9 +45,7 @@ public class Server : MonoBehaviourPun
         _server = serverPlayer;
         DontDestroyOnLoad(this);
         if (serverPlayer != PhotonNetwork.LocalPlayer)
-        {
             photonView.RPC("AddPlayer", _server, PhotonNetwork.LocalPlayer);
-        }
     }
     [PunRPC]
     public void AddPlayer(Player player)
@@ -66,39 +55,22 @@ public class Server : MonoBehaviourPun
         maxLife = character.life;
     }
 
-
-    public void RequestAttack(Player player)
-    {
-        photonView.RPC("Attack", RpcTarget.All, player);
-    }
+    public void RequestAttack(Player player) => photonView.RPC("Attack", RpcTarget.All, player);
     //Ps por si acaso comento esto para que despues no me reten
-    public void RequestMoveX(Player player, float dir, Vector3 camRight, Vector3 currentDir)
-    {
-        photonView.RPC("MoveX", _server, player, dir, camRight, currentDir);
-    }
-
-    public void RequestMoveY(Player player, float dir, Vector3 camForward)
-    {
-        photonView.RPC("MoveY", _server, player, dir, camForward);
-    }
+    public void RequestMoveX(Player player, float dir, Vector3 camRight, Vector3 currentDir) => photonView.RPC("MoveX", _server, player, dir, camRight, currentDir);
+    public void RequestMoveY(Player player, float dir, Vector3 camForward) => photonView.RPC("MoveY", _server, player, dir, camForward);
 
     void setCamHandler() //hago un rpc por cada jugador en el diccionario y les paso el ID de su model para que cada uno de forma separada active la camara
     {
         foreach (var Player in _dic)
-        {
             photonView.RPC("StartPlayer", Player.Key, Player.Value.gameObject.GetPhotonView().ViewID);
-            //Aca iria lo de StartModel en caso de que el planController no funcionase
-        }
     }
 
-    //Y esto igual uwu
     [PunRPC]
     void StartPlayer(int modelID)
     {
-
         PlayerController controller = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerController>();
         controller.StartPlayer();
-
     }
     [PunRPC]
     void MoveX(Player player, float dir, Vector3 camRight, Vector3 currentDir)
@@ -112,18 +84,6 @@ public class Server : MonoBehaviourPun
         if (!_dic.ContainsKey(player)) return;
         _dic[player].MoveVertical(dir, camForward);
     }
-    /*
-    void MoveX( Player player, Vector3 newDir ) {
-        Debug.Log("se movio " + player);
-        if ( !_dic.ContainsKey(player) ) return;
-        _dic [ player ].MoveHorizontal(newDir);
-    }
-    [PunRPC]
-    void MoveY( Player player, Vector3 camForward ) {
-        if ( !_dic.ContainsKey(player) ) return;
-        _dic [ player ].MoveVertical(camForward);
-    }
-    */
     [PunRPC]
     void Attack(Player player)
     {
@@ -133,10 +93,7 @@ public class Server : MonoBehaviourPun
 
     }
 
-    public void RequestJump(Player player)
-    {
-        photonView.RPC("Jump", _server, player);
-    }
+    public void RequestJump(Player player) => photonView.RPC("Jump", _server, player);
     [PunRPC]
     void Jump(Player player)
     {
@@ -148,7 +105,6 @@ public class Server : MonoBehaviourPun
         int charId = character.gameObject.GetPhotonView().ViewID;
         photonView.RPC("Damage", _server, charId, damage);
     }
-
     [PunRPC]
     void Damage(int ID, int damage)
     {
@@ -170,13 +126,11 @@ public class Server : MonoBehaviourPun
         {
             int flagID = flag.photonView.ViewID;
             photonView.RPC("RemoveFlag", RpcTarget.AllBuffered, modelID, flagID);           
-
         }
     }
     public void RequestTrap(Trap t)
     {
         int trapID = t.photonView.ViewID;
-
         photonView.RPC("ActiveTrap", RpcTarget.All, trapID);
     }
     [PunRPC]
@@ -193,14 +147,9 @@ public class Server : MonoBehaviourPun
         Grabeable flag = PhotonNetwork.GetPhotonView(flatID).GetComponent<Grabeable>();
         model.hasTheFlag = false;
         flag.grabed = false;
-        
-
         flag.transform.SetParent(null);
     }
-    public void RequestAbility(Player player)
-    {
-        photonView.RPC("Ability", _server, player);
-    }
+    public void RequestAbility(Player player) => photonView.RPC("Ability", _server, player);
     [PunRPC]
     void Ability(Player player)
     {
@@ -208,34 +157,23 @@ public class Server : MonoBehaviourPun
         _dic[player].Ability();
         PhotonNetwork.Instantiate("WAA", _dic [ player ].transform.position + _dic [ player ].transform.forward + _dic [ player ].transform.up * 2, _dic [ player ].transform.rotation);
     }
-    public void RequestDash(Player player, float x)
-    {
-        photonView.RPC("Dash", _server, player, x);
-    }
+    public void RequestDash(Player player, float x) => photonView.RPC("Dash", _server, player, x);
     [PunRPC]
     void Dash(Player player, float x)
     {
         if (!_dic.ContainsKey(player)) return;
         _dic[player].Dash(x);
     }
-
-    public void RequestGrab(Player player)
-    {
-        photonView.RPC("Grab", _server, player);
-        Debug.Log("grabbbbbbbin");
-
-    }
+    public void RequestGrab(Player player) => photonView.RPC("Grab", _server, player);
     public void CheckedGrab(Grabeable obj, PlayerModel model)
     {
         int objID = obj.gameObject.GetPhotonView().ViewID;
         int modelID = model.gameObject.GetPhotonView().ViewID;
         photonView.RPC("GrabObject", RpcTarget.AllBuffered, objID, modelID);
     }
-
     [PunRPC]
     void Grab(Player player)
     {
-
         if (!_dic.ContainsKey(player)) return;
         _dic[player].Grab();
     }
@@ -247,7 +185,6 @@ public class Server : MonoBehaviourPun
         PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
         obj.transform.parent = model.transform;       
     }
-
     public void RequestHeal(PlayerModel model,int heal,Heal coso)
     {
         int modelID = model.photonView.ViewID;
@@ -263,24 +200,15 @@ public class Server : MonoBehaviourPun
         PhotonNetwork.Instantiate("Heal", model.transform.position , Quaternion.identity);
         h.DestroyTime();
     }
-
     public void GetWinner(PlayerModel model)
     {
         int modelID = model.photonView.ViewID;
-
         foreach (var item in _dic)
         {
             if (item.Value == model)
-            {
                 photonView.RPC("SetWinner", item.Key, item.Value.photonView.ViewID, true);
-
-            }
             else
-            {
                 photonView.RPC("SetWinner", item.Key, item.Value.photonView.ViewID, false);
-
-            }
-
         }
         endAnim.SetBool("End", true);
     }
@@ -289,37 +217,20 @@ public class Server : MonoBehaviourPun
     {
         PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
         if (!isWinner)
-        {
             model.view.endText.text = "You Lose :c";
-        }
         else
-        {
             model.view.endText.text = "You Win :D";
-        }
 
     }
-
-    public void RequestStartModel(Player p)
-    { //Esto tmbn inicia al view. Es como el start
-        photonView.RPC("StartPlayerModel", RpcTarget.AllBuffered, p);
-    }
-
+    public void RequestStartModel(Player p) => photonView.RPC("StartPlayerModel", RpcTarget.AllBuffered, p);
     [PunRPC]
     private void StartPlayerModel(Player p)
     {
         if (!_dic.ContainsKey(p)) return;
         _dic[p].StartModel(p);
-
     }
-
-    public void PlayerRequestToStopX(Player p)
-    {
-        photonView.RPC("AskToStopWalkingX", _server, p);
-    }
-    public void PlayerRequestToStopY(Player p)
-    {
-        photonView.RPC("AskToStopWalkingY", _server, p);
-    }
+    public void PlayerRequestToStopX(Player p) => photonView.RPC("AskToStopWalkingX", _server, p);
+    public void PlayerRequestToStopY(Player p) => photonView.RPC("AskToStopWalkingY", _server, p);
 
     [PunRPC]
     void AskToStopWalkingX(Player p)
@@ -333,17 +244,10 @@ public class Server : MonoBehaviourPun
         if (!_dic.ContainsKey(p)) return;
         _dic[p].StopWalkingY();
     }
-
-
-
     IEnumerator WaitForPlayers()
     {
         while (_dic.Count < 2)
-        {
             yield return null;
-        }
         setCamHandler();
     }
-
-
 }

@@ -33,8 +33,6 @@ public class Trap : MonoBehaviourPun
                 Debug.Log("trampa activada");
                 actived = true;
             }
-
-
         }
     }
 

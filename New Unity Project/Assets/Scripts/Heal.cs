@@ -14,11 +14,19 @@ public class Heal : MonoBehaviourPun
 
         }
     }
+
+    public void OnCollect(GameObject go)
+    {
+        PlayerModel model = go.GetComponent<PlayerModel>();
+        Server.Instance.RequestHeal(model, heal, this);
+    }
+
     public void DestroyTime() {
         photonView.RPC("DestroyMe", RpcTarget.All);
     }
     [PunRPC]
-    void DestroyMe() {
+    void DestroyMe() 
+    {
         Destroy(this.gameObject);
     }
 
