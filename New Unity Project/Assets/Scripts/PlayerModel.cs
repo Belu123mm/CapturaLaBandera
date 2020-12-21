@@ -11,7 +11,7 @@ public class PlayerModel : MonoBehaviourPun
     //Variables
     public Transform grabPoint;//usted sabe,ahi va la posicion del objeto agarrado
     public int life = 3;    //Cada hit es de 1, asi que ps 3 hits de base pero vemos, you know
-   
+
     public float rotateSpeed;
     public float jumpForce;
     public float DashForce;
@@ -68,49 +68,20 @@ public class PlayerModel : MonoBehaviourPun
         }
     }
 
+    private void FixedUpdate()
+    {
+        rb.velocity = movementVector * Time.deltaTime * movementSpeed;
+    }
+
+    Vector3 movementVector;
     public void MoveHorizontal(float dir, Vector3 camRight, Vector3 currentDir)
     {
         if (!_isMovingHor)
         {
             _isMovingHor = true;
-            /*
-             * Ahora todo esto estaria en el controller, solo le pasaria la nueva direccion a la que mirar
-             * 
-             */
-            /*
-           Debug.DrawLine(currentDir, (transform.position + camRight), Color.red);
-
-
-           ////transform.rotation = Quaternion.LookRotation(newDir);
-           //*/
-           // //RIGIDBODYMOVEMENT
-           // //rb.MoveRotation(Quaternion.LookRotation(newDir));
-
-           // float step = rotateSpeed * dir * Time.deltaTime;
-           // Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
-           // if (rb.angularVelocity.y * dir < 0)//si esta sensilla cuenta matematica da un numero negativo quiere decir que esta girando en direccion contraria a la del input recibido
-           // {
-           //     rb.angularVelocity = Vector3.zero;
-           // }
-           // rb.rotation = Quaternion.LookRotation(newDir);
-           // view.SetWalkAnimX(dir);
-           // StartCoroutine(WaitToMoveHor());
-
-            // rb.AddTorque(Vector3.up * dir * rotateSpeed * Time.deltaTime);
-
-
-
-            _isMovingHor = true;
-
-            //transform.position += Time.deltaTime * camForward * dir * movementSpeed;
-            //RIGIDBODYMOVEMENT
-            rb.position += Time.deltaTime * camRight * dir * movementSpeed;
-
-            //  Debug.DrawLine(transform.position, (transform.position + camForward), Color.green);
-
+            movementVector += camRight * dir;
             view.SetWalkAnimY(dir);
             StartCoroutine(WaitToMoveHor());
-
         }
     }
     public void MoveVertical(float dir, Vector3 camForward)
@@ -118,18 +89,9 @@ public class PlayerModel : MonoBehaviourPun
         if (!_isMovingVer)
         {
             _isMovingVer = true;
-
-            //transform.position += Time.deltaTime * camForward * dir * movementSpeed;
-            //RIGIDBODYMOVEMENT
-            rb.position += Time.deltaTime * camForward * dir * movementSpeed;
-
-          //  Debug.DrawLine(transform.position, (transform.position + camForward), Color.green);
-
+            movementVector += camForward * dir;
             view.SetWalkAnimY(dir);
             StartCoroutine(WaitToMoveVer());
-
-            //lo llama MoveY
-
         }
     }
     public void StopWalkingX()
@@ -166,7 +128,8 @@ public class PlayerModel : MonoBehaviourPun
     {
         Debug.Log("GRABBIN");
         //Si tiene un objeto
-        if ( hasObject ) {
+        if (hasObject)
+        {
             //Let it go
             Server.Instance.RequestRemove(this, _currentObject);
             _currentObject = null;
@@ -174,17 +137,20 @@ public class PlayerModel : MonoBehaviourPun
 
         }
         //Si no tiene un objeto
-        else {
+        else
+        {
             //Smash
-            Collider [] collisions = Physics.OverlapSphere(transform.position, radiusRange);
+            Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
             //Solo el 1ro
             var gList = collisions.Where(x => x.GetComponent<Grabeable>() == true).Select(x => x.GetComponent<Grabeable>());
-            if ( gList.Any() ) {
+            if (gList.Any())
+            {
                 Grabeable g = gList.First();
 
 
 
-                if ( g != null && !g.grabed ) {
+                if (g != null && !g.grabed)
+                {
                     hasObject = true;
                     //Server.Instance.CheckedGrab(g, this);
                     g.grabed = true;
@@ -193,52 +159,16 @@ public class PlayerModel : MonoBehaviourPun
 
                     _currentObject = g;
                     Debug.Log("PESCAO");
-                    if ( g.IsFlag ) {
+                    if (g.IsFlag)
+                    {
                         hasTheFlag = true;
                     }
                 }
             }
-            }
-
-        //envia el componente Grabeable y este model a RequestGrab
-
-        /*
-        if (!hasObject)
-        {
-
-            Collider[] collisions = Physics.OverlapSphere(transform.position, radiusRange);
-            for (int i = 0; i < collisions.Length; i++)
-            {
-                if (collisions[i].GetComponent<Grabeable>() != null)
-                {
-
-                    Grabeable g = collisions[i].GetComponent<Grabeable>();
-                    if (!g.grabed)
-                    {
-                        _currentObject = g;
-                        if (g.IsFlag)
-                        {
-                            hasTheFlag = true;
-                        }
-                        hasObject = true;
-                        Server.Instance.CheckedGrab(g, this);
-                        break;
-                    }
-                }
-            }
         }
-        else
-        {
-            Server.Instance.RequestRemove(this, _currentObject);
-            _currentObject = null;
-            hasObject = false;
-            
-        }
-
-    */
     }
 
-    
+
     public void Jump()
     {
         if (_grounded)
@@ -249,24 +179,28 @@ public class PlayerModel : MonoBehaviourPun
     public void Ability()
     {
         //Como es una cosa que hace el server y tiene rigidbody, ps el movimiento se replica cuando pasas el addforce
-        Collider [] penguinz = Physics.OverlapSphere(transform.position, radiusRange);
-        Debug.DrawLine(transform.position, transform.position+ transform.forward * radiusRange);
+        Collider[] penguinz = Physics.OverlapSphere(transform.position, radiusRange);
+        Debug.DrawLine(transform.position, transform.position + transform.forward * radiusRange);
         Debug.DrawLine(transform.position, transform.position - transform.forward * radiusRange);
         Debug.DrawLine(transform.position, transform.position + transform.right * radiusRange);
         Debug.DrawLine(transform.position, transform.position - transform.right * radiusRange);
-        if (penguinz.Length > 0 ) {
+        if (penguinz.Length > 0)
+        {
 
-        for ( int i = 0; i< penguinz.Length;i++ ) {
-            if(penguinz[i].gameObject != this ) {
-                Vector3 dir = penguinz [ i ].transform.position - transform.position;
-                Debug.Log(penguinz [ i ].name);
-                    Rigidbody rb = penguinz [ i ].GetComponent<Rigidbody>();
-                if (rb != null ) {
-                    rb.AddForce(dir.normalized * waaaForce);
+            for (int i = 0; i < penguinz.Length; i++)
+            {
+                if (penguinz[i].gameObject != this)
+                {
+                    Vector3 dir = penguinz[i].transform.position - transform.position;
+                    Debug.Log(penguinz[i].name);
+                    Rigidbody rb = penguinz[i].GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.AddForce(dir.normalized * waaaForce);
 
+                    }
                 }
             }
-        }
         }
 
         view.SetAbility();
@@ -276,8 +210,8 @@ public class PlayerModel : MonoBehaviourPun
     public void GetDamage(int damage)
     {
         life -= damage;
-        
-        view.SetDamage(life);        
+
+        view.SetDamage(life);
     }
     public void addLife(int heal)
     {
@@ -295,17 +229,19 @@ public class PlayerModel : MonoBehaviourPun
     //Para no llenar la red con paquetes
     IEnumerator WaitToMoveHor()
     {
-        if ( _isMovingHor ) {
-        yield return new WaitForFixedUpdate();
-        _isMovingHor = false;
+        if (_isMovingHor)
+        {
+            yield return new WaitForFixedUpdate();
+            _isMovingHor = false;
 
         }
     }
     IEnumerator WaitToMoveVer()
     {
-        if ( _isMovingVer ) {
-        yield return new WaitForFixedUpdate();
-        _isMovingVer = false;
+        if (_isMovingVer)
+        {
+            yield return new WaitForFixedUpdate();
+            _isMovingVer = false;
 
         }
     }
