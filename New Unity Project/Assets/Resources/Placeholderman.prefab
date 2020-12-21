@@ -919,7 +919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18e4d217a895c94bb459c9149bbf4a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camHandler: {fileID: 0}
+  camHandler: {fileID: -7798287872127426655}
 --- !u!114 &6559322840356640556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,15 +978,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8238921333441893627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c0b9ab9df5f7ba48adb1baa5b3cfb98, type: 3}
+  m_Script: {fileID: 11500000, guid: 86fd5975432ddb84c81747d507a3a156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
+  cameraParent: {fileID: 0}
   distance: 7
   height: 3
   centerOffset: {x: 0, y: 0, z: 0}
   followOnStart: 0
-  smoothSpeed: 5
+  smoothSpeed: 0.125
+  clampYUp: 0
+  clampYDown: 0
 --- !u!114 &7604296805763515496
 MonoBehaviour:
   m_ObjectHideFlags: 0
