@@ -37,8 +37,8 @@ public class PlayerController : MonoBehaviour
             _horHasStopped = false;
             _animxHastStopped = false;
             float X = Input.GetAxis("Horizontal");
-            Vector3 camRight = new Vector3(camHandler.cameraTransform.right.x, 0, camHandler.cameraTransform.right.z);
-            Vector3 currentDir = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
+            Vector3 camRight = new Vector3(camHandler.cameraParent.right.x, 0, camHandler.cameraParent.right.z);
+            Vector3 currentDir = new Vector3(camHandler.cameraParent.forward.x, 0, camHandler.cameraParent.forward.z);
             Server.Instance.RequestMoveX(PhotonNetwork.LocalPlayer, X, camRight, currentDir);
         }
         else

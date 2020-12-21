@@ -993,7 +993,7 @@ MonoBehaviour:
   clampYUp: 90
   clampYDown: 90
   isFollowing: 0
-  cameraOffset: {x: 0, y: 3, z: 0}
+  cameraOffset: {x: 0, y: 3, z: 2}
 --- !u!114 &7604296805763515496
 MonoBehaviour:
   m_ObjectHideFlags: 0
