@@ -37,7 +37,8 @@ public class CameraHandler : MonoBehaviour
     public bool isFollowing;
 
     // Cache for camera offset
-    Vector3 cameraOffset = Vector3.zero;
+    [SerializeField]
+    Vector3 cameraOffset;
 
     Vector3 currentRotX;
     Vector3 currentRotY;
@@ -62,7 +63,7 @@ public class CameraHandler : MonoBehaviour
         // only follow is explicitly declared
         if (isFollowing)
         {
-            cameraParent.position = this.transform.position + cameraOffset;
+            cameraParent.position = transform.position + cameraOffset;
 
             //Nunca cuestiones a Agus, aunque haga negradas 
             Vector3 rotateCameraVector3 = cameraTransform.transform.rotation.eulerAngles;

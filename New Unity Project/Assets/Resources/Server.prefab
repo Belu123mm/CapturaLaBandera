@@ -542,7 +542,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6695349387890100424}
+  - {fileID: 8945043808925247158}
   - {fileID: 2714152586653526112}
   - {fileID: 1119491277445148955}
   - {fileID: 239660751689566135}
@@ -613,7 +613,7 @@ MonoBehaviour:
   - {fileID: 8713647906204525245}
   - {fileID: 1482013659153515511}
   prefab: {fileID: 8238921333441893627, guid: 3757705e2faef354aabcd01636136c57, type: 3}
-  endAnim: {fileID: 6695349387890100462}
+  endAnim: {fileID: 8945043808851244097}
 --- !u!114 &-7676091466928473319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1118,13 +1118,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 798bcf2cd93b17045aa602db9e06086a, type: 3}
---- !u!224 &6695349387890100424 stripped
+--- !u!224 &8945043808925247158 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2362565959175794503, guid: 798bcf2cd93b17045aa602db9e06086a,
     type: 3}
   m_PrefabInstance: {fileID: 6695349387890100721}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &6695349387890100462 stripped
+--- !u!95 &8945043808851244097 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2362565959370358192, guid: 798bcf2cd93b17045aa602db9e06086a,
     type: 3}
