@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     //Variables
     public CameraHandler camHandler;
     private bool _isStarted;
+    public float mouseXsensibility;
+    public float mouseYsensibility;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +26,11 @@ public class PlayerController : MonoBehaviour
     {
         //Checkeo si es mi view
         if (!camHandler.isFollowing) return;
-
+        float x = Input.GetAxis("Mouse X");
+        float y = Input.GetAxis("Mouse Y");
+        //player.Rotate(x);
+        //Independientemente de la fsm la camara se tiene que mover
+        camHandler.MoveCamera(x * mouseXsensibility, y * mouseYsensibility);
 
         if (Input.GetButton("Horizontal"))
         {

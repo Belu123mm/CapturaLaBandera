@@ -920,6 +920,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camHandler: {fileID: -7798287872127426655}
+  mouseXsensibility: 2
+  mouseYsensibility: 3
 --- !u!114 &6559322840356640556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -985,11 +987,11 @@ MonoBehaviour:
   cameraParent: {fileID: 0}
   distance: 7
   height: 3
-  centerOffset: {x: 0, y: 0, z: 0}
+  centerOffset: {x: 0, y: 50, z: 20}
   followOnStart: 0
   smoothSpeed: 0.125
-  clampYUp: 0
-  clampYDown: 0
+  clampYUp: 90
+  clampYDown: 90
   isFollowing: 0
 --- !u!114 &7604296805763515496
 MonoBehaviour:

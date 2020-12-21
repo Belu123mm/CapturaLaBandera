@@ -113,6 +113,7 @@ public class CameraHandler : MonoBehaviour
         cameraTransform.position = this.transform.position + this.transform.TransformVector(cameraOffset);
 
         cameraTransform.LookAt(this.transform.position + centerOffset);
+        Debug.Log("owowo");
     }
 
 }
