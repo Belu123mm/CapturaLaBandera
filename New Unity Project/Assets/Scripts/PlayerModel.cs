@@ -68,10 +68,10 @@ public class PlayerModel : MonoBehaviourPun
         }
     }
 
-    private void FixedUpdate()
-    {
-        rb.velocity = movementVector * Time.deltaTime * movementSpeed;
-    }
+    //private void FixedUpdate()
+    //{
+    //    rb.velocity = movementVector * Time.deltaTime * movementSpeed;
+    //}
 
     Vector3 movementVector;
     public void MoveHorizontal(float dir, Vector3 camRight, Vector3 currentDir)
@@ -79,9 +79,34 @@ public class PlayerModel : MonoBehaviourPun
         if (!_isMovingHor)
         {
             _isMovingHor = true;
-            movementVector += camRight * dir;
-            view.SetWalkAnimY(dir);
-            StartCoroutine(WaitToMoveHor());
+//<<<<<<< HEAD
+         //   movementVector += camRight * dir;
+         //   view.SetWalkAnimY(dir);
+          //  StartCoroutine(WaitToMoveHor());
+//=======
+//            /*
+//             * Ahora todo esto estaria en el controller, solo le pasaria la nueva direccion a la que mirar
+//             * 
+//             */
+//            /*
+//           Debug.DrawLine(currentDir, (transform.position + camRight), Color.red);
+
+
+//           //transform.rotation = Quaternion.LookRotation(newDir);
+//           */
+//            //RIGIDBODYMOVEMENT
+//            //rb.MoveRotation(Quaternion.LookRotation(newDir));
+//            float step = rotateSpeed * dir * Time.deltaTime;
+//            Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
+//            if (rb.angularVelocity.y * dir < 0)//si esta sensilla cuenta matematica da un numero negativo quiere decir que esta girando en direccion contraria a la del input recibido
+//            {
+//                rb.angularVelocity = Vector3.zero;
+//            }
+//            rb.rotation = Quaternion.LookRotation(newDir);
+//            view.SetWalkAnimX(dir);
+//            StartCoroutine(WaitToMoveHor());
+//            // rb.AddTorque(Vector3.up * dir * rotateSpeed * Time.deltaTime);
+//>>>>>>> parent of d9a3c02... rotacion horizontal anulada y rempazada por movimiento horizontal
         }
     }
     public void MoveVertical(float dir, Vector3 camForward)
@@ -89,7 +114,7 @@ public class PlayerModel : MonoBehaviourPun
         if (!_isMovingVer)
         {
             _isMovingVer = true;
-            movementVector += camForward * dir;
+            rb.position += Time.deltaTime * camForward * dir * movementSpeed;
             view.SetWalkAnimY(dir);
             StartCoroutine(WaitToMoveVer());
         }
