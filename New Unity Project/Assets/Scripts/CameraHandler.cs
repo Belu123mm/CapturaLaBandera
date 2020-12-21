@@ -34,7 +34,7 @@ public class CameraHandler : MonoBehaviour
     // cached transform of the target
 
     // maintain a flag internally to reconnect if target is lost or camera is switched
-    bool isFollowing;
+    public bool isFollowing;
 
     // Cache for camera offset
     Vector3 cameraOffset = Vector3.zero;
@@ -49,11 +49,8 @@ public class CameraHandler : MonoBehaviour
         if (followOnStart)
         {
             OnStartFollowing();
+
         }
-        currentRotX = cameraParent.eulerAngles;
-        currentRotY = cameraTransform.eulerAngles;
-        initialVector = cameraTransform.forward;
-        initialVector.x = 0f;
     }
     public void MoveCamera(float x, float y)
     {
@@ -94,6 +91,13 @@ public class CameraHandler : MonoBehaviour
     {
 
         isFollowing = true;
+        //busco los transform
+        cameraParent = GameObject.Find("CameraParent").transform;
+        cameraTransform = Camera.main.transform;
+        currentRotX = cameraParent.eulerAngles;
+        currentRotY = cameraTransform.eulerAngles;
+        initialVector = cameraTransform.forward;
+        initialVector.x = 0f;
     }
 
 

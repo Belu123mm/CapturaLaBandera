@@ -19,11 +19,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
 
-    }    // Update is called once per frame
+    }    // Update is called once per frame|
     void Update()
     {
         //Checkeo si es mi view
-        if (!camHandler) return;
+        if (!camHandler.isFollowing) return;
 
 
         if (Input.GetButton("Horizontal"))
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
             _verHasStopped = false;
             _animyHastStopped = false;
             float Y = Input.GetAxis("Vertical");
-            Vector3 camForward = new Vector3(camHandler.cameraTransform.forward.x, 0, camHandler.cameraTransform.forward.z);
+            Vector3 camForward = new Vector3(camHandler.cameraParent.forward.x, 0, camHandler.cameraParent.forward.z);
             Server.Instance.RequestMoveY(PhotonNetwork.LocalPlayer, Y, camForward);
             Server.Instance.RequestMoveY(PhotonNetwork.LocalPlayer, Y, camForward);
         }

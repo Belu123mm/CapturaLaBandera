@@ -12,12 +12,10 @@ public class Server : MonoBehaviourPun
     Dictionary<Player, PlayerModel> _dic = new Dictionary<Player, PlayerModel>();
     public GameObject prefab;
     public Animator endAnim;
-    private void Awake()
+
+    void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-    }
-    void Start()
-    {
         if (Instance == null)
         {
             if (photonView.IsMine)
@@ -89,7 +87,7 @@ public class Server : MonoBehaviourPun
     {
         if (!_dic.ContainsKey(player)) return;
         _dic[player].PrepAttack();
-        PhotonNetwork.Instantiate("Boink", _dic [ player ].transform.position + _dic [ player ].transform.forward + _dic [ player ].transform.up * 2, _dic [ player ].transform.rotation);
+        PhotonNetwork.Instantiate("Boink", _dic[player].transform.position + _dic[player].transform.forward + _dic[player].transform.up * 2, _dic[player].transform.rotation);
 
     }
 
@@ -125,7 +123,7 @@ public class Server : MonoBehaviourPun
         if (flag != null)
         {
             int flagID = flag.photonView.ViewID;
-            photonView.RPC("RemoveFlag", RpcTarget.AllBuffered, modelID, flagID);           
+            photonView.RPC("RemoveFlag", RpcTarget.AllBuffered, modelID, flagID);
         }
     }
     public void RequestTrap(Trap t)
@@ -155,7 +153,7 @@ public class Server : MonoBehaviourPun
     {
         if (!_dic.ContainsKey(player)) return;
         _dic[player].Ability();
-        PhotonNetwork.Instantiate("WAA", _dic [ player ].transform.position + _dic [ player ].transform.forward + _dic [ player ].transform.up * 2, _dic [ player ].transform.rotation);
+        PhotonNetwork.Instantiate("WAA", _dic[player].transform.position + _dic[player].transform.forward + _dic[player].transform.up * 2, _dic[player].transform.rotation);
     }
     public void RequestDash(Player player, float x) => photonView.RPC("Dash", _server, player, x);
     [PunRPC]
@@ -183,21 +181,21 @@ public class Server : MonoBehaviourPun
         Grabeable obj = PhotonNetwork.GetPhotonView(objID).GetComponent<Grabeable>();
         obj.grabed = true;
         PlayerModel model = PhotonNetwork.GetPhotonView(modelID).GetComponent<PlayerModel>();
-        obj.transform.parent = model.transform;       
+        obj.transform.parent = model.transform;
     }
-    public void RequestHeal(PlayerModel model,int heal,Heal coso)
+    public void RequestHeal(PlayerModel model, int heal, Heal coso)
     {
         int modelID = model.photonView.ViewID;
         int cosoID = coso.photonView.ViewID;
-        photonView.RPC("Heal", _server, modelID, heal,cosoID);
+        photonView.RPC("Heal", _server, modelID, heal, cosoID);
     }
     [PunRPC]
-    void Heal(int modeID,int heal,int coso)
+    void Heal(int modeID, int heal, int coso)
     {
         Heal h = PhotonNetwork.GetPhotonView(coso).GetComponent<Heal>();
         PlayerModel model = PhotonNetwork.GetPhotonView(modeID).GetComponent<PlayerModel>();
         model.addLife(heal);
-        PhotonNetwork.Instantiate("Heal", model.transform.position , Quaternion.identity);
+        PhotonNetwork.Instantiate("Heal", model.transform.position, Quaternion.identity);
         h.DestroyTime();
     }
     public void GetWinner(PlayerModel model)

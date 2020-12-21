@@ -990,6 +990,7 @@ MonoBehaviour:
   smoothSpeed: 0.125
   clampYUp: 0
   clampYDown: 0
+  isFollowing: 0
 --- !u!114 &7604296805763515496
 MonoBehaviour:
   m_ObjectHideFlags: 0
