@@ -81,20 +81,36 @@ public class PlayerModel : MonoBehaviourPun
            Debug.DrawLine(currentDir, (transform.position + camRight), Color.red);
 
 
-           //transform.rotation = Quaternion.LookRotation(newDir);
-           */
-            //RIGIDBODYMOVEMENT
-            //rb.MoveRotation(Quaternion.LookRotation(newDir));
-            float step = rotateSpeed * dir * Time.deltaTime;
-            Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
-            if (rb.angularVelocity.y * dir < 0)//si esta sensilla cuenta matematica da un numero negativo quiere decir que esta girando en direccion contraria a la del input recibido
-            {
-                rb.angularVelocity = Vector3.zero;
-            }
-            rb.rotation = Quaternion.LookRotation(newDir);
-            view.SetWalkAnimX(dir);
-            StartCoroutine(WaitToMoveHor());
+           ////transform.rotation = Quaternion.LookRotation(newDir);
+           //*/
+           // //RIGIDBODYMOVEMENT
+           // //rb.MoveRotation(Quaternion.LookRotation(newDir));
+
+           // float step = rotateSpeed * dir * Time.deltaTime;
+           // Vector3 newDir = Vector3.RotateTowards(currentDir, camRight, step, 0.0f);
+           // if (rb.angularVelocity.y * dir < 0)//si esta sensilla cuenta matematica da un numero negativo quiere decir que esta girando en direccion contraria a la del input recibido
+           // {
+           //     rb.angularVelocity = Vector3.zero;
+           // }
+           // rb.rotation = Quaternion.LookRotation(newDir);
+           // view.SetWalkAnimX(dir);
+           // StartCoroutine(WaitToMoveHor());
+
             // rb.AddTorque(Vector3.up * dir * rotateSpeed * Time.deltaTime);
+
+
+
+            _isMovingHor = true;
+
+            //transform.position += Time.deltaTime * camForward * dir * movementSpeed;
+            //RIGIDBODYMOVEMENT
+            rb.position += Time.deltaTime * camRight * dir * movementSpeed;
+
+            //  Debug.DrawLine(transform.position, (transform.position + camForward), Color.green);
+
+            view.SetWalkAnimY(dir);
+            StartCoroutine(WaitToMoveHor());
+
         }
     }
     public void MoveVertical(float dir, Vector3 camForward)
@@ -107,7 +123,7 @@ public class PlayerModel : MonoBehaviourPun
             //RIGIDBODYMOVEMENT
             rb.position += Time.deltaTime * camForward * dir * movementSpeed;
 
-            Debug.DrawLine(transform.position, (transform.position + camForward), Color.green);
+          //  Debug.DrawLine(transform.position, (transform.position + camForward), Color.green);
 
             view.SetWalkAnimY(dir);
             StartCoroutine(WaitToMoveVer());
