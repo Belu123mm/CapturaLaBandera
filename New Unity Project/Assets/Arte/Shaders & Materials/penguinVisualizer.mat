@@ -127,7 +127,7 @@ Material:
     - _Shadowcolor: {r: 0, g: 1, b: 0.03440881, a: 0}
     - _Watercolor: {r: 1, g: 0, b: 0.009047508, a: 0}
     - _WaterreflexionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _baseColor: {r: 0.780648, g: 0.88740736, b: 0.46002743, a: 1}
+    - _baseColor: {r: 0.58962876, g: 0.88740736, b: 0.20227365, a: 1}
     - _clothesColor: {r: 0.9772549, g: 0.54434973, b: 0.54434973, a: 1}
     - _patternColor: {r: 0.8529371, g: 0.55377555, b: 0.9194958, a: 1}
     - _skinColor: {r: 0.6320754, g: 0.24746348, b: 0.43976945, a: 1}

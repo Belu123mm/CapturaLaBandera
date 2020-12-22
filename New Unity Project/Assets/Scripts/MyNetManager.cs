@@ -147,19 +147,19 @@ public class MyNetManager : MonoBehaviourPunCallbacks
     }
     public override void OnCreatedRoom()
     {
-        DebugCustomConsole.Log("Room created", Color.yellow, true);
+        DebugCustomConsole.Log("Room created", Color.yellow);
         infoText.text = "Room created";
     }
 
     public override void OnJoinedRoom()
     {
-        DebugCustomConsole.Log("In Room", Color.yellow, true);
+        DebugCustomConsole.Log("In Room", Color.yellow);
         infoText.text = "In room";
 
     }
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        DebugCustomConsole.Log("Failed.Cause: " + message, Color.red, true);
+        DebugCustomConsole.Log("Failed.Cause: " + message, Color.red);
         infoText.text = "Failed. Cause: " + message;
         PhotonNetwork.Disconnect();
     }
@@ -167,7 +167,7 @@ public class MyNetManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        DebugCustomConsole.Log("On Disconected", Color.red, true);
+        DebugCustomConsole.Log("On Disconected", Color.red);
         infoText.text = cause.ToString();
     }
 
