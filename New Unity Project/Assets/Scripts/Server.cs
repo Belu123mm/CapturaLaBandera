@@ -56,7 +56,7 @@ public class Server : MonoBehaviourPun
     public void RequestAttack(Player player) => photonView.RPC("Attack", RpcTarget.All, player);
     //Ps por si acaso comento esto para que despues no me reten
     public void RequestMoveX(Player player, float dir, Vector3 camRight, Vector3 currentDir) => photonView.RPC("MoveX", _server, player, dir, camRight, currentDir);
-    public void RequestMoveY(Player player, float dir, Vector3 camForward) => photonView.RPC("MoveY", _server, player, dir, camForward);
+    public void RequestMoveY(Player player, float dir, Vector3 camForward, Vector3 currentDir) => photonView.RPC("MoveY", _server, player, dir, camForward, currentDir);
 
     void setCamHandler() //hago un rpc por cada jugador en el diccionario y les paso el ID de su model para que cada uno de forma separada active la camara
     {
@@ -77,10 +77,10 @@ public class Server : MonoBehaviourPun
         _dic[player].MoveHorizontal(dir, camRight, currentDir);
     }
     [PunRPC]
-    void MoveY(Player player, float dir, Vector3 camForward)
+    void MoveY(Player player, float dir, Vector3 camForward, Vector3 currentDir)
     {
         if (!_dic.ContainsKey(player)) return;
-        _dic[player].MoveVertical(dir, camForward);
+        _dic[player].MoveVertical(dir, camForward, currentDir);
     }
     [PunRPC]
     void Attack(Player player)

@@ -31,6 +31,8 @@ public class CameraHandler : MonoBehaviour
     public float clampYUp;
     public float clampYDown;
 
+    public Transform LookAtCamera;
+
     // cached transform of the target
 
     // maintain a flag internally to reconnect if target is lost or camera is switched
@@ -65,25 +67,29 @@ public class CameraHandler : MonoBehaviour
         {
             cameraParent.position = transform.position + cameraOffset;
 
-            //Nunca cuestiones a Agus, aunque haga negradas 
-            Vector3 rotateCameraVector3 = cameraTransform.transform.rotation.eulerAngles;
-            Vector3 rotateBodyVector3 = cameraParent.transform.rotation.eulerAngles;
-            rotateCameraVector3.x -= y;
-            rotateBodyVector3.y += x;
+            ////Nunca cuestiones a Agus, aunque haga negradas 
+            //Vector3 rotateCameraVector3 = cameraTransform.transform.rotation.eulerAngles;
+            //Vector3 rotateBodyVector3 = cameraParent.transform.rotation.eulerAngles;
+            //rotateCameraVector3.x -= y;
+            //rotateBodyVector3.y += x;
 
-            clampYUp -= y;
-            if (clampYUp > 90)
-            {
-                clampYUp = 90;
-                rotateCameraVector3.x = clampYUp;
-            }
-            else if (clampYUp < -90)
-            {
-                clampYUp = -90;
-                rotateCameraVector3.x = 270;
-            }
-            cameraTransform.transform.rotation = Quaternion.Euler(rotateCameraVector3);
-            cameraParent.transform.rotation = Quaternion.Euler(rotateBodyVector3);
+            //clampYUp -= y;
+            //if (clampYUp > 90)
+            //{
+            //    clampYUp = 90;
+            //    rotateCameraVector3.x = clampYUp;
+            //}
+            //else if (clampYUp < -90)
+            //{
+            //    clampYUp = -90;
+            //    rotateCameraVector3.x = 270;
+            //}
+            //cameraTransform.transform.rotation = Quaternion.Euler(rotateCameraVector3);
+            //cameraParent.transform.rotation = Quaternion.Euler(rotateBodyVector3);
+
+
+            cameraTransform.transform.RotateAround(this.transform.position, Vector3.up, x * 30 * Time.deltaTime);
+            cameraTransform.LookAt(LookAtCamera.position, Vector3.up);
 
         }
     }

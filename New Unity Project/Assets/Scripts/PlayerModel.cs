@@ -80,16 +80,22 @@ public class PlayerModel : MonoBehaviourPun
         {
             _isMovingHor = true;
             rb.position += Time.deltaTime * camRight * dir * movementSpeed;
+
+            rb.transform.forward = currentDir;
+
             view.SetWalkAnimY(dir);
             StartCoroutine(WaitToMoveHor());
         }
     }
-    public void MoveVertical(float dir, Vector3 camForward)
+    public void MoveVertical(float dir, Vector3 camForward, Vector3 currentDir)
     {
         if (!_isMovingVer)
         {
             _isMovingVer = true;
             rb.position += Time.deltaTime * camForward * dir * movementSpeed;
+
+            rb.transform.forward = currentDir;
+
             view.SetWalkAnimY(dir);
             StartCoroutine(WaitToMoveVer());
         }
